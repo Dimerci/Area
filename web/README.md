@@ -6,7 +6,7 @@ This platform is designed for creating custom automations, similar to IFTTT and 
 ## 🚀 Quick Start
 
 ### Prerequisites
-Ensure you have the following software installed on your machine before proceeding:
+Ensure you have the following software installed on your laptop before proceeding:
 - [Node.js & npm](https://nodejs.org/en/download/)
 - [Docker & Docker Compose](https://www.docker.com/get-started)
 
