@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# Action REAction Web Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Action REAction Web Client serves as the user interface for the Action REAction software suite.
+This platform is designed for creating custom automations, similar to IFTTT and Zapier, allowing users to render interfaces and facilitate interactions through a REST API. The web client communicates effectively with the application server, enhancing user experience by making operations seamless and intuitive.
 
-## Available Scripts
+## 🚀 Quick Start
 
-In the project directory, you can run:
+### Prerequisites
+Ensure you have the following software installed on your machine before proceeding:
+- [Node.js & npm](https://nodejs.org/en/download/)
+- [Docker & Docker Compose](https://www.docker.com/get-started)
 
-### `npm start`
+### Installation & Setup
+1. **Clone the Repository**
+   git clone git@github.com:EpitechPromo2026/B-DEV-500-BER-5-1-area-maxime.lambert.git
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Navigate to the Project Directory
+    cd web
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Install Dependencies
+    npm install
 
-### `npm test`
+### Run with npm
+    npm start
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    Now, navigate to http://localhost:8081_ in your web browser to access the web client
 
-### `npm run build`
+### Run with Docker
+    docker-compose up && docker-compose build
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    Access the web client by navigating to http://localhost:8081 in your web browser.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🎨 Features
+    User Authentication: Securely register and authenticate users.
+    Service Subscription: Subscribe to and manage various services.
+    Action & REAction Composition: Create and manage custom automations.
+    Trigger Activation: Monitor and activate triggers for actions and reactions.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📦 Docker Deployment
+    Build and Run the Docker Container
 
-### `npm run eject`
+    docker-compose up --build -d client_web
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Stop and Remove the Container
+    docker-compose down
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📘 API Documentation
+    For detailed information on available endpoints, request/response formats, and usage examples, please refer to the included API documentation.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 📬 Contact
+    Should you have any inquiries, issues, or suggestions for enhancements, feel free to open an issue in the project repository or contact the development team directly.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📚 Additional Information
+    For a more comprehensive understanding of the Action REAction software suite and its components, refer to the main documentation and README files located in the respective directories of the project repository.
