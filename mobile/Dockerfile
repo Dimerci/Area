@@ -5,15 +5,20 @@ FROM ubuntu:20.04
 WORKDIR /app
 
 # Install necessary dependencies without interactive prompts
-RUN apt-get update && apt-get install -y \
-    sudo \
-    git \
-    unzip \
-    xz-utils \
-    lib32stdc++6 \
-    libglu1-mesa \
-    curl \
-    openjdk-11-jdk && \
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends tzdata && \
+    ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
+    dpkg-reconfigure --frontend noninteractive tzdata && \
+    apt-get install -y \
+        sudo \
+        git \
+        unzip \
+        xz-utils \
+        lib32stdc++6 \
+        libglu1-mesa \
+        curl \
+        openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
 # Create a non-root user with a home directory
@@ -44,8 +49,5 @@ RUN flutter doctor
 # Expose a port (e.g., 3000)
 EXPOSE 3000
 
-# Build the Android APK
-RUN flutter build apk --release
-
 # Start the Flutter app (replace with your actual entry point)
-CMD ["flutter", "run", "--release"]
+CMD ["flutter", "run"]
