@@ -1,0 +1,14 @@
+/* src/theme/dark-theme.css */
+
+:root {
+    --background-color: #364240; /* Darker shade of primary color */
+    --primary-color: #CCE3DE; /* Inverted tertiary color */
+    --secondary-color: #6B9080; /* Primary color */
+    --tertiary-color: #3E5C56; /* Darker shade of secondary color */
+    --quaternary-color: #283635; /* Much darker shade of primary color */
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
