@@ -4,7 +4,7 @@ exports.handleAboutRoute = void 0;
 const jsonUtils_1 = require("../../utils/jsonUtils");
 function handleAboutRoute(req, res) {
     const aboutData = {
-        name: 'Your App Name',
+        name: 'Me',
         version: '1.0.0',
         description: 'A simple NodeTS server with an about endpoint.',
     };
