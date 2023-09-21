@@ -1,7 +1,7 @@
 // src/App.tsx
 import React from 'react';
 import HelloWorld from './components/HelloWorld';
-import './theme/light-theme.css'; // Import light theme
+import './theme/light-theme.css';
 
 const App: React.FC = () => {
   return (
