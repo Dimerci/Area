@@ -4,8 +4,8 @@
 
 To launch back end:
 
-``npm run build ``
+    npm run build
 
-``npm start ``
+    npm start
 
 Go to http://localhost:8080/
