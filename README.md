@@ -32,7 +32,8 @@ These instructions will help you set up and run the project on your local machin
 
 2. Change to the project directory:
 
-    ```cd your-project
+    ```bash
+    cd your-project
 
 ## Usage
 
@@ -41,10 +42,12 @@ To launch and run the project using Docker Compose, follow these steps:
 1. Open a terminal window and navigate to the project directory.
 2. Run the following command to start the Docker containers:
 
-    ```docker-compose up -d
+    ```bash
+    docker-compose up -d
 
 3. Once the containers are up and running, you can access the application at http://localhost:PORT, where PORT is the port number specified in your configuration.
 
 4. To stop the containers, use the following command:
 
-    ```docker-compose down
+    ```bash
+    docker-compose down
