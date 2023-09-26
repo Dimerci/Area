@@ -20,11 +20,11 @@
 ## Technology Stack
 
 ### Front-end
-- **Technology**: React
+- **Technology**: React native
 - **Scope**: Provides the user interface for web clients
 
 ### Mobile
-- **Technology**: Flutter
+- **Technology**: React native
 - **Scope**: Provides the user interface for mobile clients
 
 ### Back-end
