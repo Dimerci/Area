@@ -1,13 +1,8 @@
 version: '3'
 services:
-  flutter-app:
+  Frontend:
     build:
-      context: ./mobile
-    # Add any additional configuration here
-
-  ts-website:
-    build:
-      context: ./web
+      context: ./Front
     ports:
       - "8081:8081" # Map container port 8081 to host port 8081
     # Add any additional configuration here
