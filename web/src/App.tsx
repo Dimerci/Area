@@ -1,12 +1,11 @@
-// src/App.tsx
 import React from 'react';
-import HelloWorld from './components/HelloWorld';
-import './theme/light-theme.css';
+import logo from './logo.svg';
+import './App.css';
 
-const App: React.FC = () => {
+function App() {
   return (
     <div className="App">
-      <HelloWorld />
+      <h1>Hello, World!</h1>
     </div>
   );
 }
