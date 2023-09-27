@@ -1,8 +1,5 @@
-# Use the androidsdk/android-30 base image
-FROM androidsdk/android-30
 
-# Set environment variables
-ENV ADB_IP=host.docker.internal
+FROM reactnativecommunity/react-native-android:latest
 
 # Set the working directory in the container
 WORKDIR /app
@@ -23,8 +20,4 @@ COPY . .
 # Build the Android APK
 RUN cd android && ./gradlew assembleRelease
 
-# Expose the port for debugging (if needed)
-EXPOSE 8081
-
-# Launch the APK (This part is experimental and may not work in all environments)
-CMD ["npx", "react-native", "run-android"]
+CMD echo "Building Android APK..." && echo "DONE!"
