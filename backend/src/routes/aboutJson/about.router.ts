@@ -3,6 +3,6 @@ import { getAboutJson } from './getAboutJson';
 
 const router = Router();
 
-router.get('/about.json', getAboutJson);
+router.get('/', getAboutJson);
 
 export default router;

@@ -8,6 +8,7 @@ const ABOUT_JSON = {
     description: 'A simple NodeTS server with an about endpoint.',
 };
 function getAboutJson(_, res) {
+    console.log("about Json");
     const jsonResponse = (0, jsonUtils_1.createJsonResponse)(ABOUT_JSON);
     res.setHeader('Content-Type', 'application/json');
     res.status(200).send(jsonResponse);
