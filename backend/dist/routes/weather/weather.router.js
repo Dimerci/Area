@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// src/routes/index.ts
 const express_1 = require("express");
-const aboutJson_1 = require("./listRoutes/aboutJson");
+const postWeather_1 = require("./postWeather");
 const router = (0, express_1.Router)();
-router.get('/about.json', aboutJson_1.handleAboutRoute);
+router.post('/weather', postWeather_1.postWeather);
 exports.default = router;
