@@ -3,6 +3,6 @@ import { postWeather } from './postWeather';
 
 const router = Router();
 
-router.post('/weather', postWeather);
+router.post('/', postWeather);
 
 export default router;
