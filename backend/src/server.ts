@@ -2,6 +2,10 @@
 import express from "express";
 import AboutJson from "./routes/aboutJson/";
 import Weather from "./routes/weather";
+import express from "express";
+import AboutJson from "./routes/aboutJson/";
+import Weather from "./routes/weather";
+import { errorHandler } from "./middleware/errors/ErrorHandler";
 
 const app = express();
 const port = 8081;
@@ -27,3 +31,5 @@ app.on("error", (err) => {
 app.on("error", (err) => {
     console.error("Server error:", err);
 });
+
+app.use(errorHandler);
