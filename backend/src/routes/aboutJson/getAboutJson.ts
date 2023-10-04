@@ -9,8 +9,8 @@ const ABOUT_JSON = {
 };
 
 export function getAboutJson(_: Request, res: Response<string>): void {
-  const jsonResponse = createJsonResponse(ABOUT_JSON);
+    const jsonResponse = createJsonResponse(ABOUT_JSON);
 
-  res.setHeader('Content-Type', 'application/json');
-  res.status(200).send(jsonResponse);
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).send(jsonResponse);
 }
