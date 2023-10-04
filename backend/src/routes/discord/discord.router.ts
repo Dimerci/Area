@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import postToDiscordWebhook from './postDiscord'; // Use the default export syntax
 
-
+// Define the variables
 const discord_webhook_url = 'https://discord.com/api/webhooks/1158339425093296209/OJ0GSO8aLOkWXPQ51YREeE6CNZeCgpJ0sNAh84jUcJrCHSS8mNvGkyIwaiR6qdRDN4bM';
-const message = 'Hello World!';
-
+const message = 'Hello from the backend!';
 const router = Router();
 
 // Define a route that invokes the function when accessed
