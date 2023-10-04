@@ -1,20 +1,10 @@
 import { Router } from 'express';
-import postToDiscordWebhook from './postDiscord'; // Use the default export syntax
+import { postDiscord } from './postDiscord'
 
-// Define the variables
-const discord_webhook_url = 'https://discord.com/api/webhooks/1158339425093296209/OJ0GSO8aLOkWXPQ51YREeE6CNZeCgpJ0sNAh84jUcJrCHSS8mNvGkyIwaiR6qdRDN4bM';
-const message = 'Hello from the backend!';
+const express = require('express');
 const router = Router();
 
-// Define a route that invokes the function when accessed
-router.get('/', (req, res) => {
-  postToDiscordWebhook(discord_webhook_url, message)
-    .then(() => {
-      res.status(200).json({ message: 'Message sent successfully' });
-    })
-    .catch((error) => {
-      res.status(500).json({ error: 'Failed to send message to Discord webhook' });
-    });
-});
+router.use(express.json());
+router.post('/', postDiscord)
 
 export default router;

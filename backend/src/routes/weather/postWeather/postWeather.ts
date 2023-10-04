@@ -4,6 +4,7 @@ import { evalForecast } from './evalForecast';
 import { Forecast, Interval, OpenWeatherMetrics } from './postWeather.interfaces';
 import { isValidForecast, isValidInterval } from './postWeather.utils';
 import { fetchOpenWeatherForecast } from './fetchOpenWeatherForecast';
+import { postRequestToDiscord } from './postRequestToDiscord';
 
 interface PostWeatherBody {
     city: string;
@@ -21,7 +22,7 @@ export async function postWeather(req: Request<void, void, PostWeatherBody, void
             }
         }
 
-        const { interval, forecast, city } = req.body;
+        const { interval, forecast, city, message} = req.body;
         if (!isValidForecast(forecast) || !isValidInterval(interval)) {
             throw(new ErrorStatus(`Invalid forecast type or value or invalid interval`, 400));
         }
@@ -31,6 +32,7 @@ export async function postWeather(req: Request<void, void, PostWeatherBody, void
             const { data } = response;
             const [firstForecast] = data.list;
             if (evalForecast(firstForecast, interval, forecast) === true) {
+                postRequestToDiscord(message);
                 console.log("SUCESS");
             }
             res.json(data);
