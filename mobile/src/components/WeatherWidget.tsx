@@ -1,33 +1,50 @@
-// import React, {useState} from 'react';
-// import {Alert, Switch, Text, View} from 'react-native';
-// import {useTailwind} from 'tailwind-rn';
+import React, {useState} from 'react';
+import {Alert, Button, Switch, Text, TextInput, View} from 'react-native';
+import {useTailwind} from 'tailwind-rn';
 
-// type WeatherWidgetT = {
-//   city: string;
-//   children?: React.ReactNode; // Define children prop
-//   debug?: boolean;
-// };
+type WeatherWidgetT = {
+  children?: React.ReactNode; // Define children prop
+  debugScreen?: boolean;
+  debugConsole?: boolean;
+};
 
-// export function WeatherWidget({
-//   city,
-//   children,
-//   debug,
-// }: WeatherWidgetT): JSX.Element {
-//   const tailwind = useTailwind();
-//   //   const [isActive, setIsActive] = useState(false);
+export function WeatherWidget({
+  children,
+  debugScreen,
+  debugConsole,
+}: WeatherWidgetT): JSX.Element {
+  const tailwind = useTailwind();
+  const [text, setText] = useState('');
 
-//   //   const toggleSwitch = () => {
-//   //     setIsActive(!isActive);
-//   //     {
-//   //       debug && Alert.alert('Switched ' + title + ' to ' + !isActive);
-//   //     }
-//   //   };
+  const handleInputChange = inputText => {
+    setText(inputText);
+  };
 
-//   return (
-//     <View>
-//       <Text style={tailwind('text-slate-50')}>City :</Text>
-// <Input
-//       <Switch value={isActive} onValueChange={toggleSwitch} />
-//     </View>
-//   );
-// }
+  const handleButtonPress = () => {
+    // Do something with the input value (text)
+    {
+      debugConsole && console.log('Input value:', text);
+    }
+    {
+      debugScreen && Alert.alert('Input value:', text);
+    }
+  };
+
+  return (
+    <View>
+      <Text style={tailwind('text-slate-50')}>City :</Text>
+      <TextInput
+        placeholder="Enter text here"
+        value={text}
+        onChangeText={handleInputChange}
+        style={{
+          borderWidth: 1,
+          borderColor: 'gray',
+          padding: 10,
+          marginBottom: 10,
+        }}
+      />
+      <Button title="Submit" onPress={handleButtonPress} />
+    </View>
+  );
+}

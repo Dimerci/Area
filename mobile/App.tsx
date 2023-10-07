@@ -9,7 +9,8 @@ import React from 'react';
 import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
 import {AreaBox} from './src/components/Box';
-import {Button, Text} from 'react-native';
+import {Button, ScrollView, Text} from 'react-native';
+import {WeatherWidget} from './src/components/WeatherWidget';
 
 function App(): JSX.Element {
   const data = [
@@ -17,22 +18,37 @@ function App(): JSX.Element {
       id: 1,
       title: 'Test 1',
       component: <Text>Test</Text>,
-      debug: true,
+      debugConsole: true,
+      debugScreen: true,
     },
     {
       id: 2,
-      title: 'Test 2',
-      component: <Text>Test 2</Text>,
-      debug: false,
+      title: 'Button Test',
+      component: <Button title="Test" />,
+      debugConsole: true,
+      debugScreen: false,
+    },
+    {
+      id: 3,
+      title: 'Weather',
+      component: <WeatherWidget debugScreen />,
+      debugConsole: false,
+      debugScreen: true,
     },
   ];
   return (
     <TailwindProvider utilities={utilities}>
-      {data.map(x => (
-        <AreaBox title={x.title} debug={x.debug} key={x.id}>
-          {x.component}
-        </AreaBox>
-      ))}
+      <ScrollView>
+        {data.map(box => (
+          <AreaBox
+            title={box.title}
+            debugConsole={box.debugConsole}
+            debugScreen={box.debugScreen}
+            key={box.id}>
+            {box.component}
+          </AreaBox>
+        ))}
+      </ScrollView>
     </TailwindProvider>
   );
 }
