@@ -4,9 +4,17 @@ import AboutJson from "./routes/aboutJson/";
 import Weather from "./routes/weather";
 import Discord from "./routes/discord";
 import { errorHandler } from "./middleware/errors/ErrorHandler";
+import express from "express";
+import AboutJson from "./routes/aboutJson/";
+import Weather from "./routes/weather";
+import Discord from "./routes/discord";
+import { errorHandler } from "./middleware/errors/ErrorHandler";
 
 const app = express();
-const port = 8081;
+const port = 8080;
+const cors = require("cors");
+
+app.use(cors()); // Move CORS up
 
 app.use("/about.json", AboutJson);
 app.use("/discord", Discord);
@@ -17,9 +25,8 @@ app.get("/", (req, res) => {
     res.send("Hello world");
 });
 
-console.log("Hello");
-
 app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
     console.log(`Server is running on port ${port}`);
 });
 
