@@ -11,9 +11,18 @@ interface Props {
     component: ReactElement;
     id: number;
   }>;
+  debugScreen?: boolean;
+  debugConsole?: boolean;
+  reaData: string;
 }
 
-const Dropdown: FC<Props> = ({label, data}) => {
+const Dropdown: FC<Props> = ({
+  label,
+  data,
+  debugConsole,
+  debugScreen,
+  reaData,
+}) => {
   const DropdownButton = useRef();
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(undefined);
@@ -23,7 +32,13 @@ const Dropdown: FC<Props> = ({label, data}) => {
   const [selectedReaction, setSelectedReaction] = useState(null);
 
   const componentMapping = {
-    Discord: () => <Discord title="test" />,
+    Discord: () => (
+      <Discord
+        debugConsole={debugConsole}
+        debugScreen={debugScreen}
+        reaData={reaData}
+      />
+    ),
     Test: () => <Text>Test</Text>,
   };
 

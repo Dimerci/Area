@@ -31,9 +31,9 @@ function App(): JSX.Element {
     {
       id: 3,
       title: 'Weather',
-      component: <WeatherWidget debugScreen />,
-      debugConsole: false,
-      debugScreen: false,
+      component: <WeatherWidget debugScreen debugConsole />,
+      debugConsole: true,
+      debugScreen: true,
     },
   ];
   return (

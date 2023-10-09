@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Button, Text, TextInput, View} from 'react-native';
+import {Text, TextInput, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import ReactionList from './ReactionList';
 
@@ -20,15 +20,18 @@ export function WeatherWidget({
     setText(inputText);
   };
 
-  const handleButtonPress = () => {
-    // Do something with the input value (text)
-    {
-      debugConsole && console.log('Input value:', text);
-    }
-    {
-      debugScreen && Alert.alert('Input value:', text);
-    }
-  };
+  // let reaData =
+  //   '{"city": "' +
+  //   city +
+  //   '","forecast" : {"type": "' +
+  //   type +
+  //   '","value":' +
+  //   value +
+  //   '}, "interval": "' +
+  //   interval +
+  //   '","message": "' +
+  //   message +
+  //   '"}';
 
   return (
     <View>
@@ -39,8 +42,11 @@ export function WeatherWidget({
         onChangeText={handleInputChange}
         style={tailwind('p-2 mx-1 my-2 border-2 border-slate-50 rounded-lg')}
       />
-      <ReactionList />
-      <Button title="Submit" onPress={handleButtonPress} />
+      <ReactionList
+        reaData="test"
+        debugConsole={debugConsole}
+        debugScreen={debugScreen}
+      />
     </View>
   );
 }

@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {Alert, Switch, Text, TextInput, View} from 'react-native';
+import {Alert, Text, TextInput, View} from 'react-native';
+import {Button} from 'react-native-elements';
 import {useTailwind} from 'tailwind-rn';
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
+  reaData: string;
 };
 
 export function Discord({debugScreen, debugConsole}: AreaBoxT): JSX.Element {
@@ -15,17 +17,15 @@ export function Discord({debugScreen, debugConsole}: AreaBoxT): JSX.Element {
     setMessage(inputText);
   };
 
-  const MessageSend = () => {
-    debugScreen && Alert.alert('Sent this :' + message);
-    debugConsole && console.log('Sent this :' + message);
+  const handleButtonPress = () => {
+    debugScreen && Alert.alert('Send this :' + message);
+    debugConsole && console.log('Send this :' + message);
   };
 
   return (
     <View>
       <View style={tailwind('rounded-lg p-2 mx-1 my-1')}>
         <Text style={tailwind('text-slate-50')}>Message to send :</Text>
-        {debugConsole && <Text>debugConsole on</Text>}
-        {debugScreen && <Text>debugScreen on</Text>}
       </View>
       <View style={tailwind('bg-slate-600 rounded-b-lg p-2')}>
         <TextInput
@@ -37,6 +37,7 @@ export function Discord({debugScreen, debugConsole}: AreaBoxT): JSX.Element {
           style={tailwind('p-2 mx-1 my-1 border-2 border-slate-50 rounded-lg')}
         />
       </View>
+      <Button title="Submit" onPress={handleButtonPress} />
     </View>
   );
 }
