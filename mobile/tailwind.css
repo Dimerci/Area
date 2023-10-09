@@ -1,5 +1,6 @@
 .absolute {
   position: absolute
+<<<<<<< HEAD
 }
 
 .mx-1 {
@@ -10,6 +11,28 @@
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem
+=======
+}
+
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem
+}
+
+.mx-5 {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem
+>>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 }
 
 .my-1 {
@@ -17,6 +40,7 @@
   margin-bottom: 0.25rem
 }
 
+<<<<<<< HEAD
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem
@@ -27,10 +51,13 @@
   margin-bottom: auto
 }
 
+=======
+>>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 .mb-2 {
   margin-bottom: 0.5rem
 }
 
+<<<<<<< HEAD
 .w-14 {
   width: 3.5rem
 }
@@ -49,6 +76,34 @@
 
 .flex-row {
   flex-direction: row
+}
+
+.rounded-lg {
+  border-radius: 0.5rem
+=======
+.mt-5 {
+  margin-top: 1.25rem
+>>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
+}
+
+.mt-2 {
+  margin-top: 0.5rem
+}
+
+.mt-1 {
+  margin-top: 0.25rem
+}
+
+.h-fit {
+  height: fit-content
+}
+
+.w-fit {
+  width: fit-content
+}
+
+.flex-1 {
+  flex: 1 1 0%
 }
 
 .rounded-lg {
@@ -107,6 +162,7 @@
   padding-bottom: 0.5rem
 }
 
+<<<<<<< HEAD
 .text-center {
   text-align: center
 }
@@ -120,6 +176,8 @@
   font-weight: 900
 }
 
+=======
+>>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 .text-slate-50 {
   --tw-text-opacity: 1;
   color: rgb(248 250 252 / var(--tw-text-opacity))

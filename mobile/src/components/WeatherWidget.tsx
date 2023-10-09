@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {useEffect, useState} from 'react';
 import {Text, TextInput, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
@@ -5,12 +6,25 @@ import ReactionList from './ReactionList';
 import {NormalDropdown} from './Dropdown';
 import {WeatherData} from './Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+=======
+import React, {useState} from 'react';
+import {Alert, Button, Text, TextInput, View} from 'react-native';
+import {useTailwind} from 'tailwind-rn';
+import ReactionList from './ReactionList';
+>>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 
 type WeatherWidgetT = {
   children?: React.ReactNode; // Define children prop
 };
 
+<<<<<<< HEAD
 export function WeatherWidget({}: WeatherWidgetT): JSX.Element {
+=======
+export function WeatherWidget({
+  debugScreen,
+  debugConsole,
+}: WeatherWidgetT): JSX.Element {
+>>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
   const tailwind = useTailwind();
   const [city, setCity] = useState('');
   const [forecastType, setForecastType] = useState('Temperature');
@@ -86,6 +100,7 @@ export function WeatherWidget({}: WeatherWidgetT): JSX.Element {
         value={city}
         onChangeText={handleInputChange}
         style={tailwind('p-2 mx-1 my-2 border-2 border-slate-50 rounded-lg')}
+<<<<<<< HEAD
       />
       <NormalDropdown
         label="Select an Option for the type of forecast"
@@ -108,6 +123,11 @@ export function WeatherWidget({}: WeatherWidgetT): JSX.Element {
         debugConsole={debugConsole}
         debugScreen={debugScreen}
       />
+=======
+      />
+      <ReactionList />
+      <Button title="Submit" onPress={handleButtonPress} />
+>>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
     </View>
   );
 }
