@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Alert, Button, Switch, Text, TextInput, View} from 'react-native';
+import {Alert, Button, Text, TextInput, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
+import ReactionList from './ReactionList';
 
 type WeatherWidgetT = {
   children?: React.ReactNode; // Define children prop
@@ -9,7 +10,6 @@ type WeatherWidgetT = {
 };
 
 export function WeatherWidget({
-  children,
   debugScreen,
   debugConsole,
 }: WeatherWidgetT): JSX.Element {
@@ -32,18 +32,14 @@ export function WeatherWidget({
 
   return (
     <View>
-      <Text style={tailwind('text-slate-50')}>City :</Text>
+      <Text style={tailwind('mx-1 text-slate-50')}>City :</Text>
       <TextInput
         placeholder="Enter text here"
         value={text}
         onChangeText={handleInputChange}
-        style={{
-          borderWidth: 1,
-          borderColor: 'gray',
-          padding: 10,
-          marginBottom: 10,
-        }}
+        style={tailwind('p-2 mx-1 my-2 border-2 border-slate-50 rounded-lg')}
       />
+      <ReactionList />
       <Button title="Submit" onPress={handleButtonPress} />
     </View>
   );

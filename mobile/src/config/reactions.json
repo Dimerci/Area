@@ -1,0 +1,22 @@
+{
+  "reactions": [
+    {
+      "label": "test",
+      "value": "test",
+      "component": "Test",
+      "id": 0
+    },
+    {
+      "label": "discord",
+      "value": "discord",
+      "component": "Discord",
+      "id": 1
+    },
+    {
+      "label": "label 2",
+      "value": "label 2",
+      "component": "Test",
+      "id": 2
+    }
+  ]
+}

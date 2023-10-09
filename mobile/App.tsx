@@ -33,7 +33,7 @@ function App(): JSX.Element {
       title: 'Weather',
       component: <WeatherWidget debugScreen />,
       debugConsole: false,
-      debugScreen: true,
+      debugScreen: false,
     },
   ];
   return (
