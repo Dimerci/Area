@@ -1,14 +1,22 @@
-// src/App.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
+import keycloak from './keycloakConfig';
+import { useAuth } from './utils/AuthContext';
 import AppRouter from './utils/Router';
-import './App.css'; // or your Tailwind CSS import
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
+  const { setIsAuthenticated } = useAuth();
 
-      < AppRouter /> </div>
-  );
+  useEffect(() => {
+    keycloak.init({ onLoad: 'login-required' })
+      .then(authenticated => {
+        setIsAuthenticated(authenticated);
+      })
+      .catch(err => {
+        console.error("Failed to initialize authentication", err);
+      });
+  }, [setIsAuthenticated]);
+
+  return <AppRouter />;
 };
 
 export default App;
