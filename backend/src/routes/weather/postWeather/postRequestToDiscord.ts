@@ -4,7 +4,7 @@ export async function postRequestToDiscord(message: string) {
     const requestBody = {
         message: message
     };
-    console.log(requestBody);
+
     return fetch("http://localhost:8080/discord", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
