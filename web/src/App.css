@@ -24,6 +24,12 @@
   color: white;
 }
 
+@layer components {
+  .genie-transition {
+    transition: transform 0.5s ease-in-out;
+  }
+}
+
 .App-link {
   color: #61dafb;
 }
