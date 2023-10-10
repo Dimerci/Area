@@ -12,19 +12,14 @@
   margin-right: 1.25rem
 }
 
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem
-}
-
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem
-}
-
 .my-1 {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem
 }
 
 .mb-2 {
@@ -35,24 +30,20 @@
   margin-top: 1.25rem
 }
 
-.mt-2 {
-  margin-top: 0.5rem
+.flex {
+  display: flex
 }
 
-.mt-1 {
-  margin-top: 0.25rem
-}
-
-.h-fit {
-  height: fit-content
-}
-
-.w-fit {
-  width: fit-content
+.h-40 {
+  height: 10rem
 }
 
 .flex-1 {
   flex: 1 1 0%
+}
+
+.items-center {
+  align-items: center
 }
 
 .rounded-lg {
@@ -94,6 +85,14 @@
 
 .p-2 {
   padding: 0.5rem
+}
+
+.p-5 {
+  padding: 1.25rem
+}
+
+.p-6 {
+  padding: 1.5rem
 }
 
 .px-5 {

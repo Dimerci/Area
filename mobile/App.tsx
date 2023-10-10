@@ -5,50 +5,28 @@
  * @format
  */
 
-import React from 'react';
-import {TailwindProvider} from 'tailwind-rn';
+import React, {useState} from 'react';
+import {TailwindProvider, useTailwind} from 'tailwind-rn';
 import utilities from './tailwind.json';
-import {AreaBox} from './src/components/Box';
-import {Button, ScrollView, Text} from 'react-native';
-import {WeatherWidget} from './src/components/WeatherWidget';
+import {MainPage} from './src/screens/MainPage';
+import {SettingsPage} from './src/screens/SettingsPage';
+import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {TouchableOpacity} from 'react-native';
 
 function App(): JSX.Element {
-  const data = [
-    {
-      id: 1,
-      title: 'Test 1',
-      component: <Text>Test</Text>,
-      debugConsole: true,
-      debugScreen: true,
-    },
-    {
-      id: 2,
-      title: 'Button Test',
-      component: <Button title="Test" />,
-      debugConsole: true,
-      debugScreen: false,
-    },
-    {
-      id: 3,
-      title: 'Weather',
-      component: <WeatherWidget debugScreen debugConsole />,
-      debugConsole: true,
-      debugScreen: true,
-    },
-  ];
+  const [isSettings, setIsSettings] = useState(false);
+  const tailwind = useTailwind();
+
+  const toggleSwitch = () => {
+    setIsSettings(!isSettings);
+  };
   return (
     <TailwindProvider utilities={utilities}>
-      <ScrollView>
-        {data.map(box => (
-          <AreaBox
-            title={box.title}
-            debugConsole={box.debugConsole}
-            debugScreen={box.debugScreen}
-            key={box.id}>
-            {box.component}
-          </AreaBox>
-        ))}
-      </ScrollView>
+      {!isSettings && <MainPage />}
+      {isSettings && <SettingsPage />}
+      {!isSettings && <Button title="Settings Page" onPress={toggleSwitch} />}
+      {isSettings && <Button title="Home Page" onPress={toggleSwitch} />}
     </TailwindProvider>
   );
 }
