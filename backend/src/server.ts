@@ -15,9 +15,26 @@ import {
 const app = express();
 const port = 8080;
 const cors = require("cors");
+// const { auth } = require('express-openid-connect');
+const cors = require("cors");
 
 app.use(cors()); // Move CORS up
 
+app.use("/about.json", AboutJson);
+app.use("/discord", Discord);
+app.use("/weather", Weather);
+app.use(cors());
+
+// const config = {
+//   authRequired: false,
+//   auth0Logout: true,
+//   secret: 'a long, randomly-generated string stored in env',
+//   baseURL: 'http://localhost:8080',
+//   clientID: 'EeIDOpDIYLzrQc04tgmkr8r2nyNIVZqF',
+//   issuerBaseURL: 'https://dev-zqudvtrv6sw7xe6c.us.auth0.com'
+// };
+
+// app.use(auth(config));
 app.use("/about.json", AboutJson);
 app.use("/discord", Discord);
 app.use("/weather", Weather);
@@ -41,5 +58,3 @@ app.on("error", (err) => {
 });
 
 app.use(errorHandler);
-
-connectToDatabase();
