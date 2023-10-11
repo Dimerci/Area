@@ -131,3 +131,13 @@ export function WeatherWidget({
     </View>
   );
 }
+
+export interface WeatherData {
+  city: string;
+  forecast: {
+    type: 'temperature' | 'wind' | 'humidity';
+    value: number;
+  };
+  interval: '>' | '<' | '=';
+  // message?: string;
+}

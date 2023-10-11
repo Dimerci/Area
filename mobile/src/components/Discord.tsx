@@ -34,7 +34,11 @@ export function Discord({
 =======
 };
 
-export function Discord({debugScreen, debugConsole}: AreaBoxT): JSX.Element {
+export function Discord({
+  debugScreen,
+  debugConsole,
+  weatherData,
+}: AreaBoxT): JSX.Element {
   const tailwind = useTailwind();
   const [message, setMessage] = useState('');
 >>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)

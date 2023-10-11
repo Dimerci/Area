@@ -18,7 +18,7 @@ function ReactionList({
 }: ReactionT): JSX.Element {
   return (
     <View>
-      <Dropdown
+      <ReactionDropdown
         label="Reaction List"
         data={data.reactions}
         debugConsole={debugConsole}
