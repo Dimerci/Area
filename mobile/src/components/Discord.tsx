@@ -1,17 +1,32 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Alert, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useTailwind} from 'tailwind-rn';
+import {sendWeather} from '../apiHandling/weatherApi';
+import {WeatherData} from './WeatherWidget';
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
-  reaData: string;
+  weatherData?: WeatherData;
 };
 
-export function Discord({debugScreen, debugConsole}: AreaBoxT): JSX.Element {
+export function Discord({
+  debugScreen,
+  debugConsole,
+  weatherData,
+}: AreaBoxT): JSX.Element {
   const tailwind = useTailwind();
   const [message, setMessage] = useState('');
+  const newWeatherData = {
+    city: weatherData?.city,
+    forecast: {
+      type: weatherData?.forecast.type,
+      value: weatherData?.forecast.value,
+    },
+    interval: weatherData?.interval,
+    message: message,
+  };
 
   const handleInputChange = inputText => {
     setMessage(inputText);
@@ -20,6 +35,8 @@ export function Discord({debugScreen, debugConsole}: AreaBoxT): JSX.Element {
   const handleButtonPress = () => {
     debugScreen && Alert.alert('Send this :' + message);
     debugConsole && console.log('Send this :' + message);
+
+    sendWeather(newWeatherData);
   };
 
   return (

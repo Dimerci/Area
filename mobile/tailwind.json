@@ -28,6 +28,12 @@
 			"marginBottom": 8
 		}
 	},
+	"my-auto": {
+		"style": {
+			"marginTop": "auto",
+			"marginBottom": "auto"
+		}
+	},
 	"mb-2": {
 		"style": {
 			"marginBottom": 8
@@ -38,26 +44,11 @@
 			"marginTop": 20
 		}
 	},
-	"flex": {
-		"style": {
-			"display": "flex"
-		}
-	},
-	"h-40": {
-		"style": {
-			"height": 160
-		}
-	},
 	"flex-1": {
 		"style": {
 			"flexGrow": 1,
 			"flexShrink": 1,
 			"flexBasis": "0%"
-		}
-	},
-	"items-center": {
-		"style": {
-			"alignItems": "center"
 		}
 	},
 	"rounded-lg": {
@@ -120,22 +111,6 @@
 			"paddingRight": 8,
 			"paddingBottom": 8,
 			"paddingLeft": 8
-		}
-	},
-	"p-5": {
-		"style": {
-			"paddingTop": 20,
-			"paddingRight": 20,
-			"paddingBottom": 20,
-			"paddingLeft": 20
-		}
-	},
-	"p-6": {
-		"style": {
-			"paddingTop": 24,
-			"paddingRight": 24,
-			"paddingBottom": 24,
-			"paddingLeft": 24
 		}
 	},
 	"px-5": {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Alert, Switch, Text, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import ReactionList from './ReactionList';

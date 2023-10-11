@@ -11,12 +11,9 @@ import utilities from './tailwind.json';
 import {MainPage} from './src/screens/MainPage';
 import {SettingsPage} from './src/screens/SettingsPage';
 import {Button} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {TouchableOpacity} from 'react-native';
 
 function App(): JSX.Element {
   const [isSettings, setIsSettings] = useState(false);
-  const tailwind = useTailwind();
 
   const toggleSwitch = () => {
     setIsSettings(!isSettings);

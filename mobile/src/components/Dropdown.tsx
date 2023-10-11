@@ -1,7 +1,8 @@
-import React, {FC, ReactElement, useRef, useState} from 'react';
+import {FC, ReactElement, useRef, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, Modal, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import {Discord} from './Discord';
+import {WeatherData} from './WeatherWidget';
 
 interface Props {
   label: string;
@@ -13,7 +14,15 @@ interface Props {
   }>;
   debugScreen?: boolean;
   debugConsole?: boolean;
-  reaData: string;
+  weatherData?: WeatherData;
+}
+interface NormalDropdownProps {
+  label: string;
+  data: Array<{
+    label: string;
+    value: string;
+  }>;
+  onSelect: (item: {label: string; value: string}) => void;
 }
 
 const Dropdown: FC<Props> = ({
@@ -21,7 +30,7 @@ const Dropdown: FC<Props> = ({
   data,
   debugConsole,
   debugScreen,
-  reaData,
+  weatherData,
 }) => {
   const DropdownButton = useRef();
   const [visible, setVisible] = useState(false);
@@ -36,7 +45,7 @@ const Dropdown: FC<Props> = ({
       <Discord
         debugConsole={debugConsole}
         debugScreen={debugScreen}
-        reaData={reaData}
+        weatherData={weatherData}
       />
     ),
     Test: () => <Text>Test</Text>,
@@ -108,6 +117,82 @@ const Dropdown: FC<Props> = ({
 
       {/* Render the selected component conditionally */}
       {selectedReaction && <SelectedComponent />}
+    </View>
+  );
+};
+export const NormalDropdown: FC<NormalDropdownProps> = ({
+  label,
+  data,
+  onSelect,
+}) => {
+  const DropdownButton = useRef();
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(undefined);
+  const [dropdownTop, setDropdownTop] = useState(0);
+  const tailwind = useTailwind();
+
+  const handleSelect = item => {
+    onSelect(item);
+  };
+
+  const toggleDropdown = (): void => {
+    visible ? setVisible(false) : openDropdown();
+  };
+
+  const openDropdown = (): void => {
+    DropdownButton.current.measure((_fx, _fy, _w, h, _px, py) => {
+      setDropdownTop(py + h);
+    });
+    setVisible(true);
+  };
+
+  const onItemPress = (item): void => {
+    setSelected(item);
+    handleSelect(item);
+    setVisible(false);
+  };
+
+  const renderItem = ({item}): ReactElement<any, any> => (
+    <TouchableOpacity
+      style={tailwind('py-2 px-5 border-b-2')}
+      onPress={() => onItemPress(item)}>
+      <Text>{item.label}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderDropdown = (): ReactElement<any, any> => {
+    return (
+      <Modal visible={visible} transparent animationType="none">
+        <TouchableOpacity
+          style={tailwind('flex-1')}
+          onPress={() => setVisible(false)}>
+          <View
+            style={[
+              tailwind('absolute bg-slate-600 my-auto'),
+              {top: dropdownTop},
+            ]}>
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+        </TouchableOpacity>
+      </Modal>
+    );
+  };
+
+  return (
+    <View>
+      <TouchableOpacity
+        ref={DropdownButton}
+        style={tailwind('bg-slate-500 rounded-lg p-2 mx-1 mb-2')}
+        onPress={toggleDropdown}>
+        {renderDropdown()}
+        <Text style={tailwind('text-slate-50')}>
+          {(selected && selected.label) || label}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

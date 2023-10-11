@@ -1,28 +1,28 @@
-import React, {useState} from 'react';
-import Dropdown from './Dropdown';
 import {View} from 'react-native';
+import ReactionDropdown from './Dropdown';
+import {WeatherData} from './WeatherWidget';
 
 const data = require('../config/reactions.json');
 
 type ReactionT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
-  reaData: string;
+  weatherData?: WeatherData;
 };
 
 function ReactionList({
   debugConsole,
   debugScreen,
-  reaData,
+  weatherData,
 }: ReactionT): JSX.Element {
   return (
     <View>
-      <Dropdown
+      <ReactionDropdown
         label="Reaction List"
         data={data.reactions}
         debugConsole={debugConsole}
         debugScreen={debugScreen}
-        reaData={reaData}
+        weatherData={weatherData}
       />
     </View>
   );

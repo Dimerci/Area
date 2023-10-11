@@ -22,6 +22,11 @@
   margin-bottom: 0.5rem
 }
 
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto
+}
+
 .mb-2 {
   margin-bottom: 0.5rem
 }
@@ -30,20 +35,8 @@
   margin-top: 1.25rem
 }
 
-.flex {
-  display: flex
-}
-
-.h-40 {
-  height: 10rem
-}
-
 .flex-1 {
   flex: 1 1 0%
-}
-
-.items-center {
-  align-items: center
 }
 
 .rounded-lg {
@@ -85,14 +78,6 @@
 
 .p-2 {
   padding: 0.5rem
-}
-
-.p-5 {
-  padding: 1.25rem
-}
-
-.p-6 {
-  padding: 1.5rem
 }
 
 .px-5 {
