@@ -1,23 +1,32 @@
-
-FROM reactnativecommunity/react-native-android:latest
+# Use an official Node.js runtime as a parent image
+FROM node:16
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Install Node.js and npm
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
-
-# Copy the package.json and package-lock.json files to the container
+# Copy the package.json and package-lock.json to the container
 COPY package*.json ./
+
+# Copy the metro.config.js to the container
+COPY metro.config.js .
+
+# Clean the npm cache
+RUN npm cache clean --force
 
 # Install project dependencies
 RUN npm install
 
-# Copy the rest of your project files to the container
-COPY . .
+# Install adb
+RUN apt-get update && apt-get install -y android-tools-adb
 
-# Build the Android APK
-RUN cd android && ./gradlew assembleRelease
+# Copy the keypress script to the container
+COPY send_key.sh .
 
-CMD echo "Building Android APK..." && echo "DONE!"
+# Make the script executable
+RUN chmod +x send_key.sh
+
+# Expose the Metro port
+EXPOSE 8081
+
+# Start Metro in watch mode and send 'a' keypress after a delay
+CMD ["sh", "-c", "npx react-native start & sleep 10 && ./send_key.sh"]
