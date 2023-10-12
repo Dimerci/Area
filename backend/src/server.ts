@@ -3,12 +3,14 @@ import AboutJson from "./routes/aboutJson/";
 import Weather from "./routes/weather";
 import Discord from "./routes/discord";
 import { errorHandler } from "./middleware/errors/ErrorHandler";
-import run from "./database/writeInDb";
-import express from "express";
-import AboutJson from "./routes/aboutJson/";
-import Weather from "./routes/weather";
-import Discord from "./routes/discord";
-import { errorHandler } from "./middleware/errors/ErrorHandler";
+import { connectToDatabase, Client } from "./database/connectToDb";
+import {
+    readListingByName,
+    createListing,
+    updateListingByName,
+    deleteListingByName,
+    listDb,
+} from "./database/dbInteraction";
 
 const app = express();
 const port = 8080;
@@ -39,3 +41,5 @@ app.on("error", (err) => {
 });
 
 app.use(errorHandler);
+
+connectToDatabase();
