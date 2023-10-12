@@ -1,8 +1,8 @@
 version: '3'
 services:
-  Frontend:
+  web:
     build:
-      context: ./Front
+      context: ./web
     ports:
       - "8081:8081" # Map container port 8081 to host port 8081
     # Add any additional configuration here
@@ -13,3 +13,7 @@ services:
     ports:
       - "8080:8080"  # Map container port 8080 to host port 8080
     # Add any additional configuration here
+
+  mobile:
+    build:
+      context: ./mobile
