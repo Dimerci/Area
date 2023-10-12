@@ -5,74 +5,93 @@ import weatherLogo from '../assets/weather.png';
 export interface WeatherData {
     city: string;
     forecast: {
-        type: string;
+        type: 'temperature' | 'wind' | 'humidity';
         value: number;
     };
-    interval: string;
+    interval: '>' | '<' | '=';
     message: string;
 }
 
 const WeatherSearchBox: React.FC = () => {
-    const [showForm, setShowForm] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
     const [city, setCity] = useState('');
-    const [forecastType, setForecastType] = useState('wind');
-    const [value, setValue] = useState(0);
-    const [interval, setInterval] = useState('>');
+    const [forecastType, setForecastType] = useState<'Temperature' | 'Wind' | 'Humidity'>('Temperature');
+    const [value, setValue] = useState('');
+    const [interval, setInterval] = useState<'Greater Than' | 'Less Than' | 'Equals'>('Greater Than');
     const [message, setMessage] = useState('');
 
-    console.log("WeatherSearchBox is rendered");
+    const handleSubmit = async () => {
+        const intervalValueMap: { [key in 'Greater Than' | 'Less Than' | 'Equals']: '>' | '<' | '=' } = {
+            'Greater Than': '>',
+            'Less Than': '<',
+            'Equals': '='
+        }
 
-    const handleSubmit = async () => { 
-        console.log("handleSubmit called");
-        const data: WeatherData = { 
+        const data: WeatherData = {
             city,
             forecast: {
-                type: forecastType,
-                value
+                type: forecastType.toLowerCase() as 'temperature' | 'wind' | 'humidity',
+                value: Number(value)
             },
-            interval,
+            interval: (intervalValueMap[interval] as WeatherData["interval"]),
+
             message
         };
-    
-        console.log("Data to send:", data);
-    
+
         const result = await sendWeather(data);
-        if (result && result.error) {  // Check for result before accessing its properties
+        if (result?.error) {
             console.error("Error sending data:", result.error);
-        } else if (result && result.data) { 
-            console.log("Data sent successfully:", result.data); 
+        } else if (result?.data) {
+            console.log("Data sent successfully:", result.data);
         }
     };
 
     return (
-        <div
-            className="flex flex-col items-center mt-10 p-4 bg-gray-300 rounded-lg shadow-xl border-2 border-black cursor-pointer"
-        >
-            {!showForm ? (
-                <img
-                    src={weatherLogo}
-                    alt="Weather Logo"
-                    style={{ width: '10%', height: '10%' }}
-                    onClick={() => setShowForm(true)}
-                />
-            ) : (
-                <div className="w-full">
-                    <button onClick={() => console.log("Test button clicked!")}>Test Button</button>
-                    <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
-                    <select value={forecastType} onChange={(e) => setForecastType(e.target.value)}>
-                        <option value="wind">Wind</option>
-                        <option value="temperature">Temperature</option>
-                        <option value="humidity">Humidity</option>
-                    </select>
-                    <input type="number" value={value} onChange={(e) => setValue(Number(e.target.value))} placeholder="Value" />
-                    <select value={interval} onChange={(e) => setInterval(e.target.value)}>
-                        <option value=">">Greater Than</option>
-                        <option value="<">Less Than</option>
-                        <option value="=">Equals</option>
-                    </select>
-                    <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Message" />
-                    <button onClick={() => { console.log("Direct click handler triggered"); handleSubmit(); }}>Send</button>
-                </div>
+        <div className="flex items-center justify-center m-4">
+            <div className="bg-white p-4 w-64 h-64 rounded-lg shadow-xl border border-gray-200 transition-all duration-300">
+                {!showOptions ? (
+                    <div className="text-center">
+                        <img src={weatherLogo} alt="Weather Logo" className="w-16 h-16 mb-4 mx-auto" />
+                        <button 
+                            className="bg-orange-500 text-white px-4 py-2 rounded hover:brightness-150"
+                            onClick={() => setShowOptions(true)}
+                        >
+                            Show Options
+                        </button>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-2 gap-2">
+                        <InteractiveBox label="City" type="text" value={city} onChange={setCity} />
+                        <InteractiveBox label="Forecast Type" type="dropdown" options={['Temperature', 'Wind', 'Humidity']} value={forecastType} onChange={(val) => setForecastType(val as 'Temperature' | 'Wind' | 'Humidity')} />
+                        <InteractiveBox label="Value" type="number" value={value} onChange={setValue} />
+                        <InteractiveBox label="Interval" type="dropdown" options={['Greater Than', 'Less Than', 'Equals']} value={interval} onChange={(val) => setInterval(val as 'Greater Than' | 'Less Than' | 'Equals')} />
+                        <InteractiveBox label="Message" type="text" value={message} onChange={setMessage} />
+                        <div className="col-span-2 flex justify-center">
+                            <button onClick={handleSubmit} className="bg-blue-500 text-white px-3 py-1 rounded">Send</button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+const InteractiveBox: React.FC<{
+    label: string,
+    type: 'text' | 'number' | 'dropdown',
+    options?: string[],
+    value: string | number,
+    onChange: (value: string) => void
+}> = ({ label, type, options, value, onChange }) => {
+    return (
+        <div className="py-1">
+            <label className="block mb-1 text-sm font-medium">{label}</label>
+            {type === 'text' && <input className="border p-1 rounded w-full text-sm" type="text" value={value} onChange={(e) => onChange(e.target.value)} />}
+            {type === 'number' && <input className="border p-1 rounded w-full text-sm" type="number" value={value} onChange={(e) => onChange(e.target.value)} />}
+            {type === 'dropdown' && (
+                <select className="border p-1 rounded w-full text-sm" value={value} onChange={(e) => onChange(e.target.value)}>
+                    {options?.map(option => <option key={option} value={option}>{option}</option>)}
+                </select>
             )}
         </div>
     );
