@@ -24,6 +24,4 @@ app.on('error', (err) => {
     console.error('Server error:', err);
 });
 
-run();
-
 app.use(errorHandler);
