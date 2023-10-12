@@ -1,52 +1,14 @@
 const { MongoClient } = require('mongodb');
 // Replace the uri string with your MongoDB deployment's connection string.
-const uri =
-  "mongodb+srv://ar3aepitech:aaaaaaaaaaaaaaaaaa@area.l8hemky.mongodb.net/";
-const client = new MongoClient(uri);
+const uri ="mongodb+srv://ar3aepitech:aaaaaaaaaaaaaaaaaa@area.l8hemky.mongodb.net/";
+const Client = new MongoClient(uri);
 
-export async function createListing(client: typeof MongoClient, newListing: any) {
-  const result = await client
-    .db("user_info")
-    .collection("user_info")
-    .insertOne(newListing);
-  console.log(`New listing created with the following id: ${result.insertedId}`);
+async function connectToDatabase() {
+    try {
+        await Client.connect();
+    } catch (e) {
+        console.error(e);
+    } 
 }
 
-export async function readListingByName(client: typeof MongoClient, nameOfListing: string) {
-  const result = await client
-    .db("user_info")
-    .collection("user_info")
-    .findOne({ name: nameOfListing });
-  if (result) {
-    console.log(`Found a listing in the collection with the name '${nameOfListing}':`);
-    console.log(result);
-  } else {
-    console.log(`No listings found with the name '${nameOfListing}'`);
-  }
-}
-
-export async function updateListingByName(client: typeof MongoClient, nameOfListing: string, updatedListing: any) {
-  const result = await client
-    .db("user_info")
-    .collection("user_info")
-    .updateOne({ name: nameOfListing }, { $set: updatedListing });
-
-  console.log(`${result.matchedCount} document(s) matched the query criteria.`);
-  console.log(`${result.modifiedCount} document(s) was/were updated.`);
-}
-
-export async function deleteListingByName(client: typeof MongoClient, nameOfListing: string) {
-  const result = await client
-    .db("user_info")
-    .collection("user_info")
-    .deleteOne({ name: nameOfListing });
-
-  console.log(`${result.deletedCount} document(s) was/were deleted.`);
-}
-
-export async function listDb(client: typeof MongoClient) {
-  const databasesList = await client.db().admin().listDatabases();
-
-  console.log("Databases:");
-  databasesList.databases.forEach((db: { name: string }) => console.log(` - ${db.name}`));
-}
+export { connectToDatabase, Client};
