@@ -6,6 +6,9 @@ const HomePage: React.FC = () => {
     <div>
       <h1>Home Page</h1>
       <WeatherSearchBox />
+      <a href="http://localhost:8080/login">
+        <button>Login</button>
+      </a>
     </div>
   );
 };
