@@ -3,7 +3,6 @@ import AboutJson from './routes/aboutJson/';
 import Weather from './routes/weather';
 import Discord from './routes/discord';
 import { errorHandler } from './middleware/errors/ErrorHandler';
-import run from './database/writeInDb';
 
 const app = express();
 const port = 8080;

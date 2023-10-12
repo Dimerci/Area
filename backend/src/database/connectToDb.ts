@@ -1,37 +1,10 @@
-const { MongoClient, Db } = require('mongodb');
+const { MongoClient } = require('mongodb');
 // Replace the uri string with your MongoDB deployment's connection string.
 const uri =
   "mongodb+srv://ar3aepitech:aaaaaaaaaaaaaaaaaa@area.l8hemky.mongodb.net/";
 const client = new MongoClient(uri);
-async function run() {
-  try {
-    await client.connect();
-    await listDb(client);
-    await createListing(client, {
-      name: "Léo",
-      email: "leo@gmail.com",
-      action: "meteo",
-      reaction: "discord",
-    });
-    await readListingByName(client, "Léo");
-    await updateListingByName(client, "Léo", { name: "Léonard" });
-    await readListingByName(client, "Léonard");
-    await createListing(client, {
-      name: "Léo",
-      email: "leo@gmail.com",
-      action: "meteo",
-      reaction: "discord",
-    });
-  } catch (e) {
-    console.error(e);
-    console.log("error");
-  } finally {
-  }
-}
 
-//run().catch(console.error);
-
-async function createListing(client: typeof MongoClient, newListing: any) {
+export async function createListing(client: typeof MongoClient, newListing: any) {
   const result = await client
     .db("user_info")
     .collection("user_info")
@@ -39,7 +12,7 @@ async function createListing(client: typeof MongoClient, newListing: any) {
   console.log(`New listing created with the following id: ${result.insertedId}`);
 }
 
-async function readListingByName(client: typeof MongoClient, nameOfListing: string) {
+export async function readListingByName(client: typeof MongoClient, nameOfListing: string) {
   const result = await client
     .db("user_info")
     .collection("user_info")
@@ -52,7 +25,7 @@ async function readListingByName(client: typeof MongoClient, nameOfListing: stri
   }
 }
 
-async function updateListingByName(client: typeof MongoClient, nameOfListing: string, updatedListing: any) {
+export async function updateListingByName(client: typeof MongoClient, nameOfListing: string, updatedListing: any) {
   const result = await client
     .db("user_info")
     .collection("user_info")
@@ -62,7 +35,7 @@ async function updateListingByName(client: typeof MongoClient, nameOfListing: st
   console.log(`${result.modifiedCount} document(s) was/were updated.`);
 }
 
-async function deleteListingByName(client: typeof MongoClient, nameOfListing: string) {
+export async function deleteListingByName(client: typeof MongoClient, nameOfListing: string) {
   const result = await client
     .db("user_info")
     .collection("user_info")
@@ -71,10 +44,9 @@ async function deleteListingByName(client: typeof MongoClient, nameOfListing: st
   console.log(`${result.deletedCount} document(s) was/were deleted.`);
 }
 
-async function listDb(client: typeof MongoClient) {
+export async function listDb(client: typeof MongoClient) {
   const databasesList = await client.db().admin().listDatabases();
 
   console.log("Databases:");
   databasesList.databases.forEach((db: { name: string }) => console.log(` - ${db.name}`));
 }
-export default run;
