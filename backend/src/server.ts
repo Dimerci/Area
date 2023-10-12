@@ -4,6 +4,11 @@ import Weather from "./routes/weather";
 import Discord from "./routes/discord";
 import { errorHandler } from "./middleware/errors/ErrorHandler";
 import run from "./database/writeInDb";
+import express from "express";
+import AboutJson from "./routes/aboutJson/";
+import Weather from "./routes/weather";
+import Discord from "./routes/discord";
+import { errorHandler } from "./middleware/errors/ErrorHandler";
 
 const app = express();
 const port = 8080;
