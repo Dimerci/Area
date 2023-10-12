@@ -15,7 +15,7 @@ export async function sendWeather(data: WeatherData) {
             const errorText = await response.text();
             throw new Error(errorText);
         }
-        
+
 
         const responseData = await response.json();
         return { data: responseData, error: null };
