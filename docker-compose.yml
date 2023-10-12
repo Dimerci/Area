@@ -1,11 +1,6 @@
 version: '3'
 services:
-  flutter-app:
-    build:
-      context: ./mobile
-    # Add any additional configuration here
-
-  ts-website:
+  web:
     build:
       context: ./web
     ports:
@@ -18,3 +13,7 @@ services:
     ports:
       - "8080:8080"  # Map container port 8080 to host port 8080
     # Add any additional configuration here
+
+  mobile:
+    build:
+      context: ./mobile
