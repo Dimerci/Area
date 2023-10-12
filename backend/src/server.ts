@@ -1,14 +1,9 @@
-// src/server.ts
 import express from "express";
 import AboutJson from "./routes/aboutJson/";
 import Weather from "./routes/weather";
 import Discord from "./routes/discord";
 import { errorHandler } from "./middleware/errors/ErrorHandler";
-import express from "express";
-import AboutJson from "./routes/aboutJson/";
-import Weather from "./routes/weather";
-import Discord from "./routes/discord";
-import { errorHandler } from "./middleware/errors/ErrorHandler";
+import run from "./database/writeInDb";
 
 const app = express();
 const port = 8080;
@@ -37,5 +32,7 @@ app.on("error", (err) => {
 app.on("error", (err) => {
     console.error("Server error:", err);
 });
+
+run();
 
 app.use(errorHandler);
