@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "express": "^4.18.2",
-    "react-native-fs": "^2.20.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.2.2"
-  }
-}
