@@ -2,6 +2,11 @@
 
 ### 1. postDiscord Function
 
+Handles the POST request to the Discord endpoint.
+ * @param req - Express request object
+ * @param res - Express response object
+ * @param next - Express next function
+
 ```typescript
 import { Request, Response, NextFunction } from "express";
 import { ErrorStatus } from "../../../middleware/errors/ErrorStatus";
@@ -11,12 +16,6 @@ interface PostDiscordBody {
     message: string,
 }
 
-/**
- * Handles the POST request to the Discord endpoint.
- * @param req - Express request object
- * @param res - Express response object
- * @param next - Express next function
- */
 export async function postDiscord(req: Request<void, void, PostDiscordBody, void>, res: Response, next: NextFunction) {
     try {
         const field = "message";
@@ -31,18 +30,19 @@ export async function postDiscord(req: Request<void, void, PostDiscordBody, void
         next(err);
     }
 }
-
+```
 ### 2. PostRequestToDiscordBot Function
+
+* Sends a POST request to the Discord bot with the provided message.
+* @param message - The message to be sent to the Discord bot
+
+```
 import { ErrorStatus } from "../../../middleware/errors/ErrorStatus";
 
 interface PostDiscordBody {
     message: string,
 }
 
-/**
- * Sends a POST request to the Discord bot with the provided message.
- * @param message - The message to be sent to the Discord bot
- */
 export async function PostRequestToDiscordBot({message}: PostDiscordBody) {
     const requestBody = {
         content: message
@@ -62,3 +62,4 @@ export async function PostRequestToDiscordBot({message}: PostDiscordBody) {
             return {data: null, error:err};
         });
 }
+```
