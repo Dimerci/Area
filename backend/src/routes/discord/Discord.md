@@ -36,7 +36,7 @@ export async function postDiscord(req: Request<void, void, PostDiscordBody, void
 * Sends a POST request to the Discord bot with the provided message.
 * @param message - The message to be sent to the Discord bot
 
-```
+```typescript
 import { ErrorStatus } from "../../../middleware/errors/ErrorStatus";
 
 interface PostDiscordBody {
