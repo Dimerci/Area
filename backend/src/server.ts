@@ -22,7 +22,7 @@ const config: ConfigParams = {
     redirect_uri: 'http://localhost:8080/callback',
   },
   afterCallback: (req, res, session, state) => {
-    res.redirect('http://localhost:8081/protected');
+    res.redirect('http://localhost:8081/inside');
     return session;
   }
 };

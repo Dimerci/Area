@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import ProtectedRoute from './ProtectedRoute';
+import InsidePage from '../pages/InsidePage';
 import ProtectedPage from '../pages/ProtectedPage'; // Assuming you have this component
 
 const AppRouter: React.FC = () => {
@@ -13,11 +12,7 @@ const AppRouter: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {isAuthenticated ? (
-          <Route path="/protected" element={<ProtectedRoute><ProtectedPage /></ProtectedRoute>} />
-        ) : (
-          <Route path="/login" element={<LoginPage />} />
-        )}
+        <Route path="/Inside" element={<InsidePage />} />
       </Routes>
     </Router>
   );

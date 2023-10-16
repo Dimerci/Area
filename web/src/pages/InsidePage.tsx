@@ -1,5 +1,6 @@
 import React from 'react';
 import keycloak from '../keycloakConfig';
+import WeatherSearchBox from '../components/WeatherSearchBox';
 
 const LoginPage: React.FC = () => {
   const handleLogin = () => {
@@ -8,7 +9,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <div>
-      <button onClick={handleLogin}>Login with Keycloak</button>
+      <WeatherSearchBox />
     </div>
   );
 };
