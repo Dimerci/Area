@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { sendWeather } from './WeatherAPI';
-import weatherLogo from '../assets/weather.png';
 
 export interface WeatherData {
     city: string;
@@ -34,7 +33,6 @@ const WeatherSearchBox: React.FC = () => {
                 value: Number(value)
             },
             interval: (intervalValueMap[interval] as WeatherData["interval"]),
-
             message
         };
 
@@ -50,15 +48,12 @@ const WeatherSearchBox: React.FC = () => {
         <div className="flex items-center justify-center m-4">
             <div className="bg-white p-4 w-64 h-64 rounded-lg shadow-xl border border-gray-200 transition-all duration-300">
                 {!showOptions ? (
-                    <div className="text-center">
-                        <img src={weatherLogo} alt="Weather Logo" className="w-16 h-16 mb-4 mx-auto" />
-                        <button 
-                            className="bg-orange-500 text-white px-4 py-2 rounded hover:brightness-150"
-                            onClick={() => setShowOptions(true)}
-                        >
-                            Show Options
-                        </button>
-                    </div>
+                    <button 
+                        className="bg-orange-500 text-white px-4 py-2 rounded hover:brightness-150"
+                        onClick={() => setShowOptions(true)}
+                    >
+                        Show Options
+                    </button>
                 ) : (
                     <div className="grid grid-cols-2 gap-2">
                         <InteractiveBox label="City" type="text" value={city} onChange={setCity} />
