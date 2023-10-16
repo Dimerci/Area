@@ -35,19 +35,10 @@ const config: ConfigParams = {
     clientID: "EeIDOpDIYLzrQc04tgmkr8r2nyNIVZqF",
     issuerBaseURL: "https://dev-zqudvtrv6sw7xe6c.us.auth0.com",
     authorizationParams: {
-        redirect_uri: "http://localhost:8081",
-    },
-    authRequired: false,
-    auth0Logout: true,
-    secret: "a long, randomly-generated string stored in env",
-    baseURL: "http://localhost:8080",
-    clientID: "EeIDOpDIYLzrQc04tgmkr8r2nyNIVZqF",
-    issuerBaseURL: "https://dev-zqudvtrv6sw7xe6c.us.auth0.com",
-    authorizationParams: {
         redirect_uri: "http://localhost:8080/callback",
     },
     afterCallback: (req, res, session, state) => {
-        res.redirect("http://localhost:8081/protected");
+        res.redirect("http://localhost:8081/inside");
         return session;
     },
 };

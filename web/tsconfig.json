@@ -21,6 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src/**/*", "types/declarations.d.ts"
 , "tailwind.config.js"  ]
 }
