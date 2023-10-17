@@ -34,6 +34,14 @@ app.use('/weather', Weather);
 
 app.get("/", (req, res) => {console.log("Here"); res.send("Hello world")});
 
+app.get("/callback", (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    res.redirect('http://localhost:8081'); // Redirect to frontend after successful authentication
+  } else {
+    res.send("Authentication failed");
+  }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
