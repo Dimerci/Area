@@ -1,10 +1,10 @@
 import React from 'react';
+import WeatherSearchBox from '../components/WeatherSearchBox';
 
 const ProtectedPage: React.FC = () => {
   return (
     <div>
-      <h1>Protected Page</h1>
-      <p>This is a protected page.</p>
+      <WeatherSearchBox/>
     </div>
   );
 };
