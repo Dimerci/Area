@@ -19,7 +19,11 @@ const config: ConfigParams = {
   clientID: 'EeIDOpDIYLzrQc04tgmkr8r2nyNIVZqF',
   issuerBaseURL: 'https://dev-zqudvtrv6sw7xe6c.us.auth0.com',
   authorizationParams:{
-    redirect_uri: 'http://localhost:8081',
+    redirect_uri: 'http://localhost:8080/callback',
+  },
+  afterCallback: (req, res, session, state) => {
+    res.redirect('http://localhost:8081/inside');
+    return session;
   }
 };
 
@@ -29,6 +33,14 @@ app.use('/discord', Discord);
 app.use('/weather', Weather);
 
 app.get("/", (req, res) => {console.log("Here"); res.send("Hello world")});
+
+app.get("/callback", (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    res.redirect('http://localhost:8081'); // Redirect to frontend after successful authentication
+  } else {
+    res.send("Authentication failed");
+  }
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

@@ -13,10 +13,16 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
+    "test": "jest",
     "start": "node dist/server.js",
     "build": "tsc",
     "dev": "ts-node-dev --respawn ./src/server.ts",
     "test": "jest --config jest.config.mjs"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
   },
   "dependencies": {
     "@types/express-session": "^1.17.8",
