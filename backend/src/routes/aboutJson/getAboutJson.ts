@@ -3,9 +3,16 @@ import { Request, Response } from 'express';
 import { createJsonResponse } from '../../utils/jsonUtils';
 
 const ABOUT_JSON = {
-  name: 'Me',
-  version: '1.0.0',
-  description: 'A simple NodeTS server with an about endpoint.',
+  server: {
+    service: [{
+        name: "Weather",
+        description: "Get the possibility to trigger an reaction depending of meterologic data"
+    }],
+    reaction: [{
+        name: "Discord",
+        description: "Send message to specific tchat"
+    }]
+  }
 };
 
 export function getAboutJson(_: Request, res: Response<string>): void {
