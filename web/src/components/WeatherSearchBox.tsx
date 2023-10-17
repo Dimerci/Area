@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { sendWeather } from './WeatherAPI';
+import weatherLogo from '../assets/weather.png';
 
 export interface WeatherData {
     city: string;
@@ -36,11 +37,17 @@ const WeatherSearchBox: React.FC = () => {
                 type: forecastType.toLowerCase() as 'temperature' | 'wind' | 'humidity',
                 value: value
             },
+<<<<<<< HEAD
             interval: intervalValueMap[interval] as '>' | '<' | '=',
             reaction: {
                 type: reactionType,
                 message: reactionMessage
             }
+=======
+            interval: (intervalValueMap[interval] as WeatherData["interval"]),
+
+            message
+>>>>>>> parent of ef6cb80 ([ADD] login setup for web frontend)
         };
     
         const result = await sendWeather(data);
@@ -53,6 +60,7 @@ const WeatherSearchBox: React.FC = () => {
 
     return (
         <div className="flex items-center justify-center m-4">
+<<<<<<< HEAD
             <div className="bg-white p-8 w-80 rounded-lg shadow-xl border border-gray-200 transition-all duration-300 space-y-4">
                 <h2 className="text-2xl font-semibold text-center mb-4">Alert Setup</h2>
                 <InteractiveBox label="Service Type" type="dropdown" options={['Weather']} value={serviceType} onChange={setServiceType} />
@@ -76,6 +84,31 @@ const WeatherSearchBox: React.FC = () => {
                 <InteractiveBox label="Reaction Type" type="text" value={reactionType} onChange={setReactionType} />
                 <InteractiveBox label="Reaction Message" type="text" value={reactionMessage} onChange={setReactionMessage} />
                 <button onClick={handleSubmit} className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg font-medium hover:bg-blue-600 transition-colors duration-300 w-full">Send Alert</button>
+=======
+            <div className="bg-white p-4 w-64 h-64 rounded-lg shadow-xl border border-gray-200 transition-all duration-300">
+                {!showOptions ? (
+                    <div className="text-center">
+                        <img src={weatherLogo} alt="Weather Logo" className="w-16 h-16 mb-4 mx-auto" />
+                        <button 
+                            className="bg-orange-500 text-white px-4 py-2 rounded hover:brightness-150"
+                            onClick={() => setShowOptions(true)}
+                        >
+                            Show Options
+                        </button>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-2 gap-2">
+                        <InteractiveBox label="City" type="text" value={city} onChange={setCity} />
+                        <InteractiveBox label="Forecast Type" type="dropdown" options={['Temperature', 'Wind', 'Humidity']} value={forecastType} onChange={(val) => setForecastType(val as 'Temperature' | 'Wind' | 'Humidity')} />
+                        <InteractiveBox label="Value" type="number" value={value} onChange={setValue} />
+                        <InteractiveBox label="Interval" type="dropdown" options={['Greater Than', 'Less Than', 'Equals']} value={interval} onChange={(val) => setInterval(val as 'Greater Than' | 'Less Than' | 'Equals')} />
+                        <InteractiveBox label="Message" type="text" value={message} onChange={setMessage} />
+                        <div className="col-span-2 flex justify-center">
+                            <button onClick={handleSubmit} className="bg-blue-500 text-white px-3 py-1 rounded">Send</button>
+                        </div>
+                    </div>
+                )}
+>>>>>>> parent of ef6cb80 ([ADD] login setup for web frontend)
             </div>
         </div>
     );
