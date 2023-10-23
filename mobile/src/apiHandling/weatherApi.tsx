@@ -1,6 +1,6 @@
-export async function sendWeather(data: WeatherData) {
+export async function sendWeather(data: WeatherData, ip: String) {
   try {
-    const response = await fetch('http://10.116.120.86:8080/weather', {
+    const response = await fetch('http://' + ip + ':8080/weather', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

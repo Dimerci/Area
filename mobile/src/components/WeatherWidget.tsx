@@ -3,6 +3,7 @@ import {Text, TextInput, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import ReactionList from './ReactionList';
 import {NormalDropdown} from './Dropdown';
+import {WeatherData} from './Interfaces';
 
 type WeatherWidgetT = {
   children?: React.ReactNode; // Define children prop
@@ -83,14 +84,4 @@ export function WeatherWidget({
       />
     </View>
   );
-}
-
-export interface WeatherData {
-  city: string;
-  forecast: {
-    type: 'temperature' | 'wind' | 'humidity';
-    value: number;
-  };
-  interval: '>' | '<' | '=';
-  // message?: string;
 }

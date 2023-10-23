@@ -3,18 +3,20 @@ import {Alert, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useTailwind} from 'tailwind-rn';
 import {sendWeather} from '../apiHandling/weatherApi';
-import {WeatherData} from './WeatherWidget';
+import {SettingsRea, WeatherData} from './Interfaces';
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
   weatherData?: WeatherData;
+  settings: SettingsRea;
 };
 
 export function Discord({
   debugScreen,
   debugConsole,
   weatherData,
+  settings,
 }: AreaBoxT): JSX.Element {
   const tailwind = useTailwind();
   const [message, setMessage] = useState('');
@@ -36,7 +38,7 @@ export function Discord({
     debugScreen && Alert.alert('Send this :' + message);
     debugConsole && console.log('Send this :' + message);
 
-    sendWeather(newWeatherData);
+    sendWeather(newWeatherData, settings);
   };
 
   return (

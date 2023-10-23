@@ -12,8 +12,12 @@
     "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\""
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.19.3",
+    "@react-navigation/stack": "^6.3.20",
     "react": "18.2.0",
     "react-native": "0.72.5",
+    "react-native-app-auth": "^7.1.0",
+    "react-native-auth0": "^3.0.2",
     "react-native-elements": "^3.4.3",
     "react-native-picker-select": "^8.1.0",
     "react-native-render-html": "^6.3.4",
