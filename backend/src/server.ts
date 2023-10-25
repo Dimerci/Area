@@ -4,6 +4,13 @@ import Weather from "./routes/weather";
 import Discord from "./routes/discord";
 import { errorHandler } from "./middleware/errors/ErrorHandler";
 import { auth, ConfigParams } from "express-openid-connect";
+import express from "express";
+import AboutJson from "./routes/aboutJson/";
+import Weather from "./routes/weather";
+import Discord from "./routes/discord";
+import User from "./routes/user";
+import { errorHandler } from "./middleware/errors/ErrorHandler";
+import { auth, ConfigParams } from "express-openid-connect";
 
 const app = express();
 const port = 8080;
@@ -47,6 +54,10 @@ app.use(auth(config));
 app.use("/about.json", AboutJson);
 app.use("/discord", Discord);
 app.use("/weather", Weather);
+app.use("/about.json", AboutJson);
+app.use("/discord", Discord);
+app.use("/weather", Weather);
+app.use("/user", User);
 
 app.get("/", (req, res) => {
     console.log("Here");
@@ -54,11 +65,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/callback", (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    res.redirect('http://localhost:8081'); // Redirect to frontend after successful authentication
-  } else {
-    res.send("Authentication failed");
-  }
+    if (req.oidc.isAuthenticated()) {
+        res.redirect("http://localhost:8081"); // Redirect to frontend after successful authentication
+    } else {
+        res.send("Authentication failed");
+    }
 });
 
 app.listen(port, () => {
