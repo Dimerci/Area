@@ -1,6 +1,6 @@
-export type SettingsRea = {
-  ip: String;
-};
+// export type SettingsRea = {
+//   ip: String;
+// };
 
 export type WeatherData = {
   city: string;
@@ -9,4 +9,8 @@ export type WeatherData = {
     value: number;
   };
   interval: '>' | '<' | '=';
+  reaction: {
+    type: 'Discord';
+    message: string;
+  };
 };

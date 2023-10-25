@@ -3,7 +3,6 @@ import Dropdown from './Dropdown';
 import {WeatherData} from './Interfaces';
 
 const data = require('../config/reactions.json');
-const settings = require('../config/settings.json');
 
 type ReactionT = {
   debugScreen?: boolean;
@@ -24,7 +23,6 @@ function ReactionList({
         debugConsole={debugConsole}
         debugScreen={debugScreen}
         weatherData={weatherData}
-        settings={settings}
       />
     </View>
   );

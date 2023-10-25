@@ -1,44 +1,140 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Alert, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useTailwind} from 'tailwind-rn';
 import {sendWeather} from '../apiHandling/weatherApi';
-import {SettingsRea, WeatherData} from './Interfaces';
+import {WeatherData} from './Interfaces';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
   weatherData?: WeatherData;
-  settings: SettingsRea;
 };
 
 export function Discord({
   debugScreen,
   debugConsole,
   weatherData,
-  settings,
 }: AreaBoxT): JSX.Element {
   const tailwind = useTailwind();
   const [message, setMessage] = useState('');
-  const newWeatherData = {
-    city: weatherData?.city,
-    forecast: {
-      type: weatherData?.forecast.type,
-      value: weatherData?.forecast.value,
-    },
-    interval: weatherData?.interval,
-    message: message,
-  };
+  const [backendIP, setbackendIp] = useState('localhost');
+  const [signature, setSignature] = useState('');
+  const [discordProvenance, setDiscordProvenance] = useState(false);
+  let provenance = '';
 
   const handleInputChange = inputText => {
     setMessage(inputText);
   };
 
-  const handleButtonPress = () => {
-    debugScreen && Alert.alert('Send this :' + message);
-    debugConsole && console.log('Send this :' + message);
+  AsyncStorage.getItem('backendIP')
+    .then(backendIp => {
+      if (backendIp) {
+        setbackendIp(backendIp);
+      } else {
+        console.log('IP not found');
+        setbackendIp('localhost');
+      }
+    })
+    .catch(error => {
+      console.error('Error retrieving backendIP:', error);
+    });
 
-    sendWeather(newWeatherData, settings);
+  AsyncStorage.getItem('discordProvenance')
+    .then(discordProvenance => {
+      if (discordProvenance) {
+        setDiscordProvenance(Boolean(discordProvenance));
+      } else {
+        console.log('DiscordProvenance not found');
+        setDiscordProvenance(false);
+      }
+    })
+    .catch(error => {
+      console.error('Error retrieving DiscordProvenance:', error);
+    });
+
+  AsyncStorage.getItem('discordSignature')
+    .then(signature => {
+      if (signature) {
+        setSignature(signature);
+      } else {
+        console.log('signature not found');
+        setSignature('');
+      }
+    })
+    .catch(error => {
+      console.error('Error retrieving backendIP:', error);
+    });
+
+  // if (discordProvenance) {
+  //   DeviceInfo.getDeviceName()
+  //     .then(deviceName => {
+  //       provenance = deviceName;
+  //       console.log(provenance);
+  //       // The rest of your code that depends on 'provenance' here...
+  //     })
+  //     .catch(error => {
+  //       console.error(error); // Handle any errors here
+  //     });
+  // } else {
+  //   provenance = '[Confidential]';
+  //   console.log(provenance);
+  //   // The rest of your code that depends on 'provenance' here...
+  // }
+
+  // const newMessage =
+  //   message + '\n------------\n~' + signature + '\n[' + provenance + ']';
+  // const newWeatherData = {
+  //   city: weatherData?.city,
+  //   forecast: {
+  //     type: weatherData?.forecast.type,
+  //     value: weatherData?.forecast.value,
+  //   },
+  //   interval: weatherData?.interval,
+  //   reaction: {
+  //     type: 'Discord',
+  //     message: newMessage,
+  //   },
+  // };
+  async function buildMessage() {
+    let provenance;
+
+    if (discordProvenance) {
+      provenance = await DeviceInfo.getDeviceName();
+    } else {
+      provenance = 'Confidential';
+    }
+
+    // Now, construct the message with the correct provenance
+    const newMessage =
+      message + '\n------------\n~' + signature + '\n[' + provenance + ']';
+
+    const newWeatherData = {
+      city: weatherData?.city,
+      forecast: {
+        type: weatherData?.forecast.type,
+        value: weatherData?.forecast.value,
+      },
+      interval: weatherData?.interval,
+      reaction: {
+        type: 'Discord',
+        message: newMessage,
+      },
+    };
+    console.log(newWeatherData.reaction.message);
+    console.log(provenance);
+    debugScreen &&
+      Alert.alert('Send this:\n' + newWeatherData.reaction.message);
+    debugConsole &&
+      console.log('Send this:\n' + newWeatherData.reaction.message);
+
+    sendWeather(newWeatherData, backendIP);
+  }
+
+  const handleButtonPress = () => {
+    buildMessage();
   };
 
   return (

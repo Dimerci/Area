@@ -1,4 +1,5 @@
 export async function sendWeather(data: WeatherData, ip: String) {
+  console.log('http://' + ip + ':8080/weather');
   try {
     const response = await fetch('http://' + ip + ':8080/weather', {
       method: 'POST',

@@ -1,24 +1,27 @@
-import React, {useState} from 'react';
-import {ScrollView, Text, TextInput} from 'react-native';
+import React from 'react';
+import {Text} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
-const settings = require('../config/settings.json');
+import {Box} from '../components/Box';
+import {BackendAPISettings} from '../components/settings/BackendAPIIPSetting';
+import {ScrollView} from 'react-native';
+import {ReactionSettings} from '../components/settings/ReactionSettings';
+import {ActionSettings} from '../components/settings/ActionSettings';
 
 export function SettingsPage(): JSX.Element {
   const tailwind = useTailwind();
-  const [ip, setIp] = useState(settings.ip);
-  const handleInputChange = inputText => {
-    setIp(inputText);
-  };
 
   return (
     <ScrollView>
-      <Text> This is the settings page</Text>
-      <TextInput
-        placeholder={settings.ip}
-        value={ip}
-        onChangeText={handleInputChange}
-        style={tailwind('p-2 mx-1 my-1 border-2 border-slate-50 rounded-lg')}
-      />
+      <Text style={tailwind('font-black mx-1 p-2 text-lg')}>Settings</Text>
+      <Box title={'IP configuration'}>
+        <BackendAPISettings />
+      </Box>
+      <Box title={'Action configuration'}>
+        <ActionSettings />
+      </Box>
+      <Box title={'Reaction configuration'}>
+        <ReactionSettings />
+      </Box>
     </ScrollView>
   );
 }
