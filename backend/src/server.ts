@@ -2,6 +2,7 @@ import express from 'express';
 import AboutJson from './routes/aboutJson/';
 import Weather from './routes/weather';
 import Discord from './routes/discord';
+import User from './routes/user'
 import { errorHandler } from './middleware/errors/ErrorHandler';
 import { auth, ConfigParams } from 'express-openid-connect';
 
@@ -31,6 +32,7 @@ app.use(auth(config));
 app.use('/about.json', AboutJson);
 app.use('/discord', Discord);
 app.use('/weather', Weather);
+app.use('/user', User);
 
 app.get("/", (req, res) => {console.log("Here"); res.send("Hello world")});
 
