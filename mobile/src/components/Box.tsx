@@ -10,11 +10,12 @@ type BoxT = {
 
 export function Box({title, children}: BoxT): JSX.Element {
   const tailwind = useTailwind();
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [debugConsole, setDebugConsole] = useState(false);
   const [debugScreen, setDebugScreen] = useState(false);
-  const [primaryColor, setPrimaryColor] = useState('#1e90ff');
-  const [secondaryColor, setSecondaryColor] = useState('#87cefa');
+  const [primaryColor, setPrimaryColor] = useState('');
+  const [secondaryColor, setSecondaryColor] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem(title + 'debugConsole')
@@ -45,6 +46,22 @@ export function Box({title, children}: BoxT): JSX.Element {
       })
       .catch(error => {
         console.error('Error retrieving DebugScreen:', error);
+      });
+  }, []); // Add an empty dependency array to run this effect only once on component mount
+
+  useEffect(() => {
+    AsyncStorage.getItem(title + '_isActive')
+      .then(isActive => {
+        if (isActive !== null) {
+          // Convert the stored value to a boolean
+          const isDebug = isActive === 'true';
+          setIsActive(isDebug);
+        } else {
+          setIsActive(true);
+        }
+      })
+      .catch(error => {
+        console.error('Error retrieving _isActive:', error);
       });
   }, []); // Add an empty dependency array to run this effect only once on component mount
 
@@ -81,55 +98,63 @@ export function Box({title, children}: BoxT): JSX.Element {
     });
 
   const toggleSwitch = () => {
-    setIsActive(!isActive);
+    setIsOpen(!isOpen);
     {
-      debugScreen && Alert.alert('Switched ' + title + ' to ' + !isActive);
-      debugConsole && console.log('Switched ' + title + ' to ' + !isActive);
+      debugScreen && Alert.alert('Switched ' + title + ' to ' + !isOpen);
+      debugConsole && console.log('Switched ' + title + ' to ' + !isOpen);
     }
   };
 
   return (
-    <View style={tailwind('rounded-lg border-2 my-2 mx-4')}>
+    <View>
       {isActive && (
-        <TouchableOpacity onPress={toggleSwitch}>
-          <View
-            style={[
-              tailwind('rounded-t-lg p-2 flex-row'),
-              {backgroundColor: primaryColor},
-            ]}>
-            <View style={tailwind('flex-row')}>
-              <Text style={tailwind('text-slate-50 basis-11/12')}>{title}</Text>
-              {debugConsole && <Text>C </Text>}
-              {debugScreen && <Text>S </Text>}
-              <Text style={tailwind('text-slate-50')}>/\</Text>
+        <View style={tailwind('rounded-lg border-2 my-2 mx-4')}>
+          {isOpen && (
+            <TouchableOpacity onPress={toggleSwitch}>
+              <View
+                style={[
+                  tailwind('rounded-t-lg p-2 flex-row'),
+                  {backgroundColor: primaryColor},
+                ]}>
+                <View style={tailwind('flex-row')}>
+                  <Text style={tailwind('text-slate-50 basis-11/12')}>
+                    {title}
+                  </Text>
+                  {debugConsole && <Text>C </Text>}
+                  {debugScreen && <Text>S </Text>}
+                  <Text style={tailwind('text-slate-50')}>/\</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )}
+          {!isOpen && (
+            <TouchableOpacity onPress={toggleSwitch}>
+              <View
+                style={[
+                  tailwind('rounded-t-lg p-2 flex-row'),
+                  {backgroundColor: primaryColor},
+                ]}>
+                <View style={tailwind('flex-row')}>
+                  <Text style={tailwind('text-slate-50 basis-11/12')}>
+                    {title}
+                  </Text>
+                  {debugConsole && <Text>C </Text>}
+                  {debugScreen && <Text>S </Text>}
+                  <Text style={tailwind('text-slate-50')}>\/</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )}
+          {isOpen && (
+            <View
+              style={[
+                tailwind('bg-slate-600 rounded-b-lg p-2'),
+                {backgroundColor: secondaryColor},
+              ]}>
+              {/* Render the children passed to AreaBox */}
+              {children}
             </View>
-          </View>
-        </TouchableOpacity>
-      )}
-      {!isActive && (
-        <TouchableOpacity onPress={toggleSwitch}>
-          <View
-            style={[
-              tailwind('rounded-t-lg p-2 flex-row'),
-              {backgroundColor: primaryColor},
-            ]}>
-            <View style={tailwind('flex-row')}>
-              <Text style={tailwind('text-slate-50 basis-11/12')}>{title}</Text>
-              {debugConsole && <Text>C </Text>}
-              {debugScreen && <Text>S </Text>}
-              <Text style={tailwind('text-slate-50')}>\/</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      )}
-      {isActive && (
-        <View
-          style={[
-            tailwind('bg-slate-600 rounded-b-lg p-2'),
-            {backgroundColor: secondaryColor},
-          ]}>
-          {/* Render the children passed to AreaBox */}
-          {children}
+          )}
         </View>
       )}
     </View>

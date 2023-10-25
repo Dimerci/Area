@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button, Text, TouchableOpacity, View} from 'react-native';
 import {TextInput} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
@@ -11,13 +11,28 @@ export function BackendAPISettings() {
   const onPress = async () => {
     await AsyncStorage.setItem('backendIP', backendIp);
   };
+
+  useEffect(() => {
+    AsyncStorage.getItem('backendIP')
+      .then(backendIp => {
+        if (backendIp !== null) {
+          setbackendIp(backendIp); // Convert the stored string to a boolean
+        } else {
+          console.log('backendIp not found in AsyncStorage');
+        }
+      })
+      .catch(error => {
+        console.error('Error retrieving backendIp:', error);
+      });
+  }, []); // Empty dependency array ensures it runs only once on mount
+
   return (
     <View>
+      <Text>Current Backend IP = {backendIp}</Text>
       <View style={tailwind('flex-row')}>
         <TextInput
           placeholder="Enter your backend IP"
           onChangeText={text => setbackendIp(text)}
-          value={backendIp}
           style={tailwind('p-2 mx-1 my-1 basis-10/12 border-2 rounded-lg')}
         />
         <TouchableOpacity

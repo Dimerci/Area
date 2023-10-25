@@ -42,18 +42,21 @@ export function Discord({
       console.error('Error retrieving backendIP:', error);
     });
 
-  AsyncStorage.getItem('discordProvenance')
-    .then(discordProvenance => {
-      if (discordProvenance) {
-        setDiscordProvenance(Boolean(discordProvenance));
-      } else {
-        console.log('DiscordProvenance not found');
-        setDiscordProvenance(false);
-      }
-    })
-    .catch(error => {
-      console.error('Error retrieving DiscordProvenance:', error);
-    });
+  useEffect(() => {
+    AsyncStorage.getItem('discordProvenance')
+      .then(discordProvenance => {
+        if (discordProvenance !== null) {
+          // Convert the stored value to a boolean
+          const isDebug = discordProvenance === 'true';
+          setDiscordProvenance(isDebug);
+        } else {
+          setDiscordProvenance(false);
+        }
+      })
+      .catch(error => {
+        console.error('Error retrieving DebugScreen:', error);
+      });
+  }, []);
 
   AsyncStorage.getItem('discordSignature')
     .then(signature => {

@@ -5,7 +5,7 @@ import {DiscordSetting} from './DiscordSetting';
 export function ReactionSettings() {
   return (
     <View>
-      <Box title={'Discord'}>
+      <Box title={'Discord Settings'}>
         <DiscordSetting />
       </Box>
     </View>

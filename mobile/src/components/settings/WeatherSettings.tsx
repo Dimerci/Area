@@ -7,6 +7,7 @@ export function WeatherSettings() {
   const tailwind = useTailwind();
   const [debugConsole, setDebugConsole] = useState(false);
   const [debugScreen, setDebugScreen] = useState(false);
+  const [weatherWidget, setWeatherWidget] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem('WeatherdebugConsole')
@@ -34,6 +35,19 @@ export function WeatherSettings() {
         console.error('Error retrieving discordProvenance:', error);
       });
   }, []);
+  useEffect(() => {
+    AsyncStorage.getItem('Weather_isActive')
+      .then(weatherWidget => {
+        if (weatherWidget !== null) {
+          setWeatherWidget(weatherWidget === 'true'); // Convert the stored string to a boolean
+        } else {
+          console.log('weather_isActive not found in AsyncStorage');
+        }
+      })
+      .catch(error => {
+        console.error('Error retrieving weather_isActive:', error);
+      });
+  }, []);
 
   const handleIsActiveDebugConsole = async () => {
     try {
@@ -57,9 +71,29 @@ export function WeatherSettings() {
       console.error('Error saving setting:', error);
     }
   };
+  const handleIsActiveWeatherWidget = async () => {
+    try {
+      const newValue = !weatherWidget; // Toggle the boolean value
+      await AsyncStorage.setItem('Weather_isActive', newValue.toString()); // Convert to string
+      setWeatherWidget(newValue); // Update the state and UI
+
+      console.log('Setting saved successfully : ' + newValue);
+    } catch (error) {
+      console.error('Error saving setting:', error);
+    }
+  };
 
   return (
     <View>
+      <View style={tailwind('flex-row')}>
+        <Text style={tailwind('basis-10/12')}>
+          Want to see the Weather Widget ?
+        </Text>
+        <Switch
+          value={weatherWidget}
+          onValueChange={handleIsActiveWeatherWidget}
+        />
+      </View>
       <View style={tailwind('flex-row')}>
         <Text style={tailwind('basis-10/12')}>
           Want to see the debug console ?
