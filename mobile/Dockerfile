@@ -1,32 +1,33 @@
-# Use an official Node.js runtime as a parent image
-FROM node:16
+# Start from the react-native Android base image
+FROM reactnativecommunity/react-native-android AS builder
 
-# Set the working directory in the container
+# Set up environment variables
+ENV ANDROID_HOME /opt/android-sdk-linux
+ENV PATH $PATH:$ANDROID_HOME/emulator
+ENV PATH $PATH:$ANDROID_HOME/tools
+ENV PATH $PATH:$ANDROID_HOME/tools/bin
+ENV PATH $PATH:$ANDROID_HOME/platform-tools
+
+# Accept Android SDK licenses
+RUN yes | sdkmanager --licenses
+
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json to the container
-COPY package*.json ./
+# Copy your app's source code into the container
+COPY . .
 
-# Copy the metro.config.js to the container
-COPY metro.config.js .
-
-# Clean the npm cache
-RUN npm cache clean --force
-
-# Install project dependencies
+# Install global and local dependencies
+RUN npm install -g react-native-cli
 RUN npm install
 
-# Install adb
-RUN apt-get update && apt-get install -y android-tools-adb
+# Ensure the directory for the bundle output exists
+RUN mkdir -p android/app/src/main/assets/
 
-# Copy the keypress script to the container
-COPY send_key.sh .
+# Bundle the React Native app
+RUN react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 
-# Make the script executable
-RUN chmod +x send_key.sh
+# Build the APK
+RUN cd android && ./gradlew assembleRelease
 
-# Expose the Metro port
-EXPOSE 8081
-
-# Start Metro in watch mode and send 'a' keypress after a delay
-CMD ["sh", "-c", "npx react-native start & sleep 10 && ./send_key.sh"]
+# Output will be in android/app/build/outputs/apk/debug/app-debug.apk

@@ -64,3 +64,9 @@ yarn-error.log
 
 # testing
 /coverage
+
+# ignore bundle artefact made by docker
+index.android.bundle 
+#ignore the files created by the build
+/app/android/app/src/main/res/*
+android/app/src/main/res/drawable-mdpi/node_modules_reactnative_libraries_newappscreen_components_logo.png
