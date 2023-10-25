@@ -8,19 +8,6 @@ export function BackendAPISettings() {
   const [backendIp, setbackendIp] = useState('localhost');
   const tailwind = useTailwind();
 
-  // AsyncStorage.getItem('backendIP')
-  //   .then(backendIp => {
-  //     if (backendIp) {
-  //       setbackendIp(backendIp);
-  //     } else {
-  //       console.log('IP not found');
-  //       setbackendIp('localhost');
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('Error retrieving backendIP:', error);
-  //   });
-
   const onPress = async () => {
     await AsyncStorage.setItem('backendIP', backendIp);
   };
@@ -31,7 +18,7 @@ export function BackendAPISettings() {
           placeholder="Enter your backend IP"
           onChangeText={text => setbackendIp(text)}
           value={backendIp}
-          style={tailwind('p-2 mx-1 my-1 basis-10/12')}
+          style={tailwind('p-2 mx-1 my-1 basis-10/12 border-2 rounded-lg')}
         />
         <TouchableOpacity
           onPress={onPress}

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Alert, Text, TouchableOpacity, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 
@@ -16,68 +16,69 @@ export function Box({title, children}: BoxT): JSX.Element {
   const [primaryColor, setPrimaryColor] = useState('#1e90ff');
   const [secondaryColor, setSecondaryColor] = useState('#87cefa');
 
-  AsyncStorage.getItem(title + 'debugConsole')
-    .then(debugConsole => {
-      if (debugConsole) {
-        setDebugConsole(Boolean(debugConsole));
+  useEffect(() => {
+    AsyncStorage.getItem(title + 'debugConsole')
+      .then(debugConsole => {
+        if (debugConsole !== null) {
+          // Convert the stored value to a boolean
+          const isDebug = debugConsole === 'true';
+          setDebugConsole(isDebug);
+        } else {
+          setDebugConsole(false);
+        }
+      })
+      .catch(error => {
+        console.error('Error retrieving DebugScreen:', error);
+      });
+  }, []); // Add an empty dependency array to run this effect only once on component mount
+
+  useEffect(() => {
+    AsyncStorage.getItem(title + 'debugScreen')
+      .then(debugScreen => {
+        if (debugScreen !== null) {
+          // Convert the stored value to a boolean
+          const isDebug = debugScreen === 'true';
+          setDebugScreen(isDebug);
+        } else {
+          setDebugScreen(false);
+        }
+      })
+      .catch(error => {
+        console.error('Error retrieving DebugScreen:', error);
+      });
+  }, []); // Add an empty dependency array to run this effect only once on component mount
+
+  AsyncStorage.getItem('primaryColor')
+    .then(primaryColor => {
+      if (primaryColor) {
+        setPrimaryColor(primaryColor);
       } else {
         console.log(
-          'debugConsole not found in AsyncStorage or debugConsole off for ' +
+          'primaryColor not found in AsyncStorage or debugScreen off for' +
             title,
         );
-        setDebugConsole(false);
-      }
-    })
-    .catch(error => {
-      console.error('Error retrieving debugConsole:', error);
-    });
-  AsyncStorage.getItem(title + 'debugScreen')
-    .then(debugScreen => {
-      if (debugScreen) {
-        setDebugScreen(Boolean(debugScreen));
-      } else {
-        console.log(
-          'debugScreen not found in AsyncStorage or debugScreen off for' +
-            title,
-        );
-        setDebugScreen(false);
+        setPrimaryColor('#1e90ff');
       }
     })
     .catch(error => {
       console.error('Error retrieving DebugScreen:', error);
     });
 
-  // AsyncStorage.getItem('primaryColor')
-  //   .then(primaryColor => {
-  //     if (primaryColor) {
-  //       setPrimaryColor(primaryColor);
-  //     } else {
-  //       console.log(
-  //         'primaryColor not found in AsyncStorage or debugScreen off for' +
-  //           title,
-  //       );
-  //       setPrimaryColor('#333333');
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('Error retrieving DebugScreen:', error);
-  //   });
-
-  // AsyncStorage.getItem('secondaryColor')
-  //   .then(secondaryColor => {
-  //     if (secondaryColor) {
-  //       setSecondaryColor(secondaryColor);
-  //     } else {
-  //       console.log(
-  //         'secondaryColor not found in AsyncStorage or debugScreen off for' +
-  //           title,
-  //       );
-  //       setSecondaryColor('#333333');
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('Error retrieving DebugScreen:', error);
-  //   });
+  AsyncStorage.getItem('secondaryColor')
+    .then(secondaryColor => {
+      if (secondaryColor) {
+        setSecondaryColor(secondaryColor);
+      } else {
+        console.log(
+          'secondaryColor not found in AsyncStorage or debugScreen off for' +
+            title,
+        );
+        setSecondaryColor('#87cefa');
+      }
+    })
+    .catch(error => {
+      console.error('Error retrieving DebugScreen:', error);
+    });
 
   const toggleSwitch = () => {
     setIsActive(!isActive);
@@ -98,10 +99,10 @@ export function Box({title, children}: BoxT): JSX.Element {
             ]}>
             <View style={tailwind('flex-row')}>
               <Text style={tailwind('text-slate-50 basis-11/12')}>{title}</Text>
+              {debugConsole && <Text>C </Text>}
+              {debugScreen && <Text>S </Text>}
               <Text style={tailwind('text-slate-50')}>/\</Text>
             </View>
-            {debugConsole && <Text>debugConsole on</Text>}
-            {debugScreen && <Text>debugScreen on</Text>}
           </View>
         </TouchableOpacity>
       )}
@@ -114,10 +115,10 @@ export function Box({title, children}: BoxT): JSX.Element {
             ]}>
             <View style={tailwind('flex-row')}>
               <Text style={tailwind('text-slate-50 basis-11/12')}>{title}</Text>
+              {debugConsole && <Text>C </Text>}
+              {debugScreen && <Text>S </Text>}
               <Text style={tailwind('text-slate-50')}>\/</Text>
             </View>
-            {debugConsole && <Text>debugConsole on</Text>}
-            {debugScreen && <Text>debugScreen on</Text>}
           </View>
         </TouchableOpacity>
       )}

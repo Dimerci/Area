@@ -9,7 +9,7 @@ export type WeatherData = {
     value: number;
   };
   interval: '>' | '<' | '=';
-  reaction: {
+  reaction?: {
     type: 'Discord';
     message: string;
   };

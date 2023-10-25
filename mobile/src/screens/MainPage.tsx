@@ -1,16 +1,13 @@
 import React from 'react';
 import {ScrollView, Text} from 'react-native';
 import {WeatherWidget} from '../components/WeatherWidget';
-import {Button} from 'react-native-elements';
 import {Box} from '../components/Box';
 
 const data = [
   {
     id: 1,
     title: 'Weather',
-    component: <WeatherWidget debugScreen debugConsole />,
-    debugConsole: true,
-    debugScreen: false,
+    component: <WeatherWidget />,
   },
 ];
 

@@ -61,6 +61,11 @@
 			"flexBasis": "83.333333%"
 		}
 	},
+	"basis-8/12": {
+		"style": {
+			"flexBasis": "66.666667%"
+		}
+	},
 	"flex-row": {
 		"style": {
 			"flexDirection": "row"

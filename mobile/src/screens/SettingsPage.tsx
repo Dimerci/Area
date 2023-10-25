@@ -6,6 +6,7 @@ import {BackendAPISettings} from '../components/settings/BackendAPIIPSetting';
 import {ScrollView} from 'react-native';
 import {ReactionSettings} from '../components/settings/ReactionSettings';
 import {ActionSettings} from '../components/settings/ActionSettings';
+import {VisualSettings} from '../components/settings/VisibleSettings';
 
 export function SettingsPage(): JSX.Element {
   const tailwind = useTailwind();
@@ -21,6 +22,9 @@ export function SettingsPage(): JSX.Element {
       </Box>
       <Box title={'Reaction configuration'}>
         <ReactionSettings />
+      </Box>
+      <Box title={'Visual configuration'}>
+        <VisualSettings />
       </Box>
     </ScrollView>
   );

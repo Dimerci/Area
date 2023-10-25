@@ -47,6 +47,10 @@
   flex-basis: 83.333333%
 }
 
+.basis-8\/12 {
+  flex-basis: 66.666667%
+}
+
 .flex-row {
   flex-direction: row
 }

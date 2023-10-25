@@ -67,37 +67,6 @@ export function Discord({
     .catch(error => {
       console.error('Error retrieving backendIP:', error);
     });
-
-  // if (discordProvenance) {
-  //   DeviceInfo.getDeviceName()
-  //     .then(deviceName => {
-  //       provenance = deviceName;
-  //       console.log(provenance);
-  //       // The rest of your code that depends on 'provenance' here...
-  //     })
-  //     .catch(error => {
-  //       console.error(error); // Handle any errors here
-  //     });
-  // } else {
-  //   provenance = '[Confidential]';
-  //   console.log(provenance);
-  //   // The rest of your code that depends on 'provenance' here...
-  // }
-
-  // const newMessage =
-  //   message + '\n------------\n~' + signature + '\n[' + provenance + ']';
-  // const newWeatherData = {
-  //   city: weatherData?.city,
-  //   forecast: {
-  //     type: weatherData?.forecast.type,
-  //     value: weatherData?.forecast.value,
-  //   },
-  //   interval: weatherData?.interval,
-  //   reaction: {
-  //     type: 'Discord',
-  //     message: newMessage,
-  //   },
-  // };
   async function buildMessage() {
     let provenance;
 

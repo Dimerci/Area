@@ -46,15 +46,19 @@ export function DiscordSetting() {
         placeholder="Enter your"
         onChangeText={text => setSignature(text)}
         value={signature}
-        style={tailwind('p-2 mx-1 my-1 basis-10/12')}
+        style={tailwind('p-2 mx-1 my-1 basis-10/12 border-2 rounded-lg')}
       />
+      <View style={tailwind('flex-row')}>
+        <Text style={tailwind('basis-10/12')}>
+          Want to show where you sent the message from ?
+        </Text>
+        <Switch value={discordProvenance} onValueChange={handleIsActive} />
+      </View>
       <TouchableOpacity
         onPress={onPress}
         style={tailwind(
           'bg-teal-800 text-center p-2 w-14 mx-1 my-1 rounded-lg',
         )}>
-        <Text>Want to show where you sent the message from ?</Text>
-        <Switch value={discordProvenance} onValueChange={handleIsActive} />
         <Text>Save</Text>
       </TouchableOpacity>
     </View>
