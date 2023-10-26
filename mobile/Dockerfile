@@ -36,4 +36,8 @@ RUN rm -rf ./android/app/src/main/res/drawable-*
 RUN rm -rf ./android/app/src/main/res/raw
 RUN ./android/gradlew -p ./android/ assembleRelease --continue
 
-# The output APK will be in android/app/build/outputs/apk/debug/app-debug.apk
+# Declare a volume
+VOLUME /apk-output
+
+# Copy the built APK to the volume
+RUN cp ./android/app/build/outputs/apk/release/app-release.apk /apk-output/
