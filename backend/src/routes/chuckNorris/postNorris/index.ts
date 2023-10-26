@@ -1,0 +1,1 @@
+export { postNorris } from "./postNorris";
