@@ -4,25 +4,26 @@ import { evalForecast } from './evalForecast';
 import { Forecast, Interval, OpenWeatherMetrics } from './postWeather.interfaces';
 import { isValidForecast, isValidInterval } from './postWeather.utils';
 import { fetchOpenWeatherForecast } from './fetchOpenWeatherForecast';
-import { postRequestToDiscord } from './postRequestToDiscord';
+import { Reaction } from '../../../utils/reaction/reactionInterface';
+import { getCorrectReaction } from '../../../utils/reaction/getCorrectReaction';
 
 interface PostWeatherBody {
     city: string;
     forecast: Forecast;
     interval: Interval;
-    message: string;
+    reaction: Reaction;
 };
 
 export async function postWeather(req: Request<void, void, PostWeatherBody, void>, res: Response, next: NextFunction) {
     try {
-        const requiredFields = ['city', 'forecast', 'interval', 'message'];
+        const requiredFields = ['city', 'forecast', 'interval', 'reaction'];
         for (const field of requiredFields) {
             if (!(field in req.body)) {
                 throw(new ErrorStatus(`Missing required field: ${field}`, 400));
             }
         }
 
-        const { interval, forecast, city, message} = req.body;
+        const { interval, forecast, city, reaction} = req.body;
         if (!isValidForecast(forecast) || !isValidInterval(interval)) {
             throw(new ErrorStatus(`Invalid forecast type or value or invalid interval`, 400));
         }
@@ -32,7 +33,7 @@ export async function postWeather(req: Request<void, void, PostWeatherBody, void
             const { data } = response;
             const [firstForecast] = data.list;
             if (evalForecast(firstForecast, interval, forecast) === true) {
-                postRequestToDiscord(message);
+                getCorrectReaction(reaction);
                 console.log("SUCESS");
             }
             res.json(data);
