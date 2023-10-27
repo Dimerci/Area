@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { postNorris } from './postNorris'
+import { getNorris } from './postNorris'
 
 const express = require('express');
 const router = Router();
 
 router.use(express.json());
-router.get('/', postNorris)
+router.get('/', getNorris)
 
 export default router;
