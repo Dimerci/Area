@@ -20,6 +20,7 @@ app.use("/about.json", AboutJson);
 app.use("/discord", Discord);
 app.use("/weather", Weather);
 app.use(cors());
+connectToDatabase();
 
 // const config = {
 //   authRequired: false,
