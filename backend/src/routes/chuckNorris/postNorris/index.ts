@@ -1,1 +1,1 @@
-export { postNorris } from "./postNorris";
+export { getNorris } from "./getNorris";
