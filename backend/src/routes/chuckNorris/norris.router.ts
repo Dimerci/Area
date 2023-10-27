@@ -5,6 +5,6 @@ const express = require('express');
 const router = Router();
 
 router.use(express.json());
-router.post('/', postNorris)
+router.get('/', postNorris)
 
 export default router;
