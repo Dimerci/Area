@@ -9,16 +9,17 @@ export async function createListing(Client: typeof MongoClient, newListing: any)
   console.log(`New listing created with the following id: ${result.insertedId}`);
 }
 
-export async function readListingByName(Client: typeof MongoClient, nameOfListing: string) {
+export async function readListingByName(Client: typeof MongoClient, clientId: string): Promise<any> {
   const result = await Client
     .db("user_info")
     .collection("user_info")
-    .findOne({ name: nameOfListing });
+    .findOne({ clientId: clientId });
   if (result) {
-    console.log(`Found a listing in the collection with the name '${nameOfListing}':`);
-    console.log(result);
+    console.log(`Found a listing in the collection with the name '${clientId}':`);
+    return result;
   } else {
-    console.log(`No listings found with the name '${nameOfListing}'`);
+    console.log(`No listings found with the name '${clientId}'`);
+    return null;
   }
 }
 

@@ -13,6 +13,7 @@ const port = 8080;
 const cors = require('cors');
 
 app.use(cors());
+connectToDatabase();
 
 const config: ConfigParams = {
   authRequired: false,
@@ -55,5 +56,3 @@ app.on('error', (err) => {
 });
 
 app.use(errorHandler);
-
-connectToDatabase();
