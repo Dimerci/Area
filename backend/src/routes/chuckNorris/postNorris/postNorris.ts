@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { ErrorStatus } from "../../../middleware/errors/ErrorStatus";
 import { getChuckNorrisJoke } from "./getChuckNorrisJoke";
 
-
 interface postNorris {
     message: string,
 }
@@ -15,9 +14,10 @@ export async function postNorris(req: Request<void, void, postNorris, void>, res
         }
 
         const { message } = req.body;
-        getChuckNorrisJoke({message});
+        const joke = await getChuckNorrisJoke({ message });
 
+        res.json({ joke });
     } catch (err) {
         next(err);
     }
-} 
+}
