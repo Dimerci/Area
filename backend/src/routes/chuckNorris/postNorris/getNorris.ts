@@ -6,7 +6,7 @@ interface postNorris {
     message: string,
 }
 
-export async function postNorris(req: Request<void, void, postNorris, void>, res: Response, next: NextFunction) {
+export async function getNorris(req: Request<void, void, postNorris, void>, res: Response, next: NextFunction) {
     try {
         const field = "message";
         if (!(field in req.body)) {
