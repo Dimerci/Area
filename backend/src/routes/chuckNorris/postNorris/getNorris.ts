@@ -8,7 +8,7 @@ interface postNorris {
 
 export async function getNorris(req: Request<void, void, postNorris, void>, res: Response, next: NextFunction) {
     try {
-    const field = "message";
+    const field = req.query.category as string
         if (!(field in req.body)) {
             throw(new ErrorStatus(`Missing required field: ${field}`, 400));
         }
