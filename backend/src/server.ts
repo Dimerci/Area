@@ -4,6 +4,8 @@ import Weather from './routes/weather';
 import Discord from './routes/discord';
 import User from './routes/user'
 import { errorHandler } from './middleware/errors/ErrorHandler';
+import { connectToDatabase, Client } from './database/connectToDb';
+import { readListingByName, createListing, updateListingByName, deleteListingByName, listDb } from './database/dbInteraction';
 import { auth, ConfigParams } from 'express-openid-connect';
 
 const app = express();
@@ -53,3 +55,5 @@ app.on('error', (err) => {
 });
 
 app.use(errorHandler);
+
+connectToDatabase();
