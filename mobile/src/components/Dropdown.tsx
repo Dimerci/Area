@@ -2,7 +2,7 @@ import {FC, ReactElement, useRef, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, Modal, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import {Discord} from './Discord';
-import {WeatherData} from './Interfaces';
+import {JokeData, WeatherData} from './Interfaces';
 
 interface Props {
   label: string;
@@ -15,6 +15,7 @@ interface Props {
   debugScreen?: boolean;
   debugConsole?: boolean;
   weatherData?: WeatherData;
+  jokeData?: JokeData;
 }
 interface NormalDropdownProps {
   label: string;
@@ -31,6 +32,7 @@ const Dropdown: FC<Props> = ({
   debugConsole,
   debugScreen,
   weatherData,
+  jokeData,
 }) => {
   const DropdownButton = useRef();
   const [visible, setVisible] = useState(false);
@@ -46,6 +48,7 @@ const Dropdown: FC<Props> = ({
         debugConsole={debugConsole}
         debugScreen={debugScreen}
         weatherData={weatherData}
+        jokeData={jokeData}
       />
     ),
     Test: () => <Text>Test</Text>,

@@ -1,6 +1,6 @@
-import {WeatherData} from '../components/Interfaces';
+import {JokeData} from '../components/Interfaces';
 
-export async function sendWeather(data: WeatherData, ip: String) {
+export async function sendJoke(data: JokeData, ip: String) {
   console.log('http://' + ip + ':8080/weather');
   try {
     const response = await fetch('http://' + ip + ':8080/weather', {

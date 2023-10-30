@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import Dropdown from './Dropdown';
-import {WeatherData} from './Interfaces';
+import {JokeData, WeatherData} from './Interfaces';
 
 const data = require('../config/reactions.json');
 
@@ -8,12 +8,14 @@ type ReactionT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
   weatherData?: WeatherData;
+  jokeData?: JokeData;
 };
 
 function ReactionList({
   debugConsole,
   debugScreen,
   weatherData,
+  jokeData,
 }: ReactionT): JSX.Element {
   return (
     <View>

@@ -3,7 +3,7 @@ import {Alert, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useTailwind} from 'tailwind-rn';
 import {sendWeather} from '../apiHandling/weatherApi';
-import {WeatherData} from './Interfaces';
+import {JokeData, WeatherData} from './Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
 
@@ -11,12 +11,14 @@ type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
   weatherData?: WeatherData;
+  jokeData?: JokeData;
 };
 
 export function Discord({
   debugScreen,
   debugConsole,
   weatherData,
+  jokeData,
 }: AreaBoxT): JSX.Element {
   const tailwind = useTailwind();
   const [message, setMessage] = useState('');
@@ -82,27 +84,31 @@ export function Discord({
     // Now, construct the message with the correct provenance
     const newMessage =
       message + '\n------------\n~' + signature + '\n[' + provenance + ']';
+    if (weatherData) {
+      const newWeatherData = {
+        city: weatherData?.city,
+        forecast: {
+          type: weatherData?.forecast.type,
+          value: weatherData?.forecast.value,
+        },
+        interval: weatherData?.interval,
+        reaction: {
+          type: 'Discord',
+          message: newMessage,
+        },
+      };
+      console.log(newWeatherData.reaction.message);
+      console.log(provenance);
+      debugScreen &&
+        Alert.alert('Send this:\n' + newWeatherData.reaction.message);
+      debugConsole &&
+        console.log('Send this:\n' + newWeatherData.reaction.message);
 
-    const newWeatherData = {
-      city: weatherData?.city,
-      forecast: {
-        type: weatherData?.forecast.type,
-        value: weatherData?.forecast.value,
-      },
-      interval: weatherData?.interval,
-      reaction: {
-        type: 'Discord',
-        message: newMessage,
-      },
-    };
-    console.log(newWeatherData.reaction.message);
-    console.log(provenance);
-    debugScreen &&
-      Alert.alert('Send this:\n' + newWeatherData.reaction.message);
-    debugConsole &&
-      console.log('Send this:\n' + newWeatherData.reaction.message);
-
-    sendWeather(newWeatherData, backendIP);
+      sendWeather(newWeatherData, backendIP);
+    }
+    if (jokeData) {
+      sendJoke(jokeData, backendIP);
+    }
   }
 
   const handleButtonPress = () => {
