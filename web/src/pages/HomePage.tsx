@@ -1,6 +1,4 @@
 import React from "react";
-import WeatherSearchBox from "../components/WeatherSearchBox";
-import React from "react";
 import backgroundImage from "./light.png";
 
 const HomePage: React.FC = () => {
