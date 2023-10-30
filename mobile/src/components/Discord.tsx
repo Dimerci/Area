@@ -6,6 +6,7 @@ import {sendWeather} from '../apiHandling/weatherApi';
 import {JokeData, WeatherData} from './Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
+import {sendJoke} from '../apiHandling/chuckAPI';
 
 type AreaBoxT = {
   debugScreen?: boolean;
@@ -84,8 +85,9 @@ export function Discord({
     // Now, construct the message with the correct provenance
     const newMessage =
       message + '\n------------\n~' + signature + '\n[' + provenance + ']';
+
     if (weatherData) {
-      const newWeatherData = {
+      const newWeatherData: WeatherData = {
         city: weatherData?.city,
         forecast: {
           type: weatherData?.forecast.type,
@@ -97,17 +99,29 @@ export function Discord({
           message: newMessage,
         },
       };
-      console.log(newWeatherData.reaction.message);
-      console.log(provenance);
       debugScreen &&
-        Alert.alert('Send this:\n' + newWeatherData.reaction.message);
+        Alert.alert('Send this:\n' + newWeatherData?.reaction?.message);
       debugConsole &&
-        console.log('Send this:\n' + newWeatherData.reaction.message);
+        console.log('Send this:\n' + newWeatherData?.reaction?.message);
 
       sendWeather(newWeatherData, backendIP);
-    }
-    if (jokeData) {
-      sendJoke(jokeData, backendIP);
+    } else if (jokeData) {
+      const newJokeData: JokeData = {
+        jokeType: jokeData.jokeType,
+        reaction: {
+          type: 'Discord',
+          message: newMessage,
+        },
+      };
+      console.log(newJokeData?.reaction?.message);
+      console.log(provenance);
+      debugScreen &&
+        Alert.alert('Send this:\n' + newJokeData?.reaction?.message);
+      debugConsole &&
+        console.log('Send this:\n' + newJokeData?.reaction?.message);
+      sendJoke(newJokeData, backendIP);
+    } else {
+      Alert.alert('You did not input a message');
     }
   }
 

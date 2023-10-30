@@ -12,7 +12,7 @@ const data = [
   },
   {
     id: 2,
-    title: 'Chuck Norris',
+    title: 'Chuck',
     component: <ChuckWidget />,
   },
 ];

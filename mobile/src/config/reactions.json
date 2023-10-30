@@ -1,7 +1,7 @@
 {
   "reactions": [
     {
-      "label": "discord",
+      "label": "Discord",
       "value": "discord",
       "component": "Discord",
       "id": 0

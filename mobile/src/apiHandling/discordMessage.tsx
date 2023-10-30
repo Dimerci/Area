@@ -1,9 +1,8 @@
-import {WeatherData} from '../components/Interfaces';
+import {DiscordMessage} from '../components/Interfaces';
 
-export async function sendWeather(data: WeatherData, ip: String) {
-  console.log(JSON.stringify(data));
+export async function sendDiscordMessage(data: DiscordMessage, ip: String) {
   try {
-    const response = await fetch('http://' + ip + ':8080/weather', {
+    const response = await fetch('http://' + ip + ':8080/discord', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,9 +15,8 @@ export async function sendWeather(data: WeatherData, ip: String) {
       throw new Error(errorText);
     }
 
-    // const responseData = await response.json();
-    console.log('Success');
-    // return {data: responseData, error: null};
+    const responseData = await response.json();
+    return {data: responseData, error: null};
   } catch (error) {
     console.error('Error sending data:', error);
     console.log(JSON.stringify(data));

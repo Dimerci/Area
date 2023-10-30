@@ -25,6 +25,7 @@ function ReactionList({
         debugConsole={debugConsole}
         debugScreen={debugScreen}
         weatherData={weatherData}
+        jokeData={jokeData}
       />
     </View>
   );

@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Text, TextInput, View} from 'react-native';
+import {View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import ReactionList from './ReactionList';
 import {NormalDropdown} from './Dropdown';
@@ -17,7 +17,23 @@ export function ChuckWidget({}: ChuckWidgetT): JSX.Element {
   const [debugScreen, setDebugScreen] = useState(false);
 
   let jokeData: JokeData = {
-    jokeType = 'animal',
+    jokeType: jokeType as
+      | 'animal'
+      | 'career'
+      | 'celebrity'
+      | 'dev'
+      | 'explicit'
+      | 'fashion'
+      | 'food'
+      | 'history'
+      | 'money'
+      | 'movie'
+      | 'music'
+      | 'political'
+      | 'religion'
+      | 'science'
+      | 'sport'
+      | 'travel',
   };
 
   const jokeTypeOptions = [
@@ -40,7 +56,6 @@ export function ChuckWidget({}: ChuckWidgetT): JSX.Element {
   ];
   const handleJokeTypeChange = value => {
     setJokeType(value.value);
-    jokeData.jokeType = value.value;
   };
 
   useEffect(() => {

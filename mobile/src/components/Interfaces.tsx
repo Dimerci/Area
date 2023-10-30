@@ -33,4 +33,12 @@ export type JokeData = {
     | 'science'
     | 'sport'
     | 'travel';
+  reaction?: {
+    type: 'Discord';
+    message: string;
+  };
+};
+
+export type DiscordMessage = {
+  message: string;
 };

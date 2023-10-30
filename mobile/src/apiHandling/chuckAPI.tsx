@@ -1,15 +1,18 @@
-import {JokeData} from '../components/Interfaces';
+import {DiscordMessage, JokeData} from '../components/Interfaces';
+import {sendDiscordMessage} from './discordMessage';
 
 export async function sendJoke(data: JokeData, ip: String) {
-  console.log('http://' + ip + ':8080/weather');
   try {
-    const response = await fetch('http://' + ip + ':8080/weather', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      'http://' + ip + ':8080/norris?category=' + JSON.stringify(data.jokeType),
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // body: JSON.stringify(data.jokeType),
       },
-      body: JSON.stringify(data),
-    });
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -17,7 +20,15 @@ export async function sendJoke(data: JokeData, ip: String) {
     }
 
     const responseData = await response.json();
-    return {data: responseData, error: null};
+    const message: DiscordMessage = {
+      message:
+        'The Joke:\n------------\n  « ' +
+        responseData.joke +
+        ' »\n' +
+        data.reaction?.message,
+    };
+
+    sendDiscordMessage(message, ip);
   } catch (error) {
     console.error('Error sending data:', error);
     console.log(JSON.stringify(data));
