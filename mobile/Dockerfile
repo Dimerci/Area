@@ -24,6 +24,8 @@ COPY . .
 RUN npm install -g react-native-cli
 RUN npm install
 
+RUN mkdir -p android/app/src/main/assets
+
 # Bundle the React Native app
 RUN react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 
