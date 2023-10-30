@@ -36,8 +36,10 @@ RUN rm -rf ./android/app/src/main/res/drawable-*
 RUN rm -rf ./android/app/src/main/res/raw
 RUN ./android/gradlew -p ./android/ assembleRelease --continue
 
-# Declare a volume
-VOLUME /apk-output
+# Define the paths for the APK copy operation
+ENV SRC_PATH "/app/android/app/build/outputs/apk/release/app-release.apk"
+ENV DEST_PATH "/apk-output/app-release.apk"
 
-# Copy the built APK to the volume
-RUN cp ./android/app/build/outputs/apk/release/app-release.apk /apk-output/
+# Create destination directory and copy the APK
+RUN mkdir -p $(dirname "$DEST_PATH") && \
+    cp "$SRC_PATH" "$DEST_PATH"
