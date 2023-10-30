@@ -51,19 +51,14 @@
 			"flexBasis": "0%"
 		}
 	},
-	"basis-11/12": {
-		"style": {
-			"flexBasis": "91.666667%"
-		}
-	},
 	"basis-10/12": {
 		"style": {
 			"flexBasis": "83.333333%"
 		}
 	},
-	"basis-8/12": {
+	"basis-11/12": {
 		"style": {
-			"flexBasis": "66.666667%"
+			"flexBasis": "91.666667%"
 		}
 	},
 	"flex-row": {

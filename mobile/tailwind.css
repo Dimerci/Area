@@ -39,16 +39,12 @@
   flex: 1 1 0%
 }
 
-.basis-11\/12 {
-  flex-basis: 91.666667%
-}
-
 .basis-10\/12 {
   flex-basis: 83.333333%
 }
 
-.basis-8\/12 {
-  flex-basis: 66.666667%
+.basis-11\/12 {
+  flex-basis: 91.666667%
 }
 
 .flex-row {
