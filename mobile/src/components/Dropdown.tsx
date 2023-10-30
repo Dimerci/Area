@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import {FC, ReactElement, useRef, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, Modal, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import {Discord} from './Discord';
 import {WeatherData} from './Interfaces';
-=======
-import React, {FC, ReactElement, useRef, useState} from 'react';
-import {FlatList, Text, TouchableOpacity, Modal, View} from 'react-native';
-import {useTailwind} from 'tailwind-rn';
-import {Discord} from './Discord';
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 
 interface Props {
   label: string;
@@ -19,7 +12,6 @@ interface Props {
     component: ReactElement;
     id: number;
   }>;
-<<<<<<< HEAD
   debugScreen?: boolean;
   debugConsole?: boolean;
   weatherData?: WeatherData;
@@ -40,11 +32,6 @@ const Dropdown: FC<Props> = ({
   debugScreen,
   weatherData,
 }) => {
-=======
-}
-
-const Dropdown: FC<Props> = ({label, data}) => {
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
   const DropdownButton = useRef();
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(undefined);
@@ -54,7 +41,6 @@ const Dropdown: FC<Props> = ({label, data}) => {
   const [selectedReaction, setSelectedReaction] = useState(null);
 
   const componentMapping = {
-<<<<<<< HEAD
     Discord: () => (
       <Discord
         debugConsole={debugConsole}
@@ -62,9 +48,6 @@ const Dropdown: FC<Props> = ({label, data}) => {
         weatherData={weatherData}
       />
     ),
-=======
-    Discord: () => <Discord title="test" />,
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
     Test: () => <Text>Test</Text>,
   };
 
@@ -137,7 +120,6 @@ const Dropdown: FC<Props> = ({label, data}) => {
     </View>
   );
 };
-<<<<<<< HEAD
 export const NormalDropdown: FC<NormalDropdownProps> = ({
   label,
   data,
@@ -214,7 +196,5 @@ export const NormalDropdown: FC<NormalDropdownProps> = ({
     </View>
   );
 };
-=======
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 
 export default Dropdown;

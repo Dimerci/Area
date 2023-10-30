@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {useEffect, useState} from 'react';
 import {Alert, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
@@ -7,16 +6,10 @@ import {sendWeather} from '../apiHandling/weatherApi';
 import {WeatherData} from './Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
-=======
-import React, {useState} from 'react';
-import {Alert, Switch, Text, TextInput, View} from 'react-native';
-import {useTailwind} from 'tailwind-rn';
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
-<<<<<<< HEAD
   weatherData?: WeatherData;
 };
 
@@ -31,23 +24,11 @@ export function Discord({
   const [signature, setSignature] = useState('');
   const [discordProvenance, setDiscordProvenance] = useState(false);
   let provenance = '';
-=======
-};
-
-export function Discord({
-  debugScreen,
-  debugConsole,
-  weatherData,
-}: AreaBoxT): JSX.Element {
-  const tailwind = useTailwind();
-  const [message, setMessage] = useState('');
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
 
   const handleInputChange = inputText => {
     setMessage(inputText);
   };
 
-<<<<<<< HEAD
   AsyncStorage.getItem('backendIP')
     .then(backendIp => {
       if (backendIp) {
@@ -126,22 +107,12 @@ export function Discord({
 
   const handleButtonPress = () => {
     buildMessage();
-=======
-  const MessageSend = () => {
-    debugScreen && Alert.alert('Sent this :' + message);
-    debugConsole && console.log('Sent this :' + message);
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
   };
 
   return (
     <View>
       <View style={tailwind('rounded-lg p-2 mx-1 my-1')}>
         <Text style={tailwind('text-slate-50')}>Message to send :</Text>
-<<<<<<< HEAD
-=======
-        {debugConsole && <Text>debugConsole on</Text>}
-        {debugScreen && <Text>debugScreen on</Text>}
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
       </View>
       <View style={tailwind('bg-slate-600 rounded-b-lg p-2')}>
         <TextInput
@@ -153,10 +124,7 @@ export function Discord({
           style={tailwind('p-2 mx-1 my-1 border-2 border-slate-50 rounded-lg')}
         />
       </View>
-<<<<<<< HEAD
       <Button title="Submit" onPress={handleButtonPress} />
-=======
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
     </View>
   );
 }
