@@ -1,0 +1,1 @@
+export { getNorris } from "./getNorris";

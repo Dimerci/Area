@@ -3,6 +3,7 @@ import AboutJson from './routes/aboutJson/';
 import Weather from './routes/weather';
 import Discord from './routes/discord';
 import User from './routes/user'
+import Norris from './routes/chuckNorris'
 import { errorHandler } from './middleware/errors/ErrorHandler';
 import { connectToDatabase, Client } from './database/connectToDb';
 import { readListingByName, createListing, updateListingByName, deleteListingByName, listDb } from './database/dbInteraction';
@@ -36,6 +37,7 @@ app.use('/about.json', AboutJson);
 app.use('/discord', Discord);
 app.use('/weather', Weather);
 app.use('/user', User);
+app.use('/norris', Norris);
 
 app.get("/", (req, res) => {console.log("Here"); res.send("Hello world")});
 
