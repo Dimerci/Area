@@ -1,32 +1,43 @@
-# Use an official Node.js runtime as a parent image
-FROM node:16
+# First stage: Building the APK
+FROM reactnativecommunity/react-native-android AS builder
 
-# Set the working directory in the container
+# Set up environment variables
+ENV ANDROID_HOME /opt/android-sdk-linux
+ENV PATH $PATH:$ANDROID_HOME/emulator
+ENV PATH $PATH:$ANDROID_HOME/tools
+ENV PATH $PATH:$ANDROID_HOME/tools/bin
+ENV PATH $PATH:$ANDROID_HOME/platform-tools
+
+# Accept Android SDK licenses
+RUN yes | sdkmanager --licenses
+
+# Install Node.js
+RUN apt-get update && apt-get install -y nodejs npm && apt-get clean
+
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json to the container
-COPY package*.json ./
+# Copy your app's source code into the container
+COPY . .
 
-# Copy the metro.config.js to the container
-COPY metro.config.js .
-
-# Clean the npm cache
-RUN npm cache clean --force
-
-# Install project dependencies
+# Install global and local dependencies
+RUN npm install -g react-native-cli
 RUN npm install
 
-# Install adb
-RUN apt-get update && apt-get install -y android-tools-adb
+RUN mkdir -p android/app/src/main/assets
 
-# Copy the keypress script to the container
-COPY send_key.sh .
+# Bundle the React Native app
+RUN react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 
-# Make the script executable
-RUN chmod +x send_key.sh
+# Clean and build the APK
+RUN ./android/gradlew -p ./android/ clean
+RUN rm -rf ./android/app/src/main/res/drawable-*
+RUN rm -rf ./android/app/src/main/res/raw
+RUN ./android/gradlew -p ./android/ assembleRelease --continue
 
-# Expose the Metro port
-EXPOSE 8081
+# Second stage: Placeholder for potential operations on the APK or simply to reduce image size.
+FROM reactnativecommunity/react-native-android
 
-# Start Metro in watch mode and send 'a' keypress after a delay
-CMD ["sh", "-c", "npx react-native start & sleep 10 && ./send_key.sh"]
+WORKDIR /app
+
+COPY --from=builder /app/android/app/build/outputs/apk/release/app-release.apk /app/

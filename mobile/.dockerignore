@@ -1,0 +1,2 @@
+#ignore the files created by the build
+/app/android/app/src/main/res/*

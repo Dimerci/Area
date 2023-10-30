@@ -17,3 +17,12 @@ services:
   mobile:
     build:
       context: ./mobile
+    image: mobile
+    ports:
+      - "8082:8082"  # Map container port 8082 to host port 8082
+
+  apksaver:
+    image: mobile
+    volumes:
+      - ./apk-output:/apk-output
+    command: /bin/sh -c "cp /app/app-release.apk /apk-output/"
