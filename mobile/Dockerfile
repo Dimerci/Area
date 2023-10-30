@@ -1,4 +1,4 @@
-# Start from the react-native Android base image
+# First stage: Building the APK
 FROM reactnativecommunity/react-native-android AS builder
 
 # Set up environment variables
@@ -24,9 +24,6 @@ COPY . .
 RUN npm install -g react-native-cli
 RUN npm install
 
-# Ensure the directory for the bundle output exists
-RUN mkdir -p android/app/src/main/assets/
-
 # Bundle the React Native app
 RUN react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 
@@ -36,10 +33,9 @@ RUN rm -rf ./android/app/src/main/res/drawable-*
 RUN rm -rf ./android/app/src/main/res/raw
 RUN ./android/gradlew -p ./android/ assembleRelease --continue
 
-# Define the paths for the APK copy operation
-ENV SRC_PATH "/app/android/app/build/outputs/apk/release/app-release.apk"
-ENV DEST_PATH "/apk-output/app-release.apk"
+# Second stage: Placeholder for potential operations on the APK or simply to reduce image size.
+FROM reactnativecommunity/react-native-android
 
-# Create destination directory and copy the APK
-RUN mkdir -p $(dirname "$DEST_PATH") && \
-    cp "$SRC_PATH" "$DEST_PATH"
+WORKDIR /app
+
+COPY --from=builder /app/android/app/build/outputs/apk/release/app-release.apk /app/
