@@ -21,7 +21,7 @@ const WeatherSearchBox: React.FC = () => {
     const [interval, setInterval] = useState<'Greater Than' | 'Less Than' | 'Equals'>('Greater Than');
     const [reactionType, setReactionType] = useState('Discord');
     const [reactionMessage, setReactionMessage] = useState('');
-    const [serviceType, setServiceType] = useState('Weather');
+    const [selectedService, setServiceType] = useState<string | null>(null);
 
     const handleSubmit = async () => {
         const intervalValueMap: { [key in 'Greater Than' | 'Less Than' | 'Equals']: '>' | '<' | '=' } = {
@@ -29,7 +29,7 @@ const WeatherSearchBox: React.FC = () => {
             'Less Than': '<',
             'Equals': '='
         };
-    
+
         const data: WeatherData = {
             city,
             forecast: {
@@ -42,7 +42,7 @@ const WeatherSearchBox: React.FC = () => {
                 message: reactionMessage
             }
         };
-    
+
         const result = await sendWeather(data);
         if (result?.error) {
             console.error("Error sending data:", result.error);
@@ -52,53 +52,91 @@ const WeatherSearchBox: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center m-4">
-            <div className="bg-white p-8 w-80 rounded-lg shadow-xl border border-gray-200 transition-all duration-300 space-y-4">
-                <h2 className="text-2xl font-semibold text-center mb-4">Alert Setup</h2>
-                <InteractiveBox label="Service Type" type="dropdown" options={['Weather']} value={serviceType} onChange={setServiceType} />
-                <InteractiveBox label="City" type="text" value={city} onChange={setCity} />
-                <div className="flex space-x-2 justify-center">
-                    {['Temperature', 'Wind', 'Humidity'].map(type => (
+        <div className="flex items-center justify-center my-10 ">
+            <div className="relative p-10 w-full max-w-3xl rounded-lg shadow-xl border border-teal-300 space-y-6">
+                {/* Cross icon at the top left */}
+                <a href="http://localhost:8081/inside">
+                    <button
+                        onClick={() => setServiceType(null)}
+                        className="absolute top-4 left-4 bg-teal-300 text-teal-900 px-2 py-1 rounded-full shadow-lg font-medium hover:bg-teal-400 active:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition-all duration-300"
+                    >
+                        <i className="fa fa-times"></i>
+                    </button>
+                </a>
+                <h2 className="text-3xl font-bold text-center mb-8 text-teal-800">SET PARAMS</h2>
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="col-span-2">
                         <button
-                            key={type}
-                            onClick={() => setForecastType(type as 'Temperature' | 'Wind' | 'Humidity')}
-                            className={`px-3 py-1 rounded ${forecastType === type ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
+                            onClick={() => setServiceType('Weather')}
+                            className={`w-full py-2 px-4 rounded-lg text-lg ${selectedService === 'Weather' ? 'bg-teal-600 text-white' : 'bg-teal-600 text-white'} hover:shadow-md transition-all duration-300`}
                         >
-                            {type}
+                            WEATHER
                         </button>
-                    ))}
+                    </div>
+                    <div>
+                        <label className="font-medium text-lg mb-2 block">City</label>
+                        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="w-full p-2 border rounded-md" />
+                    </div>
+                    <div className="col-span-2">
+                        <label className="font-medium text-lg mb-2 block">Forecast Type</label>
+                        <div className="flex space-x-1">
+                            {['Temperature', 'Wind', 'Humidity'].map(type => (
+                                <button
+                                    key={type}
+                                    onClick={() => setForecastType(type as 'Temperature' | 'Wind' | 'Humidity')}
+                                    className={`flex-1 py-2 px-3 rounded-md text-sm ${forecastType === type ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-800'} hover:shadow-md transition-all duration-300`}
+                                >
+                                    {type}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="col-span-2">
+                        <label className="font-medium text-lg mb-2 block">Value: {value}</label>
+                        <input type="range" min="-100" max="100" value={value} onChange={(e) => setValue(Number(e.target.value))} className="w-full" />
+                    </div>
+                    <div className="col-span-2">
+                        <label className="font-medium text-lg mb-2 block">Interval</label>
+                        <div className="flex space-x-2">
+                            {['Greater Than', 'Less Than', 'Equals'].map(intvl => (
+                                <button
+                                    key={intvl}
+                                    onClick={() => setInterval(intvl as 'Greater Than' | 'Less Than' | 'Equals')}
+                                    className={`flex-1 py-2 px-4 rounded-md text-sm ${interval === intvl ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-800'} hover:shadow-md transition-all duration-300`}
+                                >
+                                    {intvl}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="col-span-2">
+                        <label className="font-medium text-lg mb-2 block">Reaction Type</label>
+                        <div className="flex space-x-1 mb-2">
+                            {['Discord', 'OtherType1', 'OtherType2'].map(type => (
+                                <button
+                                    key={type}
+                                    onClick={() => setReactionType(type)}
+                                    className={`flex-1 py-2 px-3 rounded-md text-sm ${reactionType === type ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-800'} hover:shadow-md transition-all duration-300`}
+                                >
+                                    {type}
+                                </button>
+                            ))}
+                        </div>
+                        {reactionType === 'Discord' && (
+                            <div>
+                                <label className="font-medium text-lg mb-2 block">Reaction Message</label>
+                                <input type="text" value={reactionMessage} onChange={(e) => setReactionMessage(e.target.value)} className="w-full p-2 border rounded-md" />
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="flex flex-col items-center space-y-2">
-                    <span className="text-sm font-medium mb-2">Value: {value}</span>
-                    <input type="range" min="0" max="100" value={value} onChange={(e) => setValue(Number(e.target.value))} className="w-full"/>
-                </div>
-                <InteractiveBox label="Interval" type="dropdown" options={['Greater Than', 'Less Than', 'Equals']} value={interval} onChange={(val) => setInterval(val as 'Greater Than' | 'Less Than' | 'Equals')} />
-                <InteractiveBox label="Reaction Type" type="text" value={reactionType} onChange={setReactionType} />
-                <InteractiveBox label="Reaction Message" type="text" value={reactionMessage} onChange={setReactionMessage} />
-                <button onClick={handleSubmit} className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg font-medium hover:bg-blue-600 transition-colors duration-300 w-full">Send Alert</button>
+                <button onClick={handleSubmit} className="bg-teal-600 text-white px-8 py-2 rounded-lg shadow-lg font-medium hover:bg-teal-700 active:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-300 w-full">Send Alert</button>
             </div>
         </div>
     );
-};
 
-const InteractiveBox: React.FC<{
-    label: string,
-    type: 'text' | 'dropdown',
-    options?: string[],
-    value: string | number,
-    onChange: (value: string) => void
-}> = ({ label, type, options, value, onChange }) => {
-    return (
-        <div className="py-2">
-            <label className="block mb-2 text-sm font-medium">{label}</label>
-            {type === 'text' && <input className="border p-2 rounded w-full text-sm" type="text" value={value} onChange={(e) => onChange(e.target.value)} />}
-            {type === 'dropdown' && (
-                <select className="border p-2 rounded w-full text-sm" value={value} onChange={(e) => onChange(e.target.value)}>
-                    {options?.map(option => <option key={option} value={option}>{option}</option>)}
-                </select>
-            )}
-        </div>
-    );
+    return null;
+
 };
 
 export default WeatherSearchBox;

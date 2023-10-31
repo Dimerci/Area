@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import { AuthProvider } from './utils/AuthContext';
-// src/index.tsx or src/index.js
 import './index.css';
+import App from './App';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
-  <AuthProvider>
-    <App />
-  </AuthProvider>,
+  <Auth0Provider
+    domain="dev-zqudvtrv6sw7xe6c.us.auth0.com"
+    clientId="cx4hdbUF3doZRcilukkHUajuKYSdOFKA"
+    onRedirectCallback={() => window.location.href = window.location.origin}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Auth0Provider>
+  ,
+
   document.getElementById('root')
 );
+
