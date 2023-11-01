@@ -1,5 +1,5 @@
 import React from 'react';
-import backgroundImage from './light.png';
+import backgroundImage from '../assets/light.png';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const HomePage: React.FC = () => {

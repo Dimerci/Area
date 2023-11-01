@@ -22,7 +22,7 @@ const InsidePage: React.FC = () => {
       {isAuthenticated && user && <div>Welcome, {user.email}</div>}
       {/* Top Bar */}
       <div className="bg-blue-500 p-4 shadow-md shadow-2xl rounded-b-lg flex justify-between items-center">
-        <a href="http://localhost:8081/inside">
+        <a href="http://localhost:8081/">
           <button
             style={{ fontFamily: '"Bebas Neue", sans-serif' }}
             className={`text-6xl font-bold tracking-wider ${selectedButton === 'AREA' ? 'text-green-500' : 'text-white'}`}
