@@ -4,10 +4,10 @@ import { postRequestToDiscord } from "../../../utils/reaction/postRequestToDisco
 
 export async function getNorris(req: Request, res: Response, next: NextFunction) {
     try {
-        const field = req.query.category as string
-        const { message } = req.body;
+        const { message } = req.body as { message: string };
         const joke = await getChuckNorrisJoke({ message });
-        postRequestToDiscord(joke);
+        const finaljoke = "Chuck Norris jokes on " + message + ":\n" + joke;
+        postRequestToDiscord(finaljoke);
         res.json({ joke });
     } catch (err) {
         next(err);
