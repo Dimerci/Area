@@ -3,6 +3,7 @@ import {FlatList, Text, TouchableOpacity, Modal, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import {Discord} from './Discord';
 import {JokeData, WeatherData} from './Interfaces';
+import {ChuckReaD} from './ChuckReaD';
 
 interface Props {
   label: string;
@@ -52,6 +53,14 @@ const Dropdown: FC<Props> = ({
       />
     ),
     Test: () => <Text>Test</Text>,
+    Chuck: () => (
+      <ChuckReaD
+        debugConsole={debugConsole}
+        debugScreen={debugScreen}
+        weatherData={weatherData}
+        jokeData={jokeData}
+      />
+    ),
   };
 
   const handleSelect = item => {

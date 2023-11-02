@@ -5,6 +5,12 @@
       "value": "discord",
       "component": "Discord",
       "id": 0
+    },
+    {
+      "label": "Chuck Norris",
+      "value": "chuck",
+      "component": "Chuck",
+      "id": 1
     }
   ]
 }
