@@ -1,6 +1,7 @@
 import { NextFunction, Request, response, Response } from 'express';
 import { ErrorStatus } from '../../../middleware/errors/ErrorStatus'
 import { fetchClock } from './fetchClockTime';
+import { postRequestToDiscord } from '../../../utils/reaction/postRequestToDiscord';
 
 interface PostClockBody {
     city: string;
@@ -15,11 +16,16 @@ export async function postClock(req: Request<void, void, PostClockBody, void>, r
             }
         }
         const { city } = req.body;
-        const response = await fetchClock({city});
-        if (response.data) {
-            const { data } = response;
+        const response = await fetchClock({ city });
 
-            res.json(data);
+        if (response.data) {
+            const { datetime, timezone } = response.data;
+
+            // Strip seconds off the datetime
+            const strippedDatetime = datetime.slice(0, 16);  // yyyy:mm:dd hh:mm format
+
+            const formattedMessage = `The date in ${city} is ${strippedDatetime} and their timezone is ${timezone}`;
+            postRequestToDiscord(formattedMessage);
         } else {
             const { error } = response;
             throw(error);
