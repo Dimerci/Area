@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react';
-import keycloak from './keycloakConfig';
-import { useAuth } from './utils/AuthContext';
-import AppRouter from './utils/Router';
+import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import LogOutButton from './LogOutButton';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/InsidePage';
+import InsidePage from './pages/InsidePage';
 
-const App: React.FC = () => {
-  const { setIsAuthenticated } = useAuth();
+function App() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-  useEffect(() => {
-    keycloak.init({ onLoad: 'login-required' })
-      .then(authenticated => {
-        setIsAuthenticated(authenticated);
-      })
-      .catch(err => {
-        console.error("Failed to initialize authentication", err);
-      });
-  }, [setIsAuthenticated]);
+  if(isLoading) {
+    return <div>loading...</div>
+  }
 
-  return <AppRouter />;
-};
+  return (
+    <div className="App">
+        { !isAuthenticated && <HomePage /> }  {/* Show HomePage if not authenticated */}
+        { isAuthenticated && <LogOutButton /> && <InsidePage />}
+        { isAuthenticated && user && user.email }
+    </div>
+  );
+}
 
 export default App;

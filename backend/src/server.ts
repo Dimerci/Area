@@ -9,6 +9,7 @@ import { errorHandler } from './middleware/errors/ErrorHandler';
 import { connectToDatabase, Client } from './database/connectToDb';
 import { readListingByName, createListing, updateListingByName, deleteListingByName, listDb } from './database/dbInteraction';
 import { auth, ConfigParams } from 'express-openid-connect';
+import 'dotenv/config';
 
 const app = express();
 const port = 8080;
@@ -20,9 +21,9 @@ connectToDatabase();
 const config: ConfigParams = {
   authRequired: false,
   auth0Logout: true,
-  secret: 'a long, randomly-generated string stored in env',
+  secret: process.env.AUTH0_CLIENT_SECRET || 'Iyw3zDnJFy6RcCftqkEB9dyzKYjke_Y3exF7IhNxSO_dWG31iO0Wt6K0RSKPFuCu',
   baseURL: 'http://localhost:8080',
-  clientID: 'EeIDOpDIYLzrQc04tgmkr8r2nyNIVZqF',
+  clientID: 'cx4hdbUF3doZRcilukkHUajuKYSdOFKA',
   issuerBaseURL: 'https://dev-zqudvtrv6sw7xe6c.us.auth0.com',
   authorizationParams:{
     redirect_uri: 'http://localhost:8080/callback',
@@ -44,9 +45,12 @@ app.use('/mealDb', MealDb);
 app.get("/", (req, res) => {console.log("Here"); res.send("Hello world")});
 
 app.get("/callback", (req, res) => {
+  console.log("Callback route hit");
   if (req.oidc.isAuthenticated()) {
-    res.redirect('http://localhost:8081'); // Redirect to frontend after successful authentication
+    console.log("User is authenticated");
+    res.redirect('http://localhost:8081');
   } else {
+    console.log("Authentication failed");
     res.send("Authentication failed");
   }
 });

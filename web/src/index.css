@@ -23,3 +23,72 @@ code {
     transition: all 0.5s ease-in-out;
   }
 }
+
+.slider-thumb::-webkit-slider-thumb {
+  width: 20px;
+  height: 40px;
+  background-color: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.1s;
+}
+
+.slider-thumb::-webkit-slider-thumb:hover {
+  background-color: #45a049;
+}
+
+.slider-thumb::-webkit-slider-runnable-track {
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  border-radius: 1.3px;
+  background: #319795;
+}
+
+/* Slider Thumb and Track Styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 24px; /* Adjusting this ensures that the thumb is centered vertically */
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  margin-top: -8px; /* Half the negative difference between the thumb height and track height to center the thumb */
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #48BB78; /* green-500 */
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: linear-gradient(to right, #D1FAE5, #38B2AC); /* gradient from teal-200 to teal-600 */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #48BB78; /* green-500 */
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: linear-gradient(to right, #D1FAE5, #38B2AC); /* gradient from teal-200 to teal-600 */
+}
