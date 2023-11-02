@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { getRandomMeal } from "./getRandomMeal";
+import { postRequestToDiscord } from "../../../utils/reaction/postRequestToDiscord";
 
 export async function getMeal(req: Request, res: Response, next: NextFunction) {
     try {
@@ -8,7 +9,8 @@ export async function getMeal(req: Request, res: Response, next: NextFunction) {
         // Notice that we no longer access meals[0] since the response doesn't seem to be an array
         const instructions = mealData.strInstructions;
         const ingredients = extractIngredients(mealData);
-
+        postRequestToDiscord(instructions);
+        postRequestToDiscord(ingredients.join("\n"));
         res.json({ instructions, ingredients });
     } catch (err) {
         next(err);

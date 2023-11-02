@@ -13,8 +13,6 @@ export async function getRandomMeal() {
 
         const mealData = await response.json();
         const meal = mealData.meals[0];
-
-        console.log('Random Meal:', meal);
         return meal;
     } catch (err) {
         console.error(err);
