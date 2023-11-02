@@ -1,13 +1,19 @@
 import React from 'react';
 import {ScrollView, Text} from 'react-native';
-import {WeatherWidget} from '../components/WeatherWidget';
-import {Box} from '../components/Box';
+import {WeatherWidget} from '../components/widgets/WeatherWidget';
+import {Box} from '../components/utils/Box';
+import {ClockWidget} from '../components/widgets/ClockWidget';
 
 const data = [
   {
     id: 1,
     title: 'Weather',
     component: <WeatherWidget />,
+  },
+  {
+    id: 2,
+    title: 'Clock',
+    component: <ClockWidget />,
   },
 ];
 

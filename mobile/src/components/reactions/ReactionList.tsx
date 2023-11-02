@@ -1,21 +1,19 @@
 import {View} from 'react-native';
-import Dropdown from './Dropdown';
-import {JokeData, WeatherData} from './Interfaces';
+import Dropdown from '../utils/Dropdown';
+import {ActionData} from '../utils/Interfaces';
 
-const data = require('../config/reactions.json');
+const data = require('../../config/reactions.json');
 
 type ReactionT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
-  weatherData?: WeatherData;
-  jokeData?: JokeData;
+  actionData: ActionData;
 };
 
 function ReactionList({
   debugConsole,
   debugScreen,
-  weatherData,
-  jokeData,
+  actionData,
 }: ReactionT): JSX.Element {
   return (
     <View>
@@ -24,8 +22,7 @@ function ReactionList({
         data={data.reactions}
         debugConsole={debugConsole}
         debugScreen={debugScreen}
-        weatherData={weatherData}
-        jokeData={jokeData}
+        actionData={actionData}
       />
     </View>
   );

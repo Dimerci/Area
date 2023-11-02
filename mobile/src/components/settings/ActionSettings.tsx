@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import {Box} from '../Box';
+import {Box} from '../utils/Box';
 import {WeatherSettings} from './WeatherSettings copy';
 
 export function ActionSettings() {

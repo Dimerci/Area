@@ -9,12 +9,12 @@ import React, {useState} from 'react';
 import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
 import {Auth0Provider, useAuth0} from 'react-native-auth0';
-import {LoginButton} from './src/components/Login';
+import {LoginButton} from './src/components/utils/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainPage} from './src/screens/MainPage';
 import {SettingsPage} from './src/screens/SettingsPage';
 import {Button} from 'react-native-elements';
-import LogOutButton from './src/components/Logout';
+import LogOutButton from './src/components/utils/Logout';
 
 function App(): JSX.Element {
   const [isSettings, setIsSettings] = useState(false);

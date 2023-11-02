@@ -1,36 +1,28 @@
 import {useEffect, useState} from 'react';
-import {Alert, Text, TextInput, View} from 'react-native';
+import {Alert, View} from 'react-native';
 import {Button} from 'react-native-elements';
-import {useTailwind} from 'tailwind-rn';
-import {sendWeather} from '../apiHandling/weatherApi';
-import {JokeData, WeatherData} from './Interfaces';
+import {sendWeather} from '../../apiHandling/weatherApi';
+import {ActionData, ClockData, WeatherData} from '../utils/Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
-import {sendJoke} from '../apiHandling/chuckAPI';
+import {getMeal} from '../../apiHandling/mealDBAPI';
+import {postClock} from '../../apiHandling/clockAPI';
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
-  weatherData?: WeatherData;
-  jokeData?: JokeData;
+  actionData: ActionData;
 };
 
-export function Discord({
+export function MealDBRea({
   debugScreen,
   debugConsole,
-  weatherData,
-  jokeData,
+  actionData,
 }: AreaBoxT): JSX.Element {
-  const tailwind = useTailwind();
-  const [message, setMessage] = useState('');
   const [backendIP, setbackendIp] = useState('localhost');
   const [signature, setSignature] = useState('');
   const [discordProvenance, setDiscordProvenance] = useState(false);
   let provenance = '';
-
-  const handleInputChange = inputText => {
-    setMessage(inputText);
-  };
 
   AsyncStorage.getItem('backendIP')
     .then(backendIp => {
@@ -83,17 +75,29 @@ export function Discord({
     }
 
     // Now, construct the message with the correct provenance
-    const newMessage =
-      message + '\n------------\n~' + signature + '\n[' + provenance + ']';
+    const meal = await getMeal(backendIP);
 
-    if (weatherData) {
+    const newMessage =
+      '# The Meal:\n------------\n ## __Ingredients__ :\n' +
+      meal.ingredients +
+      '\n ## __Instructions__ :\n' +
+      meal.instructions +
+      '\n------------\n~' +
+      signature +
+      '\n[' +
+      provenance +
+      ']';
+
+    console.log(newMessage);
+
+    if (actionData.weatherData) {
       const newWeatherData: WeatherData = {
-        city: weatherData?.city,
+        city: actionData.weatherData?.city,
         forecast: {
-          type: weatherData?.forecast.type,
-          value: weatherData?.forecast.value,
+          type: actionData.weatherData?.forecast.type,
+          value: actionData.weatherData?.forecast.value,
         },
-        interval: weatherData?.interval,
+        interval: actionData.weatherData?.interval,
         reaction: {
           type: 'Discord',
           message: newMessage,
@@ -105,23 +109,17 @@ export function Discord({
         console.log('Send this:\n' + newWeatherData?.reaction?.message);
 
       sendWeather(newWeatherData, backendIP);
-    } else if (jokeData) {
-      const newJokeData: JokeData = {
-        jokeType: jokeData.jokeType,
-        reaction: {
-          type: 'Discord',
-          message: newMessage,
-        },
+    } else if (actionData.clockData) {
+      const newClockData: ClockData = {
+        city: actionData.clockData.city,
+        message: newMessage,
       };
-      console.log(newJokeData?.reaction?.message);
-      console.log(provenance);
-      debugScreen &&
-        Alert.alert('Send this:\n' + newJokeData?.reaction?.message);
-      debugConsole &&
-        console.log('Send this:\n' + newJokeData?.reaction?.message);
-      sendJoke(newJokeData, backendIP);
+      debugScreen && Alert.alert('Send this:\n' + newClockData?.message);
+      debugConsole && console.log('Send this:\n' + newClockData?.message);
+
+      postClock(newClockData, backendIP);
     } else {
-      Alert.alert('You did not input a message');
+      console.error('Something went wrong');
     }
   }
 
@@ -131,20 +129,7 @@ export function Discord({
 
   return (
     <View>
-      <View style={tailwind('rounded-lg p-2 mx-1 my-1')}>
-        <Text style={tailwind('text-slate-50')}>Message to send :</Text>
-      </View>
-      <View style={tailwind('bg-slate-600 rounded-b-lg p-2')}>
-        <TextInput
-          multiline
-          numberOfLines={4} // Set the number of visible lines
-          placeholder="Enter text here"
-          value={message}
-          onChangeText={handleInputChange}
-          style={tailwind('p-2 mx-1 my-1 border-2 border-slate-50 rounded-lg')}
-        />
-      </View>
-      <Button title="Submit" onPress={handleButtonPress} />
+      <Button title="Get a recipe" onPress={handleButtonPress} />
     </View>
   );
 }

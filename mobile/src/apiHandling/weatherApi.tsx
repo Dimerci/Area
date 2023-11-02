@@ -1,4 +1,4 @@
-import {WeatherData} from '../components/Interfaces';
+import {WeatherData} from '../components/utils/Interfaces';
 
 export async function sendWeather(data: WeatherData, ip: String) {
   console.log(JSON.stringify(data));

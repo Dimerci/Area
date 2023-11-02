@@ -1,26 +1,30 @@
 import {SetStateAction, useEffect, useState} from 'react';
-import {Alert, Text, TextInput, View} from 'react-native';
+import {Alert, View} from 'react-native';
 import {Button} from 'react-native-elements';
-import {sendWeather} from '../apiHandling/weatherApi';
-import {JokeData, WeatherData} from './Interfaces';
+import {sendWeather} from '../../apiHandling/weatherApi';
+import {
+  ActionData,
+  ClockData,
+  JokeData,
+  WeatherData,
+} from '../utils/Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
-import {getJoke, sendJoke} from '../apiHandling/chuckAPI';
-import {NormalDropdown} from './Dropdown';
+import {getJoke} from '../../apiHandling/chuckAPI';
+import {NormalDropdown} from '../utils/Dropdown';
+import {postClock} from '../../apiHandling/clockAPI';
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
-  weatherData?: WeatherData;
-  jokeData?: JokeData;
+  actionData: ActionData;
 };
 
 export function ChuckReaD({
   debugScreen,
   debugConsole,
-  weatherData,
-}: // jokeData,
-AreaBoxT): JSX.Element {
+  actionData,
+}: AreaBoxT): JSX.Element {
   const [backendIP, setbackendIp] = useState('localhost');
   const [signature, setSignature] = useState('');
   const [discordProvenance, setDiscordProvenance] = useState(false);
@@ -127,7 +131,7 @@ AreaBoxT): JSX.Element {
     const joke = await getJoke(jokeData, backendIP);
 
     const newMessage =
-      'The Joke:\n------------\n  « ' +
+      '# The Joke:\n------------\n  « ' +
       joke +
       ' »\n' +
       '------------\n~' +
@@ -138,14 +142,14 @@ AreaBoxT): JSX.Element {
 
     console.log(newMessage);
 
-    if (weatherData) {
+    if (actionData.weatherData) {
       const newWeatherData: WeatherData = {
-        city: weatherData?.city,
+        city: actionData.weatherData?.city,
         forecast: {
-          type: weatherData?.forecast.type,
-          value: weatherData?.forecast.value,
+          type: actionData.weatherData?.forecast.type,
+          value: actionData.weatherData?.forecast.value,
         },
-        interval: weatherData?.interval,
+        interval: actionData.weatherData?.interval,
         reaction: {
           type: 'Discord',
           message: newMessage,
@@ -157,23 +161,17 @@ AreaBoxT): JSX.Element {
         console.log('Send this:\n' + newWeatherData?.reaction?.message);
 
       sendWeather(newWeatherData, backendIP);
-    } else if (jokeData) {
-      const newJokeData: JokeData = {
-        jokeType: jokeData.jokeType,
-        reaction: {
-          type: 'Discord',
-          message: newMessage,
-        },
+    } else if (actionData.clockData) {
+      const newClockData: ClockData = {
+        city: actionData.clockData.city,
+        message: newMessage,
       };
-      console.log(newJokeData?.reaction?.message);
-      console.log(provenance);
-      debugScreen &&
-        Alert.alert('Send this:\n' + newJokeData?.reaction?.message);
-      debugConsole &&
-        console.log('Send this:\n' + newJokeData?.reaction?.message);
-      sendJoke(newJokeData, backendIP);
+      debugScreen && Alert.alert('Send this:\n' + newClockData?.message);
+      debugConsole && console.log('Send this:\n' + newClockData?.message);
+
+      postClock(newClockData, backendIP);
     } else {
-      Alert.alert('You did not input a message');
+      console.error('Something went wrong');
     }
   }
 

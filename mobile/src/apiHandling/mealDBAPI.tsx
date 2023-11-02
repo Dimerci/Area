@@ -1,8 +1,6 @@
-import {JokeData} from '../components/utils/Interfaces';
-
-export async function getJoke(data: JokeData, ip: string) {
+export async function getMeal(ip: string) {
   try {
-    const url = `http://${ip}:8080/norris?category=${data.jokeType}`;
+    const url = `http://${ip}:8080/mealDb`;
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -17,16 +15,20 @@ export async function getJoke(data: JokeData, ip: string) {
 
     const responseData = await response.json();
 
-    if (responseData.joke) {
-      console.log('Success: ' + responseData.joke);
-      return responseData.joke;
+    if (responseData.ingredients && responseData.instructions) {
+      console.log(
+        'Success: ' + responseData.ingredients + responseData.instructions,
+      );
+      return {
+        ingredients: responseData.ingredients,
+        instructions: responseData.instructions,
+      };
     } else {
       console.error('Unexpected response format:', responseData);
       return {data: null, error: 'Unexpected response format'};
     }
   } catch (error) {
     console.error('Error sending data:', error);
-    console.log(JSON.stringify(data));
     return {data: null, error};
   }
 }

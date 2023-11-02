@@ -1,6 +1,7 @@
-// export type SettingsRea = {
-//   ip: String;
-// };
+export type ClockData = {
+  city: string;
+  message?: string;
+};
 
 export type WeatherData = {
   city: string;
@@ -41,4 +42,9 @@ export type JokeData = {
 
 export type DiscordMessage = {
   message: string;
+};
+
+export type ActionData = {
+  weatherData?: WeatherData;
+  clockData?: ClockData;
 };

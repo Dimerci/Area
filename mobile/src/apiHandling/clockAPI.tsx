@@ -1,8 +1,8 @@
-import {DiscordMessage} from '../components/utils/Interfaces';
+import {ClockData} from '../components/utils/Interfaces';
 
-export async function sendDiscordMessage(data: DiscordMessage, ip: String) {
+export async function postClock(data: ClockData, ip: String) {
   try {
-    const response = await fetch('http://' + ip + ':8080/discord', {
+    const response = await fetch('http://' + ip + ':8080/clock', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

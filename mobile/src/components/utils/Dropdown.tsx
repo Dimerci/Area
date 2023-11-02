@@ -1,9 +1,10 @@
 import {FC, ReactElement, useRef, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, Modal, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
-import {Discord} from './Discord';
-import {JokeData, WeatherData} from './Interfaces';
-import {ChuckReaD} from './ChuckReaD';
+import {ActionData} from './Interfaces';
+import {ChuckReaD} from '../reactions/ChuckRea';
+import {MealDBRea} from '../reactions/MealDBRea';
+import {Discord} from '../reactions/DiscordRea';
 
 interface Props {
   label: string;
@@ -15,9 +16,9 @@ interface Props {
   }>;
   debugScreen?: boolean;
   debugConsole?: boolean;
-  weatherData?: WeatherData;
-  jokeData?: JokeData;
+  actionData: ActionData;
 }
+
 interface NormalDropdownProps {
   label: string;
   data: Array<{
@@ -32,8 +33,7 @@ const Dropdown: FC<Props> = ({
   data,
   debugConsole,
   debugScreen,
-  weatherData,
-  jokeData,
+  actionData,
 }) => {
   const DropdownButton = useRef();
   const [visible, setVisible] = useState(false);
@@ -48,17 +48,21 @@ const Dropdown: FC<Props> = ({
       <Discord
         debugConsole={debugConsole}
         debugScreen={debugScreen}
-        weatherData={weatherData}
-        jokeData={jokeData}
+        actionData={actionData}
       />
     ),
-    Test: () => <Text>Test</Text>,
+    MealDB: () => (
+      <MealDBRea
+        debugConsole={debugConsole}
+        debugScreen={debugScreen}
+        actionData={actionData}
+      />
+    ),
     Chuck: () => (
       <ChuckReaD
         debugConsole={debugConsole}
         debugScreen={debugScreen}
-        weatherData={weatherData}
-        jokeData={jokeData}
+        actionData={actionData}
       />
     ),
   };

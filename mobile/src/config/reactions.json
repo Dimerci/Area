@@ -11,6 +11,12 @@
       "value": "chuck",
       "component": "Chuck",
       "id": 1
+    },
+    {
+      "label": "MealDB",
+      "value": "mealDB",
+      "component": "MealDB",
+      "id": 2
     }
   ]
 }

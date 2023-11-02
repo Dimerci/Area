@@ -1,9 +1,9 @@
-import {useEffect, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
 import {Text, TextInput, View} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
-import ReactionList from './ReactionList';
-import {NormalDropdown} from './Dropdown';
-import {WeatherData} from './Interfaces';
+import ReactionList from '../reactions/ReactionList';
+import {NormalDropdown} from '../utils/Dropdown';
+import {ActionData, WeatherData} from '../utils/Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type WeatherWidgetT = {
@@ -19,7 +19,7 @@ export function WeatherWidget({}: WeatherWidgetT): JSX.Element {
   const [debugConsole, setDebugConsole] = useState(false);
   const [debugScreen, setDebugScreen] = useState(false);
 
-  const handleInputChange = inputText => {
+  const handleInputChange = (inputText: SetStateAction<string>) => {
     setCity(inputText);
   };
   const forecastTypeOptions = [
@@ -27,13 +27,15 @@ export function WeatherWidget({}: WeatherWidgetT): JSX.Element {
     {label: 'Wind', value: 'wind'},
     {label: 'Humidity', value: 'humidity'},
   ];
-  const handleForecastTypeChange = value => {
+  const handleForecastTypeChange = (value: {value: SetStateAction<string>}) => {
     setForecastType(value.value);
   };
-  const handleForecastValueChange = value => {
+  const handleForecastValueChange = (value: SetStateAction<string>) => {
     setForecastValue(value);
   };
-  const handleForecastValueOptionsChange = value => {
+  const handleForecastValueOptionsChange = (value: {
+    value: SetStateAction<string>;
+  }) => {
     setForecastOptionValue(value.value);
   };
   const forecastValueOptions = [
@@ -49,6 +51,10 @@ export function WeatherWidget({}: WeatherWidgetT): JSX.Element {
       value: Number(forecastValue),
     },
     interval: forecastOptionValue as '=' | '<' | '>',
+  };
+
+  const actionData: ActionData = {
+    weatherData: weatherData,
   };
 
   useEffect(() => {
@@ -104,7 +110,7 @@ export function WeatherWidget({}: WeatherWidgetT): JSX.Element {
         style={tailwind('p-2 mx-1 my-2 border-2 border-slate-50 rounded-lg')}
       />
       <ReactionList
-        weatherData={weatherData}
+        actionData={actionData}
         debugConsole={debugConsole}
         debugScreen={debugScreen}
       />
