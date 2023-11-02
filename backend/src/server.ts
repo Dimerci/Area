@@ -2,7 +2,12 @@ import express from 'express';
 import AboutJson from './routes/aboutJson/';
 import Weather from './routes/weather';
 import Discord from './routes/discord';
+import User from './routes/user'
+import Norris from './routes/chuckNorris'
+import MealDb from './routes/mealDb'
 import { errorHandler } from './middleware/errors/ErrorHandler';
+import { connectToDatabase, Client } from './database/connectToDb';
+import { readListingByName, createListing, updateListingByName, deleteListingByName, listDb } from './database/dbInteraction';
 import { auth, ConfigParams } from 'express-openid-connect';
 import 'dotenv/config';
 
@@ -11,6 +16,7 @@ const port = 8080;
 const cors = require('cors');
 
 app.use(cors());
+connectToDatabase();
 
 const config: ConfigParams = {
   authRequired: false,
@@ -32,6 +38,9 @@ app.use(auth(config));
 app.use('/about.json', AboutJson);
 app.use('/discord', Discord);
 app.use('/weather', Weather);
+app.use('/user', User);
+app.use('/norris', Norris);
+app.use('/mealDb', MealDb);
 
 app.get("/", (req, res) => {console.log("Here"); res.send("Hello world")});
 
