@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import WeatherSearchBox from '../components/WeatherSearchBox';
 import ServiceBox from '../components/ServiceBox';
+import { sendUserIdDb } from '../components/connectionDB';
 
 const InsidePage: React.FC = () => {
   const { logout, user, isAuthenticated } = useAuth0();
@@ -11,6 +12,10 @@ const InsidePage: React.FC = () => {
   const [selectedService, setSelectedService] = useState('');
   const [showSetParamsButton, setShowSetParamsButton] = useState(false);
   const [selectedButton, setSelectedButton] = useState('AREA'); // Initialize to 'AREA'
+  if (user && user.email) {
+    console.log("Yeah")
+    const dbResult = sendUserIdDb(user.email);
+  }
 
   return (
     <div className="flex flex-col h-screen">
