@@ -64,10 +64,10 @@ export async function readListingByClientId(Client: typeof MongoClient, filter: 
     }
 }
 
-export async function addActionToDocument(Client: typeof MongoClient, filter: { clientId: number }, newAction: any) {
+export async function addActionToDocument(Client: typeof MongoClient, filter: { clientId: string }, newAction: any) {
   const update = {
     $push: {
-      action: newAction
+      data: newAction
     }
   };
 

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { sendWeather } from './WeatherAPI';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export interface WeatherData {
+    clientId: string;
     city: string;
     forecast: {
         type: 'temperature' | 'wind' | 'humidity';
@@ -15,6 +17,7 @@ export interface WeatherData {
 }
 
 const WeatherSearchBox: React.FC = () => {
+    const { user } = useAuth0();
     const [city, setCity] = useState('');
     const [forecastType, setForecastType] = useState<'Temperature' | 'Wind' | 'Humidity'>('Temperature');
     const [value, setValue] = useState(0);
@@ -29,19 +32,19 @@ const WeatherSearchBox: React.FC = () => {
             'Less Than': '<',
             'Equals': '='
         };
-
         const data: WeatherData = {
+            clientId: user?.email || 'hi',
             city,
             forecast: {
-                type: forecastType.toLowerCase() as 'temperature' | 'wind' | 'humidity',
-                value: value
+              type: forecastType.toLowerCase() as 'temperature' | 'wind' | 'humidity',
+              value: value,
             },
             interval: intervalValueMap[interval] as '>' | '<' | '=',
             reaction: {
-                type: reactionType,
-                message: reactionMessage
-            }
-        };
+              type: reactionType,
+              message: reactionMessage,
+            },
+          };
 
         const result = await sendWeather(data);
         if (result?.error) {

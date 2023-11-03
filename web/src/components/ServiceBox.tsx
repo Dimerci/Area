@@ -17,7 +17,7 @@ const ServiceBox: React.FC<ServiceBoxProps> = ({ selectedService, onSelectServic
             {['Weather', 'Service 1', 'Service 2'].map(service => (
               <div
                   key={service}
-                  onClick={() => onSelectService(service)} 
+                  onClick={() => onSelectService(service)}
                   className={`mb-2 py-3 px-4 rounded-lg text-lg cursor-pointer bg-gray-200 text-gray-700 hover:shadow-md transition-all duration-300`}
               >
                   {service}

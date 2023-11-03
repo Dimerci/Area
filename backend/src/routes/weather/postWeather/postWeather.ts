@@ -10,7 +10,7 @@ import { Client } from '../../../database/connectToDb';
 import { addActionToDocument, readListingByClientId } from '../../../database/dbInteraction';
 
 interface PostWeatherBody {
-    clientId: number;
+    clientId: string;
     city: string;
     forecast: Forecast;
     interval: Interval;
@@ -42,7 +42,7 @@ export async function postWeather(req: Request<void, void, PostWeatherBody, void
                     type: "weather",
                     city: city,
                     forecast: {
-                      type: forecast,
+                      name: forecast.type,
                       value: forecast.value
                     },
                     interval: interval,
@@ -51,7 +51,6 @@ export async function postWeather(req: Request<void, void, PostWeatherBody, void
                       message: reaction.message
                     }
                   };
-                
                 addActionToDocument(Client, {clientId}, newAction)
             }
             res.json(data);
