@@ -5,7 +5,7 @@ export type Reaction = {
     type: "Chuck Norris"
     message: string;
 } | {
-    type: "mealDB"
+    type: "meal"
     message: string;
 } | {
     type: "clock"
