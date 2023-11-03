@@ -25,7 +25,7 @@ export async function getCorrectReaction(reaction: Reaction) {
         if (!(requiredFields in reaction)){
         }
         const meal = await getMealFromDB(reaction.message);
-        //postRequestToDiscord(meal);
+        postRequestToDiscord(meal);
     }
     if (reaction.type === "Clock") {
         const requiredFields = "message"

@@ -9,7 +9,12 @@ export async function getRandomMeal(input:string) {
         else if (input.startsWith("filter:")) {
             const filterValue = input.split("filter:")[1].trim();  // Extract the value after "filter:"
             apiUrl = "https://www.themealdb.com/api/json/v1/1/filter.php?i=" + filterValue;
-            console.log(apiUrl);
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new ErrorStatus("Error fetching meal data", response.status);
+            }
+            const mealData = await response.json();
+            return mealData;
         } 
         else {
             apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + input;
@@ -20,8 +25,8 @@ export async function getRandomMeal(input:string) {
             throw new ErrorStatus("Error fetching meal data", response.status);
         }
         const mealData = await response.json();
-        console.log(mealData);
         const meal = mealData.meals[0];
+        console.log(meal);
         return meal;
 
     } catch (err) {
