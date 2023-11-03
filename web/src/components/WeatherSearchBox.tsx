@@ -45,6 +45,7 @@ const WeatherSearchBox: React.FC = () => {
               message: reactionMessage,
             },
           };
+          console.log(reactionType + reactionMessage)
 
         const result = await sendWeather(data);
         if (result?.error) {
@@ -66,7 +67,7 @@ const WeatherSearchBox: React.FC = () => {
                         <i className="fa fa-times"></i>
                     </button>
                 </a>
-                <h2 className="text-3xl font-bold text-center mb-8 text-teal-800">SET PARAMS</h2>
+                <h2 className="text-3xl font-bold text-center mb-8 text-teal-800">Setup Action</h2>
                 <div className="grid grid-cols-2 gap-6">
                     <div className="col-span-2">
                         <button
@@ -115,7 +116,7 @@ const WeatherSearchBox: React.FC = () => {
                     <div className="col-span-2">
                         <label className="font-medium text-lg mb-2 block">Reaction Type</label>
                         <div className="flex space-x-1 mb-2">
-                            {['Discord', 'OtherType1', 'OtherType2'].map(type => (
+                            {['Discord', 'Chuck Norris', 'Clock', 'Meal'].map(type => (
                                 <button
                                     key={type}
                                     onClick={() => setReactionType(type)}
@@ -131,6 +132,29 @@ const WeatherSearchBox: React.FC = () => {
                                 <input type="text" value={reactionMessage} onChange={(e) => setReactionMessage(e.target.value)} className="w-full p-2 border rounded-md" />
                             </div>
                         )}
+                        {reactionType === 'Chuck Norris' && (
+                            <div>
+                                <label className="font-medium text-lg mb-4 block">Joke Category</label>
+                                <select value={reactionMessage} onChange={(e) => setReactionMessage(e.target.value)}>
+                                    <option>animal</option>
+                                    <option>dev</option>
+                                    <option>food</option>
+                                    <option>science</option>
+                                </select>
+                            </div>
+                        )}
+                        {reactionType === 'Clock' && (
+                            <div>
+                                <label className="font-medium text-lg mb-4 block">Choose a City</label>
+                                <input type="text" value={reactionMessage} onChange={(e) => setReactionMessage(e.target.value)} className="w-full p-2 border rounded-md" />
+                            </div>
+                        )}
+                        {/* {reactionType === 'Meal' &&(
+                            <div>
+                                <label className="font-medium text-lg mb-4 block">Choose your mode</label>
+                                <select value={reactionMessage} onChange={(e) => setReactionMessage(e.target.value)}></select>
+                            </div>
+                        )} */}
                     </div>
                 </div>
                 <button onClick={handleSubmit} className="bg-teal-600 text-white px-8 py-2 rounded-lg shadow-lg font-medium hover:bg-teal-700 active:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-300 w-full">Send Alert</button>

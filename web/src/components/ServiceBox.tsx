@@ -14,7 +14,7 @@ const ServiceBox: React.FC<ServiceBoxProps> = ({ selectedService, onSelectServic
         {!selectedService && (
           <div className="mb-4">
             <label className="font-medium text-lg mb-2 block">Service Type</label>
-            {['Weather', 'Service 1', 'Service 2'].map(service => (
+            {['Weather'].map(service => (
               <div
                   key={service}
                   onClick={() => onSelectService(service)}
