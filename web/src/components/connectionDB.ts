@@ -15,7 +15,6 @@ export async function sendUserIdDb(clientId: string) {
         }
 
         const responseData = await response.json();
-        console.log(responseData)
         return { data: responseData, error: null };
 
     } catch (error) {

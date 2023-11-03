@@ -14,10 +14,10 @@ const ServiceBox: React.FC<ServiceBoxProps> = ({ selectedService, onSelectServic
         {!selectedService && (
           <div className="mb-4">
             <label className="font-medium text-lg mb-2 block">Service Type</label>
-            {['Weather', 'Service 1', 'Service 2'].map(service => (
+            {['Weather'].map(service => (
               <div
                   key={service}
-                  onClick={() => onSelectService(service)} 
+                  onClick={() => onSelectService(service)}
                   className={`mb-2 py-3 px-4 rounded-lg text-lg cursor-pointer bg-gray-200 text-gray-700 hover:shadow-md transition-all duration-300`}
               >
                   {service}

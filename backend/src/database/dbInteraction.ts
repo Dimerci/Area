@@ -48,3 +48,37 @@ export async function listDb(Client: typeof MongoClient) {
   console.log("Databases:");
   databasesList.databases.forEach((db: { name: string }) => console.log(` - ${db.name}`));
 }
+
+export async function readListingByClientId(Client: typeof MongoClient, filter: { clientId: number }): Promise<any> {
+    const result = await Client
+      .db("user_info")
+      .collection("user_info")
+      .findOne(filter);
+
+    if (result) {
+      console.log(`Found a listing in the collection with the clientId '${filter.clientId}':`);
+      return result;
+    } else {
+      console.log(`No listings found with the clientId '${filter.clientId}'`);
+      return null;
+    }
+}
+
+export async function addActionToDocument(Client: typeof MongoClient, filter: { clientId: string }, newAction: any) {
+  const update = {
+    $push: {
+      data: newAction
+    }
+  };
+
+  const result = await Client
+    .db("user_info")
+    .collection("user_info")
+    .updateOne(filter, update);
+
+  if (result.modifiedCount > 0) {
+    console.log(`New action added to the document with clientId '${filter.clientId}'`);
+  } else {
+    console.log(`No document found with clientId '${filter.clientId}'`);
+  }
+}
