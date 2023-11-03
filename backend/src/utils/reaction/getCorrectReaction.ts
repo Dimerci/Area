@@ -20,14 +20,14 @@ export async function getCorrectReaction(reaction: Reaction) {
         const joke = await getNorrisJoke(reaction.message);
         postRequestToDiscord(joke);
     }
-    if (reaction.type === "meal") {
+    if (reaction.type === "Meal") {
         const requiredFields = "message"
         if (!(requiredFields in reaction)){
         }
         const meal = await getMealFromDB(reaction.message);
         //postRequestToDiscord(meal);
     }
-    if (reaction.type === "clock") {
+    if (reaction.type === "Clock") {
         const requiredFields = "message"
         if (!(requiredFields in reaction)){
         }
