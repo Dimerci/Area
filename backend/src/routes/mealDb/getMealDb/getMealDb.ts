@@ -8,7 +8,6 @@ export async function getMealFromDB(category:string) {
             const mealData = await getRandomMeal(category)
             if (category.startsWith("filter:")) {
                 const mealNames = "Meals name:\n" + extractMealNames(mealData);
-                console.log(mealNames)
                 return mealNames;
             } else {
                 const mealName = extractMealName(mealData) + "\n";
@@ -48,14 +47,15 @@ function extractMealName(mealData: any): string {
     return "";
 }
 
-function extractMealNames(data: any): string {
-    if (!data.meals) {
+function extractMealNames(data: { meals: any[] }): string {
+    if (!data.meals || data.meals.length === 0) {
         return "";
     }
 
-    // Map over the meals array to extract the strMeal values and then join them using newline
-    return data.meals.map((meal: any) => meal.strMeal).join('\n');
+    const mealNames = data.meals.map((meal: any) => `-> ${meal.strMeal}`).join('\n');
+    return mealNames;
 }
+
 
 
 function extractIngredients(meal: any): string {
