@@ -10,6 +10,12 @@
 			"marginRight": 4
 		}
 	},
+	"mx-2": {
+		"style": {
+			"marginLeft": 8,
+			"marginRight": 8
+		}
+	},
 	"mx-4": {
 		"style": {
 			"marginLeft": 16,

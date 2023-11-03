@@ -3,6 +3,7 @@ import {ScrollView, Text} from 'react-native';
 import {WeatherWidget} from '../components/widgets/WeatherWidget';
 import {Box} from '../components/utils/Box';
 import {ClockWidget} from '../components/widgets/ClockWidget';
+import {ProfileWidget} from '../components/widgets/Profile';
 
 const data = [
   {
@@ -14,6 +15,11 @@ const data = [
     id: 2,
     title: 'Clock',
     component: <ClockWidget />,
+  },
+  {
+    id: 3,
+    title: 'Profile',
+    component: <ProfileWidget />,
   },
 ];
 
