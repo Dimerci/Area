@@ -15,7 +15,6 @@ export function ProfileWidget({}: WeatherWidgetT): JSX.Element {
   const [userData, setUserData] = useState(null);
   const [backendIP, setbackendIp] = useState('localhost');
   const {user} = useAuth0();
-  console.log(user);
 
   AsyncStorage.getItem('backendIP')
     .then(backendIp => {
@@ -31,7 +30,7 @@ export function ProfileWidget({}: WeatherWidgetT): JSX.Element {
     });
 
   useEffect(() => {
-    console.log(user?.email);
+    // console.log(user?.email);
     const fetchData = async () => {
       try {
         if (user && user.email) {
@@ -57,8 +56,8 @@ export function ProfileWidget({}: WeatherWidgetT): JSX.Element {
             {userData ? (
               <FlatList
                 data={userData}
-                renderItem={({item}) => <AReaItems data={item} />}
-                keyExtractor={item => item.id.toString()} // Provide a unique key for each item
+                renderItem={({item}) => <AReaItems item={item} />}
+                keyExtractor={(item, index) => index.toString()} // Provide a unique key for each item
               />
             ) : (
               <Text>Loading...</Text>

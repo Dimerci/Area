@@ -9,8 +9,6 @@ export async function getUserData(clientId: string, ip: string) {
       },
     });
 
-    console.log(response);
-
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(errorText);
