@@ -1,14 +1,15 @@
-import {JokeData} from '../components/utils/Interfaces';
-
 export async function getUserData(clientId: string, ip: string) {
   try {
     const url = `http://${ip}:8080/user?clientId=${clientId}`;
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+
+    console.log(response);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -17,9 +18,9 @@ export async function getUserData(clientId: string, ip: string) {
 
     const responseData = await response.json();
 
-    if (responseData.clientJson) {
-      console.log('Success: ' + responseData.clientJson);
-      return responseData.clientJson;
+    if (responseData.data) {
+      console.log('Success: ' + responseData.data);
+      return responseData.data;
     } else {
       console.error('Unexpected response format:', responseData);
       return {data: null, error: 'Unexpected response format'};

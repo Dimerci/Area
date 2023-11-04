@@ -4,6 +4,20 @@ export type ClockData = {
 };
 
 export type WeatherData = {
+  clientId: string;
+  city: string;
+  forecast: {
+    type: 'temperature' | 'wind' | 'humidity';
+    value: number;
+  };
+  interval: '>' | '<' | '=';
+  reaction?: {
+    type: 'Discord';
+    message: string;
+  };
+};
+
+export type AReaItemsT = {
   city: string;
   forecast: {
     type: 'temperature' | 'wind' | 'humidity';

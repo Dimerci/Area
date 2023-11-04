@@ -92,6 +92,7 @@ export function MealDBRea({
 
     if (actionData.weatherData) {
       const newWeatherData: WeatherData = {
+        clientId: actionData.weatherData.clientId,
         city: actionData.weatherData?.city,
         forecast: {
           type: actionData.weatherData?.forecast.type,
