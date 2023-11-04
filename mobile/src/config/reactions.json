@@ -1,29 +1,22 @@
 {
   "reactions": [
     {
-<<<<<<< HEAD
-      "label": "discord",
+      "label": "Discord",
       "value": "discord",
       "component": "Discord",
-      "id": 0
-=======
-      "label": "test",
-      "value": "test",
-      "component": "Test",
       "id": 0
     },
     {
-      "label": "discord",
-      "value": "discord",
-      "component": "Discord",
+      "label": "Chuck Norris",
+      "value": "chuck",
+      "component": "Chuck",
       "id": 1
     },
     {
-      "label": "label 2",
-      "value": "label 2",
-      "component": "Test",
+      "label": "MealDB",
+      "value": "mealDB",
+      "component": "MealDB",
       "id": 2
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
     }
   ]
 }

@@ -1,29 +1,23 @@
-<<<<<<< HEAD
-import {useEffect, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
 import {Alert, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useTailwind} from 'tailwind-rn';
-import {sendWeather} from '../apiHandling/weatherApi';
-import {WeatherData} from './Interfaces';
+import {sendWeather} from '../../apiHandling/weatherApi';
+import {ActionData, ClockData, WeatherData} from '../utils/Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
-=======
-import React, {useState} from 'react';
-import {Alert, Switch, Text, TextInput, View} from 'react-native';
-import {useTailwind} from 'tailwind-rn';
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
+import {postClock} from '../../apiHandling/clockAPI';
 
 type AreaBoxT = {
   debugScreen?: boolean;
   debugConsole?: boolean;
-<<<<<<< HEAD
-  weatherData?: WeatherData;
+  actionData: ActionData;
 };
 
 export function Discord({
   debugScreen,
   debugConsole,
-  weatherData,
+  actionData,
 }: AreaBoxT): JSX.Element {
   const tailwind = useTailwind();
   const [message, setMessage] = useState('');
@@ -31,23 +25,11 @@ export function Discord({
   const [signature, setSignature] = useState('');
   const [discordProvenance, setDiscordProvenance] = useState(false);
   let provenance = '';
-=======
-};
 
-export function Discord({
-  debugScreen,
-  debugConsole,
-  weatherData,
-}: AreaBoxT): JSX.Element {
-  const tailwind = useTailwind();
-  const [message, setMessage] = useState('');
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
-
-  const handleInputChange = inputText => {
+  const handleInputChange = (inputText: SetStateAction<string>) => {
     setMessage(inputText);
   };
 
-<<<<<<< HEAD
   AsyncStorage.getItem('backendIP')
     .then(backendIp => {
       if (backendIp) {
@@ -102,46 +84,48 @@ export function Discord({
     const newMessage =
       message + '\n------------\n~' + signature + '\n[' + provenance + ']';
 
-    const newWeatherData = {
-      city: weatherData?.city,
-      forecast: {
-        type: weatherData?.forecast.type,
-        value: weatherData?.forecast.value,
-      },
-      interval: weatherData?.interval,
-      reaction: {
-        type: 'Discord',
-        message: newMessage,
-      },
-    };
-    console.log(newWeatherData.reaction.message);
-    console.log(provenance);
-    debugScreen &&
-      Alert.alert('Send this:\n' + newWeatherData.reaction.message);
-    debugConsole &&
-      console.log('Send this:\n' + newWeatherData.reaction.message);
+    if (actionData.weatherData) {
+      const newWeatherData: WeatherData = {
+        clientId: actionData.weatherData.clientId,
+        city: actionData.weatherData?.city,
+        forecast: {
+          type: actionData.weatherData?.forecast.type,
+          value: actionData.weatherData?.forecast.value,
+        },
+        interval: actionData.weatherData?.interval,
+        reaction: {
+          type: 'Discord',
+          message: newMessage,
+        },
+      };
+      debugScreen &&
+        Alert.alert('Send this:\n' + newWeatherData?.reaction?.message);
+      debugConsole &&
+        console.log('Send this:\n' + newWeatherData?.reaction?.message);
 
-    sendWeather(newWeatherData, backendIP);
+      sendWeather(newWeatherData, backendIP);
+    } else if (actionData.clockData) {
+      const newClockData: ClockData = {
+        city: actionData.clockData.city,
+        message: newMessage,
+      };
+      debugScreen && Alert.alert('Send this:\n' + newClockData?.message);
+      debugConsole && console.log('Send this:\n' + newClockData?.message);
+
+      postClock(newClockData, backendIP);
+    } else {
+      console.error('Something went wrong');
+    }
   }
 
   const handleButtonPress = () => {
     buildMessage();
-=======
-  const MessageSend = () => {
-    debugScreen && Alert.alert('Sent this :' + message);
-    debugConsole && console.log('Sent this :' + message);
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
   };
 
   return (
     <View>
       <View style={tailwind('rounded-lg p-2 mx-1 my-1')}>
         <Text style={tailwind('text-slate-50')}>Message to send :</Text>
-<<<<<<< HEAD
-=======
-        {debugConsole && <Text>debugConsole on</Text>}
-        {debugScreen && <Text>debugScreen on</Text>}
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
       </View>
       <View style={tailwind('bg-slate-600 rounded-b-lg p-2')}>
         <TextInput
@@ -153,10 +137,7 @@ export function Discord({
           style={tailwind('p-2 mx-1 my-1 border-2 border-slate-50 rounded-lg')}
         />
       </View>
-<<<<<<< HEAD
       <Button title="Submit" onPress={handleButtonPress} />
-=======
->>>>>>> d995963 ([ADD] Added the reaction template and worked on the Weather Widget)
     </View>
   );
 }
