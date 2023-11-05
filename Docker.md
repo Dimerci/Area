@@ -42,25 +42,30 @@ The Docker Compose configuration file is structured as follows:
 
 ```yaml
 version: '3'
-
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-
   web:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./web
     ports:
-      - "8081:8081"
+      - "8081:8081" 
+
+  express-backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080" 
 
   mobile:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./mobile
+    image: mobile
     ports:
-      - "8081:8081"
+      - "8082:8082"
+
+  apksaver:
+    image: mobile
+    volumes:
+      - ./apk-output:/apk-output
+    command: /bin/sh -c "cp /app/app-release.apk /apk-output/"
+
+```
