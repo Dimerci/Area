@@ -3,16 +3,9 @@ import {Alert, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useTailwind} from 'tailwind-rn';
 import {sendWeather} from '../../apiHandling/weatherApi';
-import {ActionData, ClockData, WeatherData} from '../utils/Interfaces';
+import {AreaBoxT, WeatherData} from '../utils/Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
-import {postClock} from '../../apiHandling/clockAPI';
-
-type AreaBoxT = {
-  debugScreen?: boolean;
-  debugConsole?: boolean;
-  actionData: ActionData;
-};
 
 export function Discord({
   debugScreen,
@@ -24,7 +17,6 @@ export function Discord({
   const [backendIP, setbackendIp] = useState('localhost');
   const [signature, setSignature] = useState('');
   const [discordProvenance, setDiscordProvenance] = useState(false);
-  let provenance = '';
 
   const handleInputChange = (inputText: SetStateAction<string>) => {
     setMessage(inputText);
@@ -104,15 +96,6 @@ export function Discord({
         console.log('Send this:\n' + newWeatherData?.reaction?.message);
 
       sendWeather(newWeatherData, backendIP);
-    } else if (actionData.clockData) {
-      const newClockData: ClockData = {
-        city: actionData.clockData.city,
-        message: newMessage,
-      };
-      debugScreen && Alert.alert('Send this:\n' + newClockData?.message);
-      debugConsole && console.log('Send this:\n' + newClockData?.message);
-
-      postClock(newClockData, backendIP);
     } else {
       console.error('Something went wrong');
     }

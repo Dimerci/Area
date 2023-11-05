@@ -5,6 +5,7 @@ import {ActionData} from './Interfaces';
 import {ChuckReaD} from '../reactions/ChuckRea';
 import {MealDBRea} from '../reactions/MealDBRea';
 import {Discord} from '../reactions/DiscordRea';
+import {Clock} from '../reactions/ClockRea';
 
 interface Props {
   label: string;
@@ -60,6 +61,13 @@ const Dropdown: FC<Props> = ({
     ),
     Chuck: () => (
       <ChuckReaD
+        debugConsole={debugConsole}
+        debugScreen={debugScreen}
+        actionData={actionData}
+      />
+    ),
+    Clock: () => (
+      <Clock
         debugConsole={debugConsole}
         debugScreen={debugScreen}
         actionData={actionData}

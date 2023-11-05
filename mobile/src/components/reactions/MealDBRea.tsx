@@ -1,12 +1,17 @@
-import {useEffect, useState} from 'react';
-import {Alert, View} from 'react-native';
+import {SetStateAction, useEffect, useState} from 'react';
+import {
+  Alert,
+  Switch,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Button} from 'react-native-elements';
 import {sendWeather} from '../../apiHandling/weatherApi';
-import {ActionData, ClockData, WeatherData} from '../utils/Interfaces';
+import {ActionData, WeatherData} from '../utils/Interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DeviceInfo from 'react-native-device-info';
-import {getMeal} from '../../apiHandling/mealDBAPI';
-import {postClock} from '../../apiHandling/clockAPI';
+import {useTailwind} from 'tailwind-rn';
 
 type AreaBoxT = {
   debugScreen?: boolean;
@@ -20,9 +25,21 @@ export function MealDBRea({
   actionData,
 }: AreaBoxT): JSX.Element {
   const [backendIP, setbackendIp] = useState('localhost');
-  const [signature, setSignature] = useState('');
-  const [discordProvenance, setDiscordProvenance] = useState(false);
-  let provenance = '';
+  const [message, setMessage] = useState('');
+  const tailwind = useTailwind();
+  const [isChecked, setIsChecked] = useState(false);
+
+  const toggleCheckbox = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const handleInputChange = (inputText: SetStateAction<string>) => {
+    if (isChecked) {
+      setMessage('filter:' + inputText);
+    } else {
+      setMessage(inputText);
+    }
+  };
 
   AsyncStorage.getItem('backendIP')
     .then(backendIp => {
@@ -37,59 +54,7 @@ export function MealDBRea({
       console.error('Error retrieving backendIP:', error);
     });
 
-  useEffect(() => {
-    AsyncStorage.getItem('discordProvenance')
-      .then(discordProvenance => {
-        if (discordProvenance !== null) {
-          // Convert the stored value to a boolean
-          const isDebug = discordProvenance === 'true';
-          setDiscordProvenance(isDebug);
-        } else {
-          setDiscordProvenance(false);
-        }
-      })
-      .catch(error => {
-        console.error('Error retrieving DebugScreen:', error);
-      });
-  }, []);
-
-  AsyncStorage.getItem('discordSignature')
-    .then(signature => {
-      if (signature) {
-        setSignature(signature);
-      } else {
-        console.log('signature not found');
-        setSignature('');
-      }
-    })
-    .catch(error => {
-      console.error('Error retrieving backendIP:', error);
-    });
   async function buildMessage() {
-    let provenance;
-
-    if (discordProvenance) {
-      provenance = await DeviceInfo.getDeviceName();
-    } else {
-      provenance = 'Confidential';
-    }
-
-    // Now, construct the message with the correct provenance
-    const meal = await getMeal(backendIP);
-
-    const newMessage =
-      '# The Meal:\n------------\n ## __Ingredients__ :\n' +
-      meal.ingredients +
-      '\n ## __Instructions__ :\n' +
-      meal.instructions +
-      '\n------------\n~' +
-      signature +
-      '\n[' +
-      provenance +
-      ']';
-
-    console.log(newMessage);
-
     if (actionData.weatherData) {
       const newWeatherData: WeatherData = {
         clientId: actionData.weatherData.clientId,
@@ -100,8 +65,8 @@ export function MealDBRea({
         },
         interval: actionData.weatherData?.interval,
         reaction: {
-          type: 'Discord',
-          message: newMessage,
+          type: 'Meal',
+          message: message,
         },
       };
       debugScreen &&
@@ -110,15 +75,6 @@ export function MealDBRea({
         console.log('Send this:\n' + newWeatherData?.reaction?.message);
 
       sendWeather(newWeatherData, backendIP);
-    } else if (actionData.clockData) {
-      const newClockData: ClockData = {
-        city: actionData.clockData.city,
-        message: newMessage,
-      };
-      debugScreen && Alert.alert('Send this:\n' + newClockData?.message);
-      debugConsole && console.log('Send this:\n' + newClockData?.message);
-
-      postClock(newClockData, backendIP);
     } else {
       console.error('Something went wrong');
     }
@@ -130,6 +86,24 @@ export function MealDBRea({
 
   return (
     <View>
+      <Text>
+        Enter the name of your {isChecked && <Text>ingredient</Text>}{' '}
+        {!isChecked && <Text>dish</Text>}
+      </Text>
+      <TextInput
+        placeholder="Enter text here"
+        value={message}
+        onChangeText={handleInputChange}
+        style={tailwind(
+          'p-2 mx-1 my-1 border-2 border-slate-50 rounded-lg basis-10/12',
+        )}
+      />
+      <View style={tailwind('flex-row')}>
+        <Text style={tailwind('p-2 mx-1 my-1 basis-10/12')}>
+          Ingredient filter ?
+        </Text>
+        <Switch value={isChecked} onValueChange={toggleCheckbox} />
+      </View>
       <Button title="Get a recipe" onPress={handleButtonPress} />
     </View>
   );

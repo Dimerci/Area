@@ -1,6 +1,5 @@
 export type ClockData = {
   city: string;
-  message?: string;
 };
 
 export type WeatherData = {
@@ -12,7 +11,7 @@ export type WeatherData = {
   };
   interval: '>' | '<' | '=';
   reaction?: {
-    type: 'Discord';
+    type: 'Discord' | 'Chuck Norris' | 'Meal' | 'Clock';
     message: string;
   };
 };
@@ -25,7 +24,7 @@ export type AReaItemsT = {
   };
   interval: '>' | '<' | '=';
   reaction?: {
-    type: 'Discord';
+    type: 'Discord' | 'Chuck Norris' | 'Meal' | 'Clock';
     message: string;
   };
 };
@@ -48,10 +47,6 @@ export type JokeData = {
     | 'science'
     | 'sport'
     | 'travel';
-  reaction?: {
-    type: 'Discord';
-    message: string;
-  };
 };
 
 export type DiscordMessage = {
@@ -61,4 +56,10 @@ export type DiscordMessage = {
 export type ActionData = {
   weatherData?: WeatherData;
   clockData?: ClockData;
+};
+
+export type AreaBoxT = {
+  debugScreen?: boolean;
+  debugConsole?: boolean;
+  actionData: ActionData;
 };
