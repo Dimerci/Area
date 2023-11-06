@@ -1,0 +1,28 @@
+{
+  "reactions": [
+    {
+      "label": "Discord",
+      "value": "discord",
+      "component": "Discord",
+      "id": 0
+    },
+    {
+      "label": "Chuck Norris",
+      "value": "chuck",
+      "component": "Chuck",
+      "id": 1
+    },
+    {
+      "label": "MealDB",
+      "value": "mealDB",
+      "component": "MealDB",
+      "id": 2
+    },
+    {
+      "label": "Clock",
+      "value": "clock",
+      "component": "Clock",
+      "id": 3
+    }
+  ]
+}

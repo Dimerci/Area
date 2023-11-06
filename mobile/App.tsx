@@ -5,114 +5,53 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import React, {useState} from 'react';
+import {TailwindProvider} from 'tailwind-rn';
+import utilities from './tailwind.json';
+import {Auth0Provider, useAuth0} from 'react-native-auth0';
+import {LoginButton} from './src/components/utils/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {MainPage} from './src/screens/MainPage';
+import {SettingsPage} from './src/screens/SettingsPage';
+import {Button} from 'react-native-elements';
+import LogOutButton from './src/components/utils/Logout';
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [isSettings, setIsSettings] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  AsyncStorage.getItem('isLoggedIn').then(isLoggedIn => {
+    if (isLoggedIn === 'true') {
+      console.log('user is logged in');
+      setIsLoggedIn(true);
+    } else {
+      console.log('user is not logged in or cleared app cache');
+      setIsLoggedIn(false);
+    }
+  });
+
+  const toggleSwitch = () => {
+    setIsSettings(!isSettings);
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <Auth0Provider
+      domain={'dev-zqudvtrv6sw7xe6c.us.auth0.com'}
+      clientId={'NrkwXP0voGOWHHerGqC4x0deYPjsxhvq'}>
+      <TailwindProvider utilities={utilities}>
+        {!isLoggedIn && <LoginButton loginState={setIsLoggedIn} />}
+        {isLoggedIn && <LogOutButton loginState={setIsLoggedIn} />}
+        {isLoggedIn && !isSettings && <MainPage />}
+        {isLoggedIn && isSettings && <SettingsPage />}
+        {isLoggedIn && !isSettings && (
+          <Button title="Settings Page" onPress={toggleSwitch} />
+        )}
+        {isLoggedIn && isSettings && (
+          <Button title="Home Page" onPress={toggleSwitch} />
+        )}
+      </TailwindProvider>
+    </Auth0Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

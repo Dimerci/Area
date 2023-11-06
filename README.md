@@ -20,7 +20,7 @@
 ## Technology Stack
 
 ### Front-end
-- **Technology**: React native
+- **Technology**: React
 - **Scope**: Provides the user interface for web clients
 
 ### Mobile
@@ -32,11 +32,11 @@
 - **Scope**: Handles business logic and serves web & mobile clients
 
 ### Database
-- **Technology**: MySQL
+- **Technology**: MongoDB
 - **Scope**: Stores user data and application state
 
 ### User Management
-- **Technology**: KeyCloak
+- **Technology**: auth0
 - **Scope**: Handles user registration, authentication, and management
 
 ## Getting Started
@@ -44,13 +44,12 @@
     To compile the project, use:
 
     shell
-    docker-compose build
+   docker-compose up
 
     For detailed instructions regarding the project setup and the API, refer to the API Documentation section.
 
  ## Features
     User Registration and Authentication
-    Service Subscription
     Action & REAction Components
     Trigger Mechanism
     AREA Creation
@@ -79,5 +78,4 @@
     This project is divided into 3 milestones, focusing on planning, implementation, and refinement. Detailed timelines and expectations are provided for each phase.
 
  ## Contributing
-    Contributions are welcome. Please refer to the CONTRIBUTING.md file for contribution guidelines.
-
+    Verschhh, Dimerci, Luciole24, Orlo, and teaching staff
