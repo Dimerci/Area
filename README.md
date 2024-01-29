@@ -1,9 +1,9 @@
 # Action REAction: Automation Platform of Digital Life
-    B-DEV-500: B5 - Application Development
+B-DEV-500: B5 - Application Development
 
 ## Overview
 
-    Action REAction is a comprehensive automation platform focusing on providing a seamless interface for the integration of various digital services similar to IFTTT and/or Zapier. It consists of an application server, a web client, and a mobile client to offer various functionalities and services to users.
+Action REAction is a comprehensive automation platform focusing on providing a seamless interface for the integration of various digital services similar to IFTTT and/or Zapier. It consists of an application server, a web client, and a mobile client to offer various functionalities and services to users.
 
 ## Table of Contents
 
@@ -41,41 +41,42 @@
 
 ## Getting Started
 
-    To compile the project, use:
-
-    shell
+To compile the project, use:
+```
    docker-compose up
-
-    For detailed instructions regarding the project setup and the API, refer to the API Documentation section.
+```
+For detailed instructions regarding the project setup and the API, refer to the API Documentation section.
 
  ## Features
-    User Registration and Authentication
-    Action & REAction Components
-    Trigger Mechanism
-    AREA Creation
-    More features...
+- User Registration and Authentication
+- Action & REAction Components
+- Trigger Mechanism
+- AREA Creation
+- More features...
  ## API Documentation
-    Detailed API documentation is provided in API_DOCS.md, outlining the available endpoints, request/response formats, and example usages.
+Detailed API documentation is provided in API_DOCS.md, outlining the available endpoints, request/response formats, and example usages.
 
  ## Architecture
 ### Mobile Client
-    Platform Compatibility: Android or Windows Mobile
-    Responsibility: Displaying screens and forwarding requests to the application server
+Platform Compatibility: Android or Windows Mobile
+Responsibility: Displaying screens and forwarding requests to the application server
  ### Web Client
-    Responsibility: Displaying screens and forwarding requests to the application server
+Responsibility: Displaying screens and forwarding requests to the application server
  ## Application Server
-    Responsibility: Embedding the business logic of the project and offering services through a REST API
+Responsibility: Embedding the business logic of the project and offering services through a REST API
  ## Project Construction
 ### Docker-Compose
-    Refer to the docker-compose.yml file at the root of the project for service descriptions and dependencies. Validate image integrity using:
+Refer to the docker-compose.yml file at the root of the project for service descriptions and dependencies. Validate image integrity using:
+    
     docker-compose up
-    Ensure that the client_web and client_mobile services share a common volume and adhere to the specified port exposures and request handling.
+
+Ensure that the client_web and client_mobile services share a common volume and adhere to the specified port exposures and request handling.
 
  ## About.json
-    The application server should answer the call to http://localhost:8080/about.json with specific properties, as outlined in the example provided.
+The application server should answer the call to http://localhost:8080/about.json with specific properties, as outlined in the example provided.
 
  ## Timeline
-    This project is divided into 3 milestones, focusing on planning, implementation, and refinement. Detailed timelines and expectations are provided for each phase.
+This project is divided into 3 milestones, focusing on planning, implementation, and refinement. Detailed timelines and expectations are provided for each phase.
 
  ## Contributing
-    Verschhh, Dimerci, Luciole24, Orlo, and teaching staff
+Verschhh, Dimerci, Luciole24, Orlo, and teaching staff
